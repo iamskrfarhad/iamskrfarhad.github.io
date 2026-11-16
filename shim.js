@@ -351,7 +351,7 @@
     var loans = DB.loans.slice().sort(function (a, b) {
       return a.date < b.date ? 1 : a.date > b.date ? -1 : b.id - a.id;
     }).map(function (l) {
-      return { id: l.id, person: l.person, direction: l.direction, amount: num(l.amount), note: l.note, date: l.date, settled: !!l.settled, wallet_id: l.wallet_id != null ? l.wallet_id : null, paid: num(l.paid || 0) };
+      return { id: l.id, person: l.person, direction: l.direction, amount: num(l.amount), note: l.note, date: l.date, settled: !!l.settled, wallet_id: l.wallet_id != null ? l.wallet_id : null, paid: num(l.paid || 0), phone: l.phone || "" };
     });
     var bazarLists = DB.bazar_lists.slice().sort(function (a, b) {
       return a.date < b.date ? 1 : a.date > b.date ? -1 : b.id - a.id;
@@ -541,7 +541,7 @@
         id: id, person: person, direction: direction,
         amount: amount, note: cleanNote(a.note),
         date: date, settled: false,
-        wallet_id: wallet ? wallet.id : null, paid: 0, preexisting: a.preexisting === true
+        wallet_id: wallet ? wallet.id : null, paid: 0, preexisting: a.preexisting === true, phone: cleanStr(a.phone, 24)
       });
       if (wallet && a.preexisting !== true) {
         insertTx({
@@ -561,6 +561,7 @@
       if (!person) throw new Error("কার নাম দরকার");
       l.person = person; l.direction = cleanLoanDir(a.direction);
       l.amount = cleanAmount(a.amount); l.note = cleanNote(a.note); l.date = cleanDate(a.date);
+      l.phone = cleanStr(a.phone, 24);
       if (a.wallet_id !== undefined) {
         var uwid = a.wallet_id != null ? intId(a.wallet_id) : null;
         l.wallet_id = uwid != null && find(DB.wallets, uwid) ? uwid : null;
@@ -957,7 +958,7 @@
       });
       var newLoans = data.loans.map(function (l) {
         return {
-          id: next.loan++, person: cleanStr(l.person, 60), direction: cleanLoanDir(l.direction),
+          id: next.loan++, person: cleanStr(l.person, 60), phone: cleanStr(l.phone, 24), direction: cleanLoanDir(l.direction),
           amount: cleanAmount(l.amount), note: cleanNote(l.note), date: cleanDate(l.date), settled: bool(l.settled),
           wallet_id: l.wallet_id != null ? (walletMap[l.wallet_id] || null) : null,
           paid: bool(l.settled) ? cleanAmount(l.amount) : Math.min(cleanAmount(l.amount), cleanAmount(l.paid || 0)), preexisting: bool(l.preexisting)
