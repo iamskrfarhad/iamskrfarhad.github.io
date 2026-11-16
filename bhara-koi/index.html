@@ -858,7 +858,7 @@
         activeNow:"সক্রিয়", makeActive:"সক্রিয় করুন", switchBuilding:"বিল্ডিং বদলান", switchSub:"কোন বিল্ডিংয়ের হিসাব দেখবেন, বেছে নিন", allBuildings:"সব বিল্ডিং", buildingSwitched:"বিল্ডিং বদলানো হয়েছে: {name}",
         voice:"ভয়েস", voiceTitle:"বাংলা ভয়েস ইনপুট", voiceSub:"মাইকে চাপ দিয়ে বাংলায় পুরো কমান্ড বলুন — বিল তৈরি, সবার বিল, অভিযোগ লেখা ও সমাধান, ভাড়া আদায়, খরচ, নতুন ওয়ালেট/ব্যাংক অ্যাকাউন্ট, ধার দেনা, কর্মচারীর অ্যাডভান্স, সঞ্চয় জমা — সবই হবে। হিসাব জানতে চাইলে জিজ্ঞেস করুন (যেমন “মোট বকেয়া কত?”), পেজ খুলতে বলুন (যেমন “বকেয়া দেখাও”)। যা বুঝবে তা আগে প্রিভিউতে দেখাবে: ঠিক থাকলে “ঠিক আছে” চাপবেন, নাহলে নিজের মতো এডিট করে নিবেন।",
         voiceTap:"বলতে মাইকে চাপ দিন", voiceListening:"শুনছি… এখন বলুন", voiceHeard:"আপনি বললেন",
-        voiceUnsupported:"দুঃখিত — এই ব্রাউজারে ভয়েস ইনপুট কাজ করছে না। Chrome ব্রাউজারে খুলে আবার চেষ্টা করুন। নিচের কুইক বোতামগুলো দিয়েও কাজ করা যাবে।",
+        voiceUnsupported:"দুঃখিত — এই ব্রাউজারে ভয়েস ইনপুট কাজ করছে না। Chrome ব্রাউজারে খুলে আবার চেষ্টা করুন। নিচের কুইক বোতামগুলো দিয়েও কাজ করা যাবে।", voiceLang:"এই ব্রাউজারে বাংলা ভয়েস চালু হয়নি — iPhone ও Safari-তে Apple-এর ভয়েস ব্যবস্থায় বাংলা নেই। Android ফোনে বা কম্পিউটারের Chrome ব্রাউজারে ভয়েস চলবে। এখানে নিচে লিখে কমান্ড দেওয়া যাবে।",
         voiceDenied:"মাইক্রোফোনের অনুমতি দেওয়া হয়নি। ব্রাউজারের সেটিংস থেকে মাইকের অনুমতি দিয়ে আবার চেষ্টা করুন।",
         voiceNoSpeech:"কিছু শোনা যায়নি — আবার চাপ দিয়ে পরিষ্কার করে বলুন।",
         voiceNetwork:"ভয়েস চিনতে ইন্টারনেট সংযোগ লাগবে — সংযোগ দেখে আবার চেষ্টা করুন।",
@@ -1038,7 +1038,7 @@
         activeNow:"Active", makeActive:"Make active", switchBuilding:"Switch building", switchSub:"Choose which building's accounts to view", allBuildings:"All buildings", buildingSwitched:"Building switched: {name}",
         voice:"Voice", voiceTitle:"Bangla voice input", voiceSub:"Tap the mic and give a full command in Bangla — create a bill or everyone's bills, file or resolve a complaint, collect rent, add an expense, add a wallet/bank account, lend money, give a staff advance, deposit savings. Ask for figures (e.g. “total due?”) or ask to open a page (e.g. “show dues”). Whatever it understands is shown as a preview first: tap OK if it is right, or edit it your way.",
         voiceTap:"Tap the mic and speak", voiceListening:"Listening… speak now", voiceHeard:"You said",
-        voiceUnsupported:"Sorry — voice input does not work in this browser. Open in Chrome and try again. You can also use the quick buttons below.",
+        voiceUnsupported:"Sorry — voice input does not work in this browser. Open in Chrome and try again. You can also use the quick buttons below.", voiceLang:"Bengali voice could not start in this browser — Apple's voice system on iPhone and Safari does not support Bengali. Voice works on Android or in Chrome on a computer. You can also type a command below.",
         voiceDenied:"Microphone permission was not given. Allow the mic in browser settings and try again.",
         voiceNoSpeech:"Nothing was heard — tap again and speak clearly.",
         voiceNetwork:"Voice recognition needs an internet connection — check it and try again.",
@@ -5017,7 +5017,8 @@
         recog.onerror = function(ev){
           if(orb) orb.classList.remove("listening");
           var msg = L.voiceGeneric;
-          if(ev.error === "not-allowed" || ev.error === "service-not-allowed") msg = L.voiceDenied;
+          if(ev.error === "not-allowed") msg = L.voiceDenied;
+          else if(ev.error === "service-not-allowed" || ev.error === "language-not-supported") msg = L.voiceLang;
           else if(ev.error === "no-speech" || ev.error === "aborted") msg = L.voiceNoSpeech;
           else if(ev.error === "network") msg = L.voiceNetwork;
           setVoiceStatus(msg);
