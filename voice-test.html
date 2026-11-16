@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ভয়েস পরীক্ষা — Hisab Koi !</title>
+<style>
+  body{font-family:-apple-system,'Hind Siliguri',sans-serif;margin:0;padding:20px;background:#eff7f5;color:#0f172a}
+  h1{font-size:22px;margin:8px 0}
+  p{font-size:16px;line-height:1.55;color:#334155}
+  button{background:#0D9488;color:#fff;border:0;border-radius:14px;padding:16px 22px;font-size:19px;font-weight:700;width:100%;margin:14px 0}
+  #out{background:#fff;border:1px solid #cbd5e1;border-radius:14px;padding:16px;font-size:17px;line-height:1.6;white-space:pre-wrap;word-break:break-word;min-height:120px}
+  .lbl{font-weight:700;color:#0D9488}
+</style>
+</head>
+<body>
+<h1>🎤 ভয়েস পরীক্ষা</h1>
+<p>নিচের বাটন চেপে বাংলায় বলুন: “বাজারে পাঁচশো টাকা খরচ”। তারপর এই পেজে যা লেখা আসবে, তার স্ক্রিনশট পাঠান।</p>
+<button id="btn">বলা শুরু করুন</button>
+<div id="out">অপেক্ষা করছি…</div>
+<script>
+var out=document.getElementById('out');
+function log(t){out.textContent+=t+'\n';}
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+out.textContent='';
+log('ব্রাউজার: '+(navigator.userAgent||''));
+log('ভয়েস সাপোর্ট আছে: '+(SR?'হ্যাঁ':'না — এই ব্রাউজারে SpeechRecognition নেই'));
+document.getElementById('btn').onclick=function(){
+  if(!SR){log('থামলাম: সাপোর্ট নেই');return;}
+  var r;
+  try{ r=new SR(); }catch(e){ log('তৈরি করা যায়নি: '+e.message); return; }
+  r.lang='bn-BD'; r.interimResults=true; r.continuous=false; r.maxAlternatives=3;
+  r.onstart=function(){log('শুরু হয়েছে — এখন বলুন');};
+  r.onresult=function(ev){
+    for(var i=0;i<ev.results.length;i++){
+      var res=ev.results[i];
+      log((res.isFinal?'চূড়ান্ত: ':'শুনছি: ')+(res[0]?res[0].transcript:''));
+    }
+  };
+  r.onerror=function(ev){ log('আসল এরর কোড: '+ev.error); };
+  r.onend=function(){log('শেষ হয়েছে');};
+  out.textContent=''; log('বাটন চাপা হয়েছে, চালু করছি…');
+  try{ r.start(); }catch(e){ log('চালু করা যায়নি: '+e.message); }
+};
+</script>
+</body>
+</html>
