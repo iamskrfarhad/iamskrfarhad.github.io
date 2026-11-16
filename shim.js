@@ -351,7 +351,7 @@
     var loans = DB.loans.slice().sort(function (a, b) {
       return a.date < b.date ? 1 : a.date > b.date ? -1 : b.id - a.id;
     }).map(function (l) {
-      return { id: l.id, person: l.person, direction: l.direction, amount: num(l.amount), note: l.note, date: l.date, settled: !!l.settled };
+      return { id: l.id, person: l.person, direction: l.direction, amount: num(l.amount), note: l.note, date: l.date, settled: !!l.settled, wallet_id: l.wallet_id != null ? l.wallet_id : null, paid: num(l.paid || 0) };
     });
     var bazarLists = DB.bazar_lists.slice().sort(function (a, b) {
       return a.date < b.date ? 1 : a.date > b.date ? -1 : b.id - a.id;
@@ -531,12 +531,26 @@
     addLoan: function (a) {
       var person = cleanStr(a.person, 60);
       if (!person) throw new Error("কার নাম দরকার");
+      var wid = a.wallet_id != null ? intId(a.wallet_id) : null;
+      var wallet = wid != null ? find(DB.wallets, wid) : null;
+      var amount = cleanAmount(a.amount);
+      var direction = cleanLoanDir(a.direction);
+      var date = cleanDate(a.date);
       var id = DB.next.loan++;
       DB.loans.push({
-        id: id, person: person, direction: cleanLoanDir(a.direction),
-        amount: cleanAmount(a.amount), note: cleanNote(a.note),
-        date: cleanDate(a.date), settled: false
+        id: id, person: person, direction: direction,
+        amount: amount, note: cleanNote(a.note),
+        date: date, settled: false,
+        wallet_id: wallet ? wallet.id : null, paid: 0
       });
+      if (wallet) {
+        insertTx({
+          type: direction === "borrow" ? "income" : "expense",
+          amount: amount, walletId: wallet.id, category: "ধার-দেনা",
+          note: direction === "borrow" ? person + " থেকে ধার নেওয়া" : person + " কে ধার দেওয়া",
+          date: date, time: ""
+        });
+      }
       save(DB);
       return { id: id };
     },
@@ -547,13 +561,39 @@
       if (!person) throw new Error("কার নাম দরকার");
       l.person = person; l.direction = cleanLoanDir(a.direction);
       l.amount = cleanAmount(a.amount); l.note = cleanNote(a.note); l.date = cleanDate(a.date);
+      if (a.wallet_id !== undefined) {
+        var uwid = a.wallet_id != null ? intId(a.wallet_id) : null;
+        l.wallet_id = uwid != null && find(DB.wallets, uwid) ? uwid : null;
+      }
       save(DB);
       return { ok: true };
     },
     setLoanSettled: function (a) {
       var l = find(DB.loans, intId(a.id));
       if (!l) throw new Error("ধার পাওয়া যায়নি");
-      l.settled = bool(a.settled);
+      l.settled = bool(a.settled); if (l.settled) l.paid = num(l.amount); else l.paid = 0;
+      save(DB);
+      return { ok: true };
+    },
+    payLoan: function (a) {
+      var l = find(DB.loans, intId(a.id));
+      if (!l) throw new Error("ধার পাওয়া যায়নি");
+      var remaining = round2(num(l.amount) - num(l.paid || 0));
+      var amt = cleanAmount(a.amount);
+      if (amt > remaining) amt = remaining;
+      if (!(amt > 0)) throw new Error("পরিমাণ দিন");
+      l.paid = round2(num(l.paid || 0) + amt);
+      if (l.paid >= num(l.amount)) { l.paid = num(l.amount); l.settled = true; }
+      var wid = a.wallet_id !== undefined && a.wallet_id !== null ? intId(a.wallet_id) : (l.wallet_id != null ? l.wallet_id : null);
+      var wallet = wid != null ? find(DB.wallets, wid) : null;
+      if (wallet) {
+        insertTx({
+          type: l.direction === "borrow" ? "expense" : "income",
+          amount: amt, walletId: wallet.id, category: "ধার-দেনা",
+          note: (l.direction === "borrow" ? "ধার শোধ — " : "ধার আদায় — ") + l.person,
+          date: cleanDate(a.date), time: ""
+        });
+      }
       save(DB);
       return { ok: true };
     },
@@ -918,7 +958,9 @@
       var newLoans = data.loans.map(function (l) {
         return {
           id: next.loan++, person: cleanStr(l.person, 60), direction: cleanLoanDir(l.direction),
-          amount: cleanAmount(l.amount), note: cleanNote(l.note), date: cleanDate(l.date), settled: bool(l.settled)
+          amount: cleanAmount(l.amount), note: cleanNote(l.note), date: cleanDate(l.date), settled: bool(l.settled),
+          wallet_id: l.wallet_id != null ? (walletMap[l.wallet_id] || null) : null,
+          paid: bool(l.settled) ? cleanAmount(l.amount) : Math.min(cleanAmount(l.amount), cleanAmount(l.paid || 0))
         };
       });
       var newLists = data.bazar_lists.map(function (l) {
