@@ -138,6 +138,7 @@
       .card.flat-owner .chip.blue{ background:var(--card); }
       /* guest room with a guest staying: a warm amber-tinted card */
       .card.flat-guest{ background:var(--amber-soft); border-color:transparent; }
+      .card.bill-paid{ background:var(--brand-soft); border-color:transparent; }
       .card.flat-guest .avatar{ background:var(--amber); color:#fff; }
       .card.flat-guest .chip.amber{ background:var(--card); }
       /* the flats list is a two-per-row grid of compact cards */
@@ -2317,7 +2318,7 @@
       }
       h += shown.map(function(b){
         var t = tenantById(b.tenantId);
-        return '<div class="card" style="margin-top:10px"><div class="row"><div class="avatar ' + (billStatus(b) === "due" ? "red" : billStatus(b) === "part" ? "amber" : "") + '">' + ic("qTenant") + "</div>" +
+        return '<div class="card' + (billDue(b) <= 0 ? " bill-paid" : "") + '" style="margin-top:10px"><div class="row"><div class="avatar ' + (billStatus(b) === "due" ? "red" : billStatus(b) === "part" ? "amber" : "") + '">' + ic("qTenant") + "</div>" +
           '<div class="grow"><b>' + esc(t ? t.name : L.navTenants) + '</b><div class="small muted">' + flatLabel(flatById(b.flatId)) + "</div></div>" +
           '<div style="text-align:right"><div class="amt">' + fmt(b.total) + "</div>" + statusChip(billStatus(b)) + "</div></div>" +
           billBreakdownHTML(b) +
@@ -2364,7 +2365,7 @@
         }
         h += shown.map(function(b){
           var t = tenantById(b.tenantId);
-          return '<div class="card" style="margin-top:10px"><div class="row"><div class="avatar">' + ic("qTenant") + "</div>" +
+          return '<div class="card' + (billDue(b) <= 0 ? " bill-paid" : "") + '" style="margin-top:10px"><div class="row"><div class="avatar">' + ic("qTenant") + "</div>" +
             '<div class="grow"><b>' + esc(t ? t.name : L.navTenants) + '</b><div class="small muted">' + flatLabel(flatById(b.flatId)) + "</div></div>" +
             '<div style="text-align:right"><div class="amt">' + fmt(b.total) + "</div>" + statusChip(billStatus(b)) + "</div></div>" +
             billBreakdownHTML(b) +
