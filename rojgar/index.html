@@ -103,6 +103,53 @@ nav button.on{color:var(--deep);background:linear-gradient(145deg,#e3e9ff,#d3ddf
 .totalbar .tv{font-size:21px;font-weight:800}
 .note{font-size:13px;color:var(--muted);line-height:1.75}
 </style>
+
+<style id="kit-style">
+:root{--bg:#f3f5ff;--line:#e6e9f7;--shadow:0 12px 32px rgba(51,72,197,.09);--shadow-sm:0 6px 18px rgba(51,72,197,.07);--r:20px}
+@media (prefers-color-scheme:dark){:root{--bg:#0b0f1e;--line:#232c4d;--shadow:0 12px 32px rgba(0,0,0,.4);--shadow-sm:0 6px 18px rgba(0,0,0,.35)}}
+body{background:var(--bg)}
+header{background:transparent;color:var(--text);box-shadow:none;padding:18px 18px 4px;border-radius:0}
+header::before,header::after{display:none}
+.brand .app{color:var(--text)}
+.brand .slogan{color:var(--muted)}
+.logo{background:#fff;border:1px solid var(--line);box-shadow:var(--shadow-sm)}
+.bizchip{background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow-sm);backdrop-filter:none;margin-top:14px}
+.bizchip .biz{color:var(--text)}
+.bizchip .date{color:var(--muted)}
+.card{border-color:var(--line);box-shadow:var(--shadow-sm);border-radius:20px}
+.hero{background:linear-gradient(135deg,#22339e 0%,#3348c5 45%,#4b66f4 100%);border-radius:24px;color:#fff;padding:20px;box-shadow:0 16px 34px rgba(51,72,197,.30);margin-bottom:14px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(130,223,228,.35),transparent 65%);top:-110px;right:-60px}
+.hero .hlbl{font-size:12.5px;color:#c9d6ff;letter-spacing:.3px}
+.hero .hval{font-size:34px;font-weight:800;line-height:1.15;margin:4px 0 8px}
+.hero .hpill{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:12px;font-weight:700;border-radius:20px;padding:4px 11px}
+.hero .hsub{margin-top:12px;font-size:12.5px;color:#dbe4ff;display:flex;gap:14px;flex-wrap:wrap;position:relative;z-index:1}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:6px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px 10px;text-align:center;box-shadow:var(--shadow-sm)}
+.kpi .kic{width:44px;height:44px;border-radius:50%;background:#e7ecff;color:#3348c5;display:flex;align-items:center;justify-content:center;margin:0 auto 8px}
+@media (prefers-color-scheme:dark){.kpi .kic{background:#1b2650;color:#9db4ff}}
+.kpi .kval{font-size:17px;font-weight:800}
+.kpi .klbl{font-size:11.5px;color:var(--muted);margin-top:2px;line-height:1.4}
+.chart{display:flex;align-items:flex-end;gap:6px;height:130px;padding-top:16px}
+.chart .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end}
+.chart .bar{width:70%;max-width:30px;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,#82dfe4,#4b66f4);position:relative;min-height:4px}
+.chart .col.peak .bar{background:linear-gradient(180deg,#4b66f4,#22339e)}
+.chart .tip{background:#e7ecff;color:#22339e;font-size:10.5px;font-weight:800;border-radius:12px;padding:2px 7px;white-space:nowrap}
+@media (prefers-color-scheme:dark){.chart .tip{background:#1b2650;color:#9db4ff}}
+.chart .dlbl{font-size:10.5px;color:var(--muted)}
+.quick button{border-radius:20px;box-shadow:var(--shadow-sm)}
+.quick .qic{border-radius:50%}
+.q1{background:#e7ecff;color:#3348c5}.q2{background:#fdf3e0;color:#b45309}.q3{background:#e0f5f4;color:#0f766e}.q4{background:#efe9fd;color:#7c3aed}
+.quick .qic svg{stroke:currentColor}
+.quick button .qic{background-color:transparent}
+.quick .qic.q1,.quick .qic.q2,.quick .qic.q3,.quick .qic.q4{width:44px;height:44px}
+.qic.q1{background:#e7ecff!important}.qic.q2{background:#fdf3e0!important}.qic.q3{background:#e0f5f4!important}.qic.q4{background:#efe9fd!important}
+nav{border-radius:24px;box-shadow:0 14px 34px rgba(51,72,197,.16)}
+.btn{border-radius:999px}
+.btn.small{border-radius:999px}
+input.search{border-radius:999px}
+.chip{border-radius:999px}
+.totalbar{border-radius:24px;background:linear-gradient(135deg,#22339e,#4b66f4)}
+</style>
 </head>
 <body>
 <header>
@@ -189,12 +236,29 @@ function daySales(ds){return DB.sales.filter(s=>s.date===ds);}
 function monthSales(){return DB.sales.filter(s=>s.date.startsWith(thisMonth()));}
 function renderHome(){
   const t=today(),ts=daySales(t);
-  const tSales=ts.reduce((a,s)=>a+s.total,0),tCost=ts.reduce((a,s)=>a+(s.cost||0),0);
-  const tExp=DB.expenses.filter(e=>e.date===t).reduce((a,e)=>a+e.amount,0);
-  const tProfit=tSales-tCost-tExp;
+  const tSales=ts.reduce((a,s)=>a+s.total,0);
   const collected=DB.payments.filter(p=>p.date===t).reduce((a,p)=>a+p.amount,0);
   const totalDue=DB.dues.reduce((a,d)=>a+(d.amount-d.paid),0);
   const low=DB.products.filter(p=>p.qty<=(p.low||5));
+  const cm=thisMonth();
+  const pmDate=new Date(); pmDate.setMonth(pmDate.getMonth()-1);
+  const pm=pmDate.getFullYear()+"-"+String(pmDate.getMonth()+1).padStart(2,"0");
+  function mProfit(mk){
+    const s=DB.sales.filter(x=>x.date.startsWith(mk)).reduce((a,x)=>a+x.total,0);
+    const pu=DB.purchases.filter(x=>x.date.startsWith(mk)).reduce((a,x)=>a+x.cost,0);
+    const e=DB.expenses.filter(x=>x.date.startsWith(mk)).reduce((a,x)=>a+x.amount,0);
+    return {s:s,p:s-pu-e};
+  }
+  const cur=mProfit(cm), prev=mProfit(pm);
+  let pill;
+  if(prev.s===0&&cur.s===0) pill="এই মাসে এখনো বিক্রি হয়নি";
+  else if(prev.p===0) pill="গত মাসের সঙ্গে তুলনা নেই";
+  else {const pct=Math.round((cur.p-prev.p)/Math.abs(prev.p)*100); pill=(pct>=0?"▲ +":"▼ ")+bn(Math.abs(pct))+"% গত মাসের চেয়ে";}
+  const WD=["রবি","সোম","মঙ্গল","বুধ","বৃহ","শুক্র","শনি"];
+  const days=[];
+  for(let i=6;i>=0;i--){const d=new Date(); d.setDate(d.getDate()-i); const ds=dstr(d); days.push({lbl:WD[d.getDay()],amt:DB.sales.filter(s=>s.date===ds).reduce((a,s)=>a+s.total,0)});}
+  const mx=Math.max.apply(null,days.map(d=>d.amt).concat([1]));
+  const peakI=days.reduce((bi,d,i)=>d.amt>days[bi].amt?i:bi,0);
   const recent=[];
   DB.sales.forEach(s=>recent.push({d:s.date,ic:I.receipt,cls:"g",t:s.desc,s:fmtDate(s.date)+" · "+(s.pay==="baki"?"বাকি":s.pay==="mobile"?"মোবাইল ব্যাংকিং":"ক্যাশ"),amt:s.total,pos:true}));
   DB.dues.forEach(d=>recent.push({d:d.date,ic:I.book,cls:"a",t:"বাকি: "+d.customer,s:fmtDate(d.date),amt:d.amount,pos:true}));
@@ -203,17 +267,21 @@ function renderHome(){
   DB.expenses.forEach(e=>recent.push({d:e.date,ic:I.wallet,cls:"r",t:e.desc||e.cat,s:fmtDate(e.date)+" · "+e.cat,amt:e.amount,pos:false}));
   recent.sort((a,b)=>b.d.localeCompare(a.d));
   let h="";
-  h+='<div class="grid2">'
-    +'<div class="stat"><div class="lbl">'+svgIcon(I.receipt,"sm")+'আজকের বিক্রি</div><div class="val pos">'+money(tSales)+'</div></div>'
-    +'<div class="stat gold"><div class="lbl">'+svgIcon(I.trend,"sm")+'আজকের লাভ</div><div class="val '+(tProfit<0?"neg":"pos")+'">'+money(tProfit)+'</div></div>'
-    +'<div class="stat"><div class="lbl">'+svgIcon(I.check,"sm")+'আজকের বাকি আদায়</div><div class="val">'+money(collected)+'</div></div>'
-    +'<div class="stat gold"><div class="lbl">'+svgIcon(I.book,"sm")+'মোট বাকি বাকি আছে</div><div class="val '+(totalDue>0?"neg":"")+'">'+money(totalDue)+'</div></div></div>';
+  h+='<div class="hero"><div class="hlbl">এই মাসের লাভ</div><div class="hval">'+money(cur.p)+'</div><span class="hpill">'+pill+'</span>'
+    +'<div class="hsub"><span>বিক্রি '+money(cur.s)+'</span><span>মোট বাকি '+money(totalDue)+'</span></div></div>';
+  h+='<div class="kpis">'
+    +'<div class="kpi"><div class="kic">'+svgIcon(I.receipt)+'</div><div class="kval">'+money(tSales)+'</div><div class="klbl">আজকের বিক্রি</div></div>'
+    +'<div class="kpi"><div class="kic">'+svgIcon(I.check)+'</div><div class="kval">'+money(collected)+'</div><div class="klbl">আজকের বাকি আদায়</div></div>'
+    +'<div class="kpi"><div class="kic">'+svgIcon(I.book)+'</div><div class="kval" style="color:'+(totalDue>0?"var(--red)":"inherit")+'">'+money(totalDue)+'</div><div class="klbl">মোট বাকি বাকি আছে</div></div></div>';
   h+='<div class="section-t">তাড়াতাড়ি করুন</div><div class="quick">'
     +'<button onclick="openSale()"><span class="qic q1">'+svgIcon(I.receipt)+'</span>নতুন বিক্রি</button>'
     +'<button onclick="openDue()"><span class="qic q2">'+svgIcon(I.book)+'</span>বাকি যোগ</button>'
     +'<button onclick="openProduct()"><span class="qic q3">'+svgIcon(I.box)+'</span>পণ্য যোগ</button>'
     +'<button onclick="openExpense()"><span class="qic q4">'+svgIcon(I.wallet)+'</span>খরচ যোগ</button></div>';
   if(low.length)h+='<div class="banner" onclick="goStock()">'+svgIcon(I.alert,"sm")+'<span>'+bn(low.length)+'টি পণ্যের স্টক কমে গেছে — দেখতে চাপ দিন</span></div>';
+  h+='<div class="card"><h3>'+svgIcon(I.chart,"sm")+'গত ৭ দিনের বিক্রি</h3><div class="chart">';
+  days.forEach((d,i)=>{const ht=Math.max(4,Math.round(d.amt/mx*84)); h+='<div class="col'+(i===peakI&&d.amt>0?" peak":"")+'">'+(i===peakI&&d.amt>0?'<div class="tip">'+money(d.amt)+'</div>':"")+'<div class="bar" style="height:'+ht+'px"></div><div class="dlbl">'+d.lbl+'</div></div>';});
+  h+='</div></div>';
   h+='<div class="section-t">সাম্প্রতিক লেনদেন</div><div class="card">';
   if(!recent.length)h+='<div class="empty"><div class="eic">'+svgIcon(I.receipt)+'</div>এখনো কোনো লেনদেন নেই।<br>নতুন বিক্রি দিয়ে শুরু করুন।</div>';
   recent.slice(0,10).forEach(r=>{h+='<div class="row"><div class="ic '+r.cls+'">'+svgIcon(r.ic)+'</div><div class="grow"><div class="t">'+esc(r.t)+'</div><div class="s">'+esc(r.s)+'</div></div><div class="amt '+(r.pos?"pos":"neg")+'">'+(r.pos?"+":"−")+money(r.amt).replace("৳","৳ ")+'</div></div>';});
