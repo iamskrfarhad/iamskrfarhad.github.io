@@ -907,7 +907,7 @@
         colMonth:"মাস", colAmount:"পরিমাণ", colStatus:"অবস্থা", repNoData:"এই সময়ে কোনো হিসাব নেই",
         repMaking:"PDF তৈরি হচ্ছে…", repDone:"রিপোর্ট PDF ডাউনলোড হয়েছে", repFail:"PDF তৈরি করা যায়নি — ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন", repBillsCount:"{n}টি বিল",
         emergTitle:"জরুরি যোগাযোগ (Emergency Contact)", emName:"জরুরি যোগাযোগের নাম", emPhone:"ফোন নম্বর", emRel:"সম্পর্ক", emRelPh:"যেমন: ভাই, বাবা, স্ত্রী…", emgWord:"জরুরি যোগাযোগ", callEmerg:"জরুরি কল",
-        whatsapp:"WhatsApp",
+        whatsapp:"WhatsApp", waSendBill:"WhatsApp-এ বিল পাঠান", waSendReceipt:"WhatsApp-এ রসিদ পাঠান", waPromptT:"পেমেন্ট নেওয়া হয়েছে", waPromptP:"বিলটা PDF আকারে ভাড়াটিয়ার WhatsApp-এ পাঠিয়ে দেবেন?", waAttachHint:"PDF ডাউনলোড হয়েছে — WhatsApp চ্যাটে ফাইলটা অ্যাটাচ করে পাঠিয়ে দিন", waNoPhone:"ভাড়াটিয়ার ফোন নম্বর নেই — শুধু PDF ডাউনলোড হলো", waMsg:"আসসালামু আলাইকুম {name},\n{month}-এর বিল — মোট {total}, পরিশোধ {paid}, বকেয়া {due}।\nবিস্তারিত PDF ফাইলে দেওয়া হলো।", waReceiptWord:"রসিদ", laterBtn:"পরে",
         workersWord:"মিস্ত্রি লিস্ট", tileWorkersS:"{n}জন মিস্ত্রি ও সার্ভিসম্যান", subWorkersS:"কারিগর ও সার্ভিসম্যানের তালিকা — সমস্যা হলেই কল দিন",
         workerNew:"নতুন মিস্ত্রি", workerEdit:"মিস্ত্রি এডিট", workerSub:"মিস্ত্রির নাম, কাজের ধরন ও ফোন নম্বর দিন",
         wkName:"মিস্ত্রির নাম *", wkTrade:"কাজের ধরন *", wkPhone:"ফোন নম্বর *", wkNote:"নোট",
@@ -1087,7 +1087,7 @@
         colMonth:"Month", colAmount:"Amount", colStatus:"Status", repNoData:"No records in this period",
         repMaking:"Creating PDF…", repDone:"Report PDF downloaded", repFail:"Could not create the PDF — check your internet connection and try again", repBillsCount:"{n} bills",
         emergTitle:"Emergency contact", emName:"Emergency contact name", emPhone:"Phone number", emRel:"Relation", emRelPh:"e.g. brother, father, wife…", emgWord:"Emergency", callEmerg:"Emergency call",
-        whatsapp:"WhatsApp",
+        whatsapp:"WhatsApp", waSendBill:"Send bill on WhatsApp", waSendReceipt:"Send receipt on WhatsApp", waPromptT:"Payment received", waPromptP:"Send this bill as a PDF to the tenant on WhatsApp?", waAttachHint:"PDF downloaded — attach the file in the WhatsApp chat to send it", waNoPhone:"The tenant has no phone number — the PDF was only downloaded", waMsg:"Assalamu Alaikum {name},\nYour bill for {month} — total {total}, paid {paid}, due {due}.\nDetails are in the PDF file.", waReceiptWord:"Receipt", laterBtn:"Later",
         workersWord:"Worker List", tileWorkersS:"{n} workers & servicemen", subWorkersS:"Tradespeople & service contacts — call right away when there's a problem",
         workerNew:"New worker", workerEdit:"Edit worker", workerSub:"Enter the worker's name, trade and phone number",
         wkName:"Worker name *", wkTrade:"Trade / type of work *", wkPhone:"Phone number *", wkNote:"Note",
@@ -2324,6 +2324,7 @@
           (billDue(b) > 0
             ? '<button type="button" class="btn block" style="margin-top:11px" data-act="pay-bill" data-id="' + b.id + '">' + ic("cashIn") + " " + L.takeDue.replace("{amt}", fmt(billDue(b))) + "</button>"
             : '<div class="small muted" style="margin-top:9px">' + L.lastPay + fmtDate(b.lastPayDate || "") + ((b.payments && b.payments.length && walletById(b.payments[b.payments.length-1].walletId)) ? " · " + esc(walletById(b.payments[b.payments.length-1].walletId).name) : "") + "</div>") +
+          '<button type="button" class="btn wa block" style="margin-top:8px" data-act="wa-bill" data-id="' + b.id + '">' + brandIc("whatsapp") + " " + (billDue(b) > 0 ? L.waSendBill : L.waSendReceipt) + "</button>" +
           '<div style="display:flex;gap:8px;margin-top:8px"><button type="button" class="btn ghost" style="flex:1" data-act="edit-bill" data-id="' + b.id + '">' + ic("edit") + " " + L.editBill + '</button><button type="button" class="btn danger" style="flex:1" data-act="del-bill" data-id="' + b.id + '">' + ic("trash") + " " + L.delete + "</button></div></div>";
       }).join("");
       return h;
@@ -2368,6 +2369,7 @@
             '<div style="text-align:right"><div class="amt">' + fmt(b.total) + "</div>" + statusChip(billStatus(b)) + "</div></div>" +
             billBreakdownHTML(b) +
             (billDue(b) > 0 ? '<button type="button" class="btn soft block" style="margin-top:11px" data-act="pay-bill" data-id="' + b.id + '">' + ic("cashIn") + " " + L.takeMoney + "</button>" : "") +
+            '<button type="button" class="btn wa block" style="margin-top:8px" data-act="wa-bill" data-id="' + b.id + '">' + brandIc("whatsapp") + " " + (billDue(b) > 0 ? L.waSendBill : L.waSendReceipt) + "</button>" +
             '<div style="display:flex;gap:8px;margin-top:8px"><button type="button" class="btn ghost" style="flex:1" data-act="edit-bill" data-id="' + b.id + '">' + ic("edit") + " " + L.editBill + '</button><button type="button" class="btn danger" style="flex:1" data-act="del-bill" data-id="' + b.id + '">' + ic("trash") + " " + L.delete + "</button></div></div>";
         }).join("");
       }
@@ -3601,6 +3603,78 @@
       return loadLib("https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js")
         .then(function(){ return !!window.XLSX; });
     }
+    function billPdfHTML(b){
+      var t = tenantById(b.tenantId), f = flatById(b.flatId);
+      var bld = f ? buildingById(f.buildingId) : null;
+      var rows = (b.items || []).map(function(it){
+        return '<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #e5e7eb"><span>' + esc(it.label) + '</span><b>' + fmt(it.amount) + '</b></div>';
+      }).join("");
+      var pays = (b.payments || []).map(function(p){
+        var w = walletById(p.walletId);
+        return '<div style="display:flex;justify-content:space-between;padding:5px 0"><span>' + fmtDate(p.date) + (w ? " · " + esc(w.name) : "") + '</span><span>' + fmt(p.amount) + '</span></div>';
+      }).join("");
+      var due = billDue(b);
+      return '<div style="text-align:center;margin-bottom:6px"><div style="font-size:22px;font-weight:800">' + esc(bld ? bld.name : L.appName) + '</div>' +
+        '<div style="color:#555">' + (due <= 0 ? L.waReceiptWord : L.bills) + " — " + monthLabel(b.month) + '</div></div>' +
+        '<div style="margin:14px 0;padding:12px;background:#f4f7f5;border-radius:10px"><div><b>' + esc(t ? t.name : "") + '</b></div>' +
+        '<div style="color:#555">' + esc(f ? flatLabel(f) : "") + (t && t.phone ? " · " + esc(t.phone) : "") + '</div></div>' +
+        rows +
+        '<div style="display:flex;justify-content:space-between;padding:9px 0;font-size:17px"><span><b>' + L.totalBill + '</b></span><b>' + fmt(b.total) + '</b></div>' +
+        (num(b.paid) > 0 ? '<div style="display:flex;justify-content:space-between;padding:3px 0;color:#0a7a42"><span>' + L.collected + '</span><span>' + fmt(b.paid) + '</span></div>' : "") +
+        (due > 0 ? '<div style="display:flex;justify-content:space-between;padding:3px 0;color:#c0392b;font-weight:700"><span>' + L.remaining + '</span><span>' + fmt(due) + '</span></div>'
+                 : '<div style="text-align:center;margin-top:8px;padding:8px;border:2px solid #0a7a42;color:#0a7a42;border-radius:8px;font-weight:800">' + L.chipPaid + '</div>') +
+        (pays ? '<div style="margin-top:14px"><div style="font-weight:700;margin-bottom:4px">' + L.paymentsTitle + '</div>' + pays + '</div>' : "") +
+        '<div style="margin-top:16px;color:#888;font-size:12px;text-align:center">' + L.appName + " · " + fmtDate(todayISO()) + '</div>';
+    }
+    function billPdfBlob(b, cb){
+      ensurePdfLibs().then(function(ok){
+        if(!ok){ cb(null); return; }
+        var wrap = document.createElement("div");
+        wrap.style.cssText = "position:fixed;left:-10000px;top:0;width:720px;background:#ffffff;color:#14231e;padding:30px 28px;font-family:'Hind Siliguri',sans-serif;line-height:1.45";
+        wrap.innerHTML = billPdfHTML(b);
+        document.body.appendChild(wrap);
+        window.html2canvas(wrap, { scale: 2, backgroundColor: "#ffffff" }).then(function(canvas){
+          wrap.remove();
+          var pdf = new window.jspdf.jsPDF("p", "mm", "a4");
+          var imgW = 190, pxPerMm = canvas.width / imgW;
+          pdf.addImage(canvas.toDataURL("image/jpeg", 0.92), "JPEG", 10, 10, imgW, canvas.height / pxPerMm);
+          cb(pdf.output("blob"));
+        }).catch(function(){ wrap.remove(); cb(null); });
+      });
+    }
+    function billWaText(b){
+      var t = tenantById(b.tenantId);
+      return L.waMsg.replace("{name}", t ? t.name : "").replace("{month}", monthLabel(b.month))
+        .replace("{total}", fmt(b.total)).replace("{paid}", fmt(b.paid)).replace("{due}", fmt(billDue(b)));
+    }
+    function sendBillWhatsApp(id){
+      var b = billById(id); if(!b) return;
+      var t = tenantById(b.tenantId);
+      toast(L.repMaking);
+      billPdfBlob(b, function(blob){
+        if(!blob){ toast(L.repFail); return; }
+        var fname = "bhara-koi-" + (billDue(b) <= 0 ? "receipt" : "bill") + "-" + b.month + ".pdf";
+        var file = null;
+        try { file = new File([blob], fname, { type: "application/pdf" }); } catch(e){}
+        var text = billWaText(b);
+        if(file && navigator.canShare && navigator.canShare({ files: [file] })){
+          navigator.share({ files: [file], title: fname, text: text }).catch(function(){});
+          return;
+        }
+        downloadBlob(blob, fname);
+        var wa = t && t.phone ? waLink(t.phone) : "";
+        if(wa){ window.open(wa + "?text=" + encodeURIComponent(text), "_blank"); toast(L.waAttachHint); }
+        else { toast(L.waNoPhone); }
+      });
+    }
+    function sendReceiptPrompt(b){
+      var t = tenantById(b.tenantId);
+      openSheet(sheetHead(L.waPromptT, (t ? esc(t.name) : "") + " · " + monthLabel(b.month)) +
+      '<p class="small muted" style="margin:2px 0 12px">' + L.waPromptP + '</p>' +
+      '<button type="button" class="btn wa block" id="waPromptSend">' + brandIc("whatsapp") + " " + (billDue(b) <= 0 ? L.waSendReceipt : L.waSendBill) + '</button>' +
+      '<button type="button" class="btn ghost block" style="margin-top:8px" data-close>' + L.laterBtn + '</button>');
+      $("#waPromptSend").addEventListener("click", function(){ closeSheet(); sendBillWhatsApp(b.id); });
+    }
     function downloadReportPDF(){
       toast(L.repMaking);
       ensurePdfLibs().then(function(ok){
@@ -4122,6 +4196,7 @@
         save(); closeSheet();
         toast(billDue(b) <= 0 ? L.paidFull : L.paidPart.replace("{amt}", fmt(billDue(b))));
         render();
+        sendReceiptPrompt(b);
       };
     }
 
@@ -5537,7 +5612,7 @@
         case "edit-flat": flatForm(flatById(id)); break;
         case "add-tenant": tenantForm(null); break;
         case "edit-tenant": tenantForm(tenantById(id)); break;
-        case "pay-bill": payForm(id); break;
+        case "pay-bill": payForm(id); break; case "wa-bill": sendBillWhatsApp(id); break;
         case "edit-bill": billForm(billById(id)); break;
         case "switch-building": buildingSwitchSheet(); break;
         case "hero-month-pick": heroMonthSheet(); break;
