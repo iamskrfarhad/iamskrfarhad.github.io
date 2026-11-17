@@ -913,7 +913,7 @@
         wkName:"মিস্ত্রির নাম *", wkTrade:"কাজের ধরন *", wkPhone:"ফোন নম্বর *", wkNote:"নোট",
         noWorkersT:"কোনো মিস্ত্রি যোগ করা হয়নি", noWorkersP:"স্যানিটারি, ইলেকট্রিক, রং — যেসব মিস্ত্রি দিয়ে কাজ করান, তাদের নাম, কাজের ধরন আর ফোন নম্বর যোগ করুন। সমস্যা হলেই এখান থেকে সরাসরি কল দিতে পারবেন।", addWorker:"মিস্ত্রি যোগ করুন",
         kindWorker:"মিস্ত্রি", workerAdded:"মিস্ত্রি যোগ হয়েছে", workerUpdated:"মিস্ত্রি আপডেট হয়েছে", workerNeed:"নাম, কাজের ধরন ও ফোন নম্বর দিন",
-        cCategory:"সমস্যার ধরন", cWorker:"কে সমাধান করেছে (মিস্ত্রি)", cNoWorker:"— মিস্ত্রি বেছে নিন (ঐচ্ছিক) —", cResNote:"সমাধানের নোট", cResNotePh:"মিস্ত্রি কী কাজ করল, কোনো সমস্যা বাকি আছে কিনা…", solvedBy:"সমাধান করেছেন: {name}",
+        cCategory:"সমস্যার ধরন", cWorker:"কে সমাধান করেছে (মিস্ত্রি)", cNoWorker:"— মিস্ত্রি বেছে নিন (ঐচ্ছিক) —", cResNote:"সমাধানের নোট", cResNotePh:"মিস্ত্রি কী কাজ করল, কোনো সমস্যা বাকি আছে কিনা…", solvedBy:"সমাধান করেছেন: {name}", resSolver:"কে সমাধান করেছেন", resSolverWorker:"মিস্ত্রি দিয়ে", resOwnerSelf:"বাড়িওয়ালা নিজে", resOwnerNote:"নিজে সমাধান করলে কোনো মজুরি দিতে হবে না, রিভিউও থাকবে না।",
         reviewBtn:"রিভিউ দিন", reviewEditBtn:"রিভিউ বদলান", reviewTitle:"কাজের রিভিউ", reviewSub:"কাজটা কেমন হয়েছে — তারা দিয়ে জানান, চাইলে লিখেও রাখুন",
         reviewStarsLbl:"কাজ কেমন হয়েছে? *", reviewTextLbl:"লিখিত রিভিউ", reviewTextPh:"যেমন: কাজ খুব পরিষ্কার করে করেছে, সময়মতো এসেছে…",
         reviewNeedStars:"কমপক্ষে ১টা তারা দিন", reviewSaved:"রিভিউ সেভ হয়েছে", reviewWord:"রিভিউ", reviewsCount:"{n}টি রিভিউ",
@@ -1093,7 +1093,7 @@
         wkName:"Worker name *", wkTrade:"Trade / type of work *", wkPhone:"Phone number *", wkNote:"Note",
         noWorkersT:"No worker added yet", noWorkersP:"Add the workers you use — sanitary, electric, paint — with their name, trade and phone number. When a problem comes up, call them straight from here.", addWorker:"Add worker",
         kindWorker:"worker", workerAdded:"Worker added", workerUpdated:"Worker updated", workerNeed:"Name, trade and phone number are required",
-        cCategory:"Problem category", cWorker:"Solved by (worker)", cNoWorker:"— Pick a worker (optional) —", cResNote:"Resolution note", cResNotePh:"What the worker did, whether anything is still pending…", solvedBy:"Solved by: {name}",
+        cCategory:"Problem category", cWorker:"Solved by (worker)", cNoWorker:"— Pick a worker (optional) —", cResNote:"Resolution note", cResNotePh:"What the worker did, whether anything is still pending…", solvedBy:"Solved by: {name}", resSolver:"Who solved it", resSolverWorker:"By a worker", resOwnerSelf:"The landlord himself", resOwnerNote:"If you solved it yourself, there is no labour charge and no review.",
         reviewBtn:"Give a review", reviewEditBtn:"Change review", reviewTitle:"Review the work", reviewSub:"How was the work? Rate it with stars, and write a note if you like",
         reviewStarsLbl:"How was the work? *", reviewTextLbl:"Written review", reviewTextPh:"e.g. very neat work, arrived on time…",
         reviewNeedStars:"Please tap at least one star", reviewSaved:"Review saved", reviewWord:"Review", reviewsCount:"{n} reviews",
@@ -3197,13 +3197,13 @@
             (c.category ? '<div style="margin-top:6px"><span class="chip free">' + esc(compCatLabel(c.category)) + "</span></div>" : "") +
             '<div style="margin-top:8px;white-space:pre-wrap">' + esc(c.problem) + "</div>" +
             (resolved && c.resolvedDate ? '<div class="small muted" style="margin-top:5px">' + L.resolvedOn.replace("{d}", fmtDate(c.resolvedDate)) + "</div>" : "") +
-            (resolved && (c.workerName || c.workerId) ? '<div class="small" style="margin-top:3px">' + L.solvedBy.replace("{name}", esc(c.workerName || (workerById(c.workerId) || {}).name || "")) + "</div>" : "") +
+            (resolved && (c.solvedBy === "owner" || c.workerName || c.workerId) ? '<div class="small" style="margin-top:3px">' + L.solvedBy.replace("{name}", c.solvedBy === "owner" ? L.resOwnerSelf : esc(c.workerName || (workerById(c.workerId) || {}).name || "")) + "</div>" : "") +
             (resolved && c.resNote ? '<div class="small muted" style="margin-top:3px;white-space:pre-wrap">' + esc(c.resNote) + "</div>" : "") +
             chargeHtml +
             reviewHtml +
             '<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">' +
             (!resolved ? '<button type="button" class="btn small" data-act="resolve-comp" data-id="' + c.id + '">' + ic("check") + " " + L.markResolved + "</button>" : "") +
-            (resolved ? '<button type="button" class="btn soft small" data-act="review-comp" data-id="' + c.id + '">' + ic("star") + " " + (rev ? L.reviewEditBtn : L.reviewBtn) + "</button>" : "") +
+            (resolved && c.solvedBy !== "owner" ? '<button type="button" class="btn soft small" data-act="review-comp" data-id="' + c.id + '">' + ic("star") + " " + (rev ? L.reviewEditBtn : L.reviewBtn) + "</button>" : "") +
             '<button type="button" class="btn soft small" data-act="edit-comp" data-id="' + c.id + '">' + ic("edit") + " " + L.edit + '</button>' +
             '<button type="button" class="btn danger small" data-act="del-comp" data-id="' + c.id + '">' + L.delete + "</button></div></div>";
         }).join("");
@@ -3295,32 +3295,49 @@
       var c = complaintById(id);
       if(!c) return;
       openSheet(sheetHead(L.resTitle, esc(c.problem || "")) +
-      '<form id="fResolve"><div class="field"><label>' + L.resDate + '</label><input name="date" type="date" value="' + todayISO() + '"></div>' +
+      '<form id="fResolve"><div class="field"><label>' + L.resSolver + '</label><div class="seg" id="resSolverSeg" style="margin-top:0"><button type="button" data-sv="worker">' + L.resSolverWorker + '</button><button type="button" data-sv="owner">' + L.resOwnerSelf + '</button></div><div class="small muted" style="margin-top:5px">' + L.resOwnerNote + '</div></div><div class="field"><label>' + L.resDate + '</label><input name="date" type="date" value="' + todayISO() + '"></div>' + '<div id="resWorkerFields">' +
       '<div class="grid2"><div class="field"><label>' + L.chargeLbl + '</label><input name="charge" type="text" data-num="1" min="0" inputmode="numeric" placeholder="যেমন: 1500" value="' + esc(c.charge || "") + '"></div>' +
       '<div class="field"><label>' + L.txWallet + '</label><select name="walletId">' + walletOptions(c.chargeWalletId || "", true) + "</select></div></div>" +
-      '<div class="field"><label>' + L.cWorker + '</label><select name="workerId">' + workerOptions(c.workerId || "") + "</select></div>" +
+      '<div class="field"><label>' + L.cWorker + '</label><select name="workerId">' + workerOptions(c.workerId || "") + "</select></div></div>" +
       '<div class="field"><label>' + L.cResNote + '</label><textarea name="resNote" placeholder="' + L.cResNotePh + '">' + esc(c.resNote || "") + "</textarea></div>" +
       '<div class="form-actions"><button type="button" class="btn ghost" data-close>' + L.cancel + '</button><button class="btn" type="submit">' + L.resSubmit + "</button></div></form>");
+      var solver = "worker";
+      function applySolver(v){
+        solver = v;
+        Array.prototype.forEach.call(document.querySelectorAll("#resSolverSeg button"), function(b){ b.classList.toggle("on", b.getAttribute("data-sv") === v); });
+        var wf = $("#resWorkerFields"); if(wf) wf.style.display = v === "owner" ? "none" : "";
+      }
+      Array.prototype.forEach.call(document.querySelectorAll("#resSolverSeg button"), function(b){
+        b.addEventListener("click", function(){ applySolver(b.getAttribute("data-sv")); });
+      });
+      applySolver("worker");
       $("#fResolve").onsubmit = function(ev){
         ev.preventDefault();
         var fd = new FormData(ev.target);
-        var wk = workerById(String(fd.get("workerId") || ""));
+        var wk = solver === "owner" ? null : workerById(String(fd.get("workerId") || ""));
         c.status = "resolved";
         c.resolvedDate = String(fd.get("date") || todayISO());
-        c.workerId = String(fd.get("workerId") || "");
+        c.solvedBy = solver;
+        c.workerId = solver === "owner" ? "" : String(fd.get("workerId") || "");
         c.workerName = wk ? wk.name : "";
         c.resNote = String(fd.get("resNote") || "").trim();
+        if(solver === "owner" && c.review) delete c.review;
         /* labour/service charge: the agreed amount is saved on the complaint
            and the unpaid remainder is handed over right away as a payment
            from the chosen wallet — from then on it counts everywhere
            (wallet balance, this month's expense, Expenses page, monthly
            chart, PDF report, Recent transactions) like any other expense */
-        c.charge = num(fd.get("charge"));
-        c.chargeWalletId = String(fd.get("walletId") || "");
-        c.payments = c.payments || [];
-        var dueCh = c.charge - compCharges(c);
-        if(dueCh > 0){
-          c.payments.push({ amount: dueCh, walletId: c.chargeWalletId, date: c.resolvedDate, ts: Date.now(), note: c.resNote });
+        if(solver === "owner"){
+          c.charge = 0;
+          c.chargeWalletId = "";
+        } else {
+          c.charge = num(fd.get("charge"));
+          c.chargeWalletId = String(fd.get("walletId") || "");
+          c.payments = c.payments || [];
+          var dueCh = c.charge - compCharges(c);
+          if(dueCh > 0){
+            c.payments.push({ amount: dueCh, walletId: c.chargeWalletId, date: c.resolvedDate, ts: Date.now(), note: c.resNote });
+          }
         }
         save(); closeSheet(); toast(L.compResolved); render();
       };
@@ -3333,6 +3350,7 @@
     function reviewSheet(id){
       var c = complaintById(id);
       if(!c) return;
+      if(c.solvedBy === "owner") return;
       var rev = compReview(c);
       var stars = rev ? num(rev.stars) : 0;
       var wkName = c.workerName || (workerById(c.workerId) || {}).name || "";
