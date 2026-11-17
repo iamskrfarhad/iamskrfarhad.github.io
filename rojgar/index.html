@@ -165,6 +165,17 @@ svg text{font-family:inherit}
 .legend{display:flex;gap:16px;justify-content:center;margin-top:2px;font-size:11.5px;color:var(--muted)}
 .legend .li{display:inline-block;width:18px;height:3px;border-radius:2px;background:#4b66f4;vertical-align:middle;margin-right:5px}
 </style>
+
+<style id="donut-style">
+.donutwrap{display:flex;align-items:center;gap:18px}
+.donut-svg{flex:none}
+.dlegend{flex:1}
+.dlegend .dl-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.dlegend .dl-row:last-child{border-bottom:none}
+.dlegend .dot{width:11px;height:11px;border-radius:50%;flex:none}
+.dlegend .dl-name{color:var(--muted);flex:1}
+.dlegend .dl-val{font-weight:800}
+</style>
 </head>
 <body>
 <header>
@@ -295,6 +306,7 @@ function renderHome(){
     +'<button onclick="openExpense()"><span class="qic q4">'+svgIcon(I.wallet)+'</span>খরচ যোগ</button></div>';
   if(low.length)h+='<div class="banner" onclick="goStock()">'+svgIcon(I.alert,"sm")+'<span>'+bn(low.length)+'টি পণ্যের স্টক কমে গেছে — দেখতে চাপ দিন</span></div>';
   h+='<div class="card" id="chartCard"></div>';
+  h+='<div class="card" id="donutCard"></div>';
   h+='<div class="section-t">সাম্প্রতিক লেনদেন</div><div class="card">';
   if(!recent.length)h+='<div class="empty"><div class="eic">'+svgIcon(I.receipt)+'</div>এখনো কোনো লেনদেন নেই।<br>নতুন বিক্রি দিয়ে শুরু করুন।</div>';
   recent.slice(0,10).forEach(r=>{h+='<div class="row"><div class="ic '+r.cls+'">'+svgIcon(r.ic)+'</div><div class="grow"><div class="t">'+esc(r.t)+'</div><div class="s">'+esc(r.s)+'</div></div><div class="amt '+(r.pos?"pos":"neg")+'">'+(r.pos?"+":"−")+money(r.amt).replace("৳","৳ ")+'</div></div>';});
@@ -370,6 +382,36 @@ function drawChart(){
     +'<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;display:block"><defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4b66f4" stop-opacity=".28"/><stop offset="1" stop-color="#82dfe4" stop-opacity=".02"/></linearGradient></defs>'
     +grid+'<path d="'+area+'" fill="url(#ag)"/><path d="'+d+'" fill="none" stroke="#4b66f4" stroke-width="2.5" stroke-linecap="round"/>'+vline+dots+xlabels+'</svg>'
     +'<div class="legend"><span><span class="li"></span>বিক্রি</span></div>';
+  drawDonut();
+}
+
+
+function inRange(ds){
+  if(chartRange==="today") return ds===today();
+  if(chartRange==="7d"||chartRange==="1m"){ const n=chartRange==="7d"?7:30; const d=new Date(); d.setDate(d.getDate()-(n-1)); return ds>=dstr(d)&&ds<=today(); }
+  const n=chartRange==="6m"?6:12; const d=new Date(); d.setDate(1); d.setMonth(d.getMonth()-(n-1)); const mk=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"); return ds.slice(0,7)>=mk&&ds.slice(0,7)<=thisMonth();
+}
+function drawDonut(){
+  const el=document.getElementById("donutCard"); if(!el)return;
+  const sales=DB.sales.filter(s=>inRange(s.date)).reduce((a,s)=>a+s.total,0);
+  const out=DB.purchases.filter(x=>inRange(x.date)).reduce((a,x)=>a+x.cost,0)+DB.expenses.filter(x=>inRange(x.date)).reduce((a,x)=>a+x.amount,0);
+  const profit=sales-out;
+  const mx=Math.max(sales,out,1);
+  function ring(r,frac,color){
+    const c=2*Math.PI*r; const f=Math.max(0,Math.min(1,frac));
+    return '<circle cx="65" cy="65" r="'+r+'" fill="none" stroke="var(--line)" stroke-width="10"/>'
+      +'<circle cx="65" cy="65" r="'+r+'" fill="none" stroke="'+color+'" stroke-width="10" stroke-linecap="round" stroke-dasharray="'+(c*f).toFixed(1)+' '+c.toFixed(1)+'" transform="rotate(-90 65 65)"/>';
+  }
+  el.innerHTML='<div class="chart-head"><div class="ct">'+svgIcon(I.chart,"sm")+'বিক্রি ও খরচ</div></div>'
+    +'<div class="donutwrap"><svg class="donut-svg" viewBox="0 0 130 130" width="130" height="130">'
+    +ring(54,sales/mx,"#4b66f4")+ring(41,out/mx,"#82dfe4")
+    +'<text x="65" y="60" text-anchor="middle" font-size="11" fill="var(--muted)">লাভ</text>'
+    +'<text x="65" y="80" text-anchor="middle" font-size="15" font-weight="800" fill="'+(profit<0?"var(--red)":"var(--text)")+'">'+money(profit)+'</text></svg>'
+    +'<div class="dlegend">'
+    +'<div class="dl-row"><span class="dot" style="background:#4b66f4"></span><span class="dl-name">বিক্রি</span><span class="dl-val">'+money(sales)+'</span></div>'
+    +'<div class="dl-row"><span class="dot" style="background:#82dfe4"></span><span class="dl-name">খরচ (কেনা + খরচ)</span><span class="dl-val">'+money(out)+'</span></div>'
+    +'<div class="dl-row"><span class="dot" style="background:'+(profit<0?"var(--red)":"#0a8a4c")+'"></span><span class="dl-name">লাভ</span><span class="dl-val">'+money(profit)+'</span></div>'
+    +'</div></div>';
 }
 
 function goStock(){tab="stock";render();}
