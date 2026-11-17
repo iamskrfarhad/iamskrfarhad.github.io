@@ -1162,7 +1162,7 @@
     function monthKey(d){ return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0"); }
     function monthLabel(key){
       var p = String(key).split("-"); var y = parseInt(p[0],10), m = parseInt(p[1],10);
-      return monthNames()[m-1] + " " + bnNum(y);
+      return monthNames()[m-1] + " " + yrNum(y);
     }
     function shiftMonth(key, delta){
       var p = String(key).split("-"); var d = new Date(parseInt(p[0],10), parseInt(p[1],10)-1+delta, 1);
@@ -1173,10 +1173,15 @@
        billing month everywhere in the app is the PREVIOUS month. */
     function billingMonthKey(){ return shiftMonth(monthKey(new Date()), -1); }
     function todayISO(){ var d = new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+    function yrNum(y){
+      var s = String(Math.round(num(y)));
+      if(DB.lang === "en") return s;
+      return s.replace(/[0-9]/g, function(d){ return "০১২৩৪৫৬৭৮৯".charAt(Number(d)); });
+    }
     function fmtDate(iso){
       if(!iso) return "—";
       var d = new Date(iso + "T00:00:00"); if(isNaN(d)) return esc(iso);
-      return bnNum(d.getDate()) + " " + monthNames()[d.getMonth()] + " " + bnNum(d.getFullYear());
+      return bnNum(d.getDate()) + " " + monthNames()[d.getMonth()] + " " + yrNum(d.getFullYear());
     }
     function isoOf(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
     function fmtTime(ts){
