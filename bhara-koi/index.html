@@ -850,7 +850,7 @@
         sBankName:"ব্যাংকের নাম *", sInst:"মাসিক কিস্তি (৳) *", sTermY:"মেয়াদ (বছর)", sTermM:"মেয়াদ (মাস)", sTargetDps:"মেয়াদ শেষে কত হবে — লক্ষ্য (৳)", sTargetOpt:"লক্ষ্য (৳) — না থাকলে খালি রাখুন", sDueDate:"কবে নাগাদ লাগবে",
         dpsInstLine:"মাসিক কিস্তি {amt}", dpsTermLine:"মেয়াদ {n} মাস · বাকি {m} মাস", dpsPaidThis:"এই মাসের কিস্তি দেওয়া হয়েছে", dpsDueThis:"এই মাসের কিস্তি বাকি", dueByLine:"লাগবে: {d}",
         withdraw:"টাকা তুলুন", wdTitle:"সঞ্চয় থেকে টাকা তুলুন", wdAmount:"তোলার পরিমাণ (৳) *", wdTo:"কোন ওয়ালেটে যাবে", wdSubmit:"তুলুন", withdrawn:"সঞ্চয় থেকে {amt} তোলা হয়েছে", wdLow:"সঞ্চয়ে এত টাকা জমা নেই", savWd:"সঞ্চয় থেকে তোলা",
-        depTitle:"সঞ্চয়ে টাকা জমা", depSoFar:"এখন পর্যন্ত {amt}", depAmount:"জমার পরিমাণ (৳) *", depFrom:"কোন ওয়ালেট থেকে", depSubmit:"জমা দিন",
+        depTitle:"সঞ্চয়ে টাকা জমা", depSoFar:"এখন পর্যন্ত {amt}", sOpening:"আগে কত জমা ছিল (৳) — অ্যাপ শুরুর আগের জমা, ওয়ালেট থেকে কাটবে না", depAmount:"জমার পরিমাণ (৳) *", depFrom:"কোন ওয়ালেট থেকে", depSubmit:"জমা দিন",
         expNew:"নতুন খরচ", expEdit:"খরচ এডিট", expSub:"বিল্ডিংয়ের খরচ যোগ করুন", eTitle:"খরচের বিবরণ *", eAmount:"পরিমাণ (৳) *", eCat:"ক্যাটাগরি", eFrom:"কোন ওয়ালেট থেকে খরচ হলো",
         delTitle:"{name} মুছে ফেলবেন?", delText:"এই {name} ও এর সাথে জড়িত হিসাব মুছে যাবে। এই কাজ ফিরিয়ে আনা যাবে না।", delYes:"হ্যাঁ, মুছুন", delNo:"না",
         kindBuilding:"বিল্ডিং", kindFlat:"ফ্ল্যাট", kindTenant:"ভাড়াটিয়া", kindWallet:"ওয়ালেট", kindSaving:"সঞ্চয়", kindExpense:"খরচ",
@@ -1030,7 +1030,7 @@
         sBankName:"Bank name *", sInst:"Monthly installment (৳) *", sTermY:"Term (years)", sTermM:"Term (months)", sTargetDps:"Amount at maturity — target (৳)", sTargetOpt:"Target (৳) — leave empty if none", sDueDate:"Needed by",
         dpsInstLine:"Monthly installment {amt}", dpsTermLine:"Term {n} months · {m} left", dpsPaidThis:"This month's installment paid", dpsDueThis:"This month's installment due", dueByLine:"Needed by: {d}",
         withdraw:"Withdraw", wdTitle:"Withdraw from savings", wdAmount:"Withdrawal amount (৳) *", wdTo:"Into which wallet", wdSubmit:"Withdraw", withdrawn:"{amt} withdrawn from savings", wdLow:"Not that much saved yet", savWd:"Withdrawn from savings",
-        depTitle:"Deposit to savings", depSoFar:"So far {amt}", depAmount:"Deposit amount (৳) *", depFrom:"From which wallet", depSubmit:"Deposit",
+        depTitle:"Deposit to savings", depSoFar:"So far {amt}", sOpening:"Already saved before (৳) — saved before the app, not taken from any wallet", depAmount:"Deposit amount (৳) *", depFrom:"From which wallet", depSubmit:"Deposit",
         expNew:"New expense", expEdit:"Edit expense", expSub:"Add a building expense", eTitle:"Expense description *", eAmount:"Amount (৳) *", eCat:"Category", eFrom:"Spent from which wallet",
         delTitle:"Delete this {name}?", delText:"This {name} and its related records will be deleted. This cannot be undone.", delYes:"Yes, delete", delNo:"No",
         kindBuilding:"building", kindFlat:"flat", kindTenant:"tenant", kindWallet:"wallet", kindSaving:"savings", kindExpense:"expense",
@@ -1560,7 +1560,7 @@
       (DB.transfers||[]).forEach(function(x){ if(x.fromId===w.id) bal -= num(x.amount); if(x.toId===w.id) bal += num(x.amount); });
       return bal;
     }
-    function savingsTotal(s){ return (s.deposits||[]).reduce(function(a,d){ return a + num(d.amount); }, 0); }
+    function savingsTotal(s){ return num(s.opening) + (s.deposits||[]).reduce(function(a,d){ return a + num(d.amount); }, 0); }
     /* savings types: "dps" (bank scheme), "matir" (clay bank), "goal".
        Records saved before types existed have no `type` — they are shown
        as goal savings, exactly as the user asked; nothing is migrated or
@@ -5109,6 +5109,7 @@
         '<div class="field"><label>' + L.sTargetOpt + '</label><input name="targetGoal" type="text" data-num="1" min="0" inputmode="numeric" value="' + esc(s.target || "") + '"></div>' +
         '<div class="field"><label>' + L.sDueDate + '</label><input name="dueDate" type="date" value="' + esc(s.dueDate || "") + '"></div>' +
       "</div>" +
+      '<div class="field"><label>' + L.sOpening + '</label><input name="openingSaved" type="text" data-num="1" min="0" inputmode="numeric" value="' + esc(s.opening || "") + '"></div>' +
       '<div class="form-actions"><button type="button" class="btn ghost" data-close>' + L.cancel + '</button><button class="btn" type="submit">' + L.save + "</button></div></form>" +
       (s.id ? deleteBtn(s.id, "saving") : ""));
       function applyType(t){
@@ -5127,7 +5128,7 @@
       $("#fSaving").onsubmit = function(ev){
         ev.preventDefault();
         var fd = new FormData(ev.target);
-        var data = { name: String(fd.get("name")).trim(), type: curType, walletId: "", installment: 0, termMonths: 0, target: 0, dueDate: "" };
+        var data = { name: String(fd.get("name")).trim(), type: curType, walletId: "", installment: 0, termMonths: 0, target: 0, dueDate: "", opening: num(fd.get("openingSaved")) };
         if(!data.name) return;
         if(curType === "dps"){
           data.installment = num(fd.get("installment"));
