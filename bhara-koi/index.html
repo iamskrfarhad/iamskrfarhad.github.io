@@ -122,6 +122,12 @@
         background:none; border:none; color:var(--brand); font:inherit; font-weight:600;
         cursor:pointer; padding:6px 4px; min-height:36px;
       }
+      .bk-row{ display:flex; align-items:center; gap:12px; cursor:pointer; margin:0; }
+      .bk-row .bk-ic{ width:34px; height:34px; flex:none; border-radius:9px; background:var(--brand-soft); color:var(--brand); display:grid; place-items:center; }
+      .bk-row .bk-ic svg{ width:19px; height:19px; }
+      .bk-row .bk-tx{ flex:1; min-width:0; }
+      .bk-row .bk-ch{ flex:none; color:var(--muted); display:grid; place-items:center; }
+      .bk-row .bk-ch svg{ width:20px; height:20px; }
       .card{ background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px; }
       .card + .card{ margin-top:10px; }
       /* occupied flat: full brand-tone card; vacant flat stays a plain white card */
@@ -2461,7 +2467,7 @@
       return h;
     }
     function moreRow(id, icon, title, sub){
-      return '<div class="card" data-sub="' + id + '" style="display:flex;align-items:center;gap:12px;cursor:pointer;margin:0"><span class="ti">' + ic(icon) + '</span><span style="flex:1"><b>' + title + '</b><br><span class="small muted">' + sub + '</span></span>' + ic("chevR") + "</div>";
+      return '<div class="card bk-row" data-sub="' + id + '"><span class="bk-ic">' + ic(icon) + '</span><span class="bk-tx"><b>' + title + '</b><br><span class="small muted">' + sub + '</span></span><span class="bk-ch">' + ic("chevR") + "</span></div>";
     }
     function tile(id, icon, title, sub, badge){
       return '<button type="button" class="tile" data-sub="' + id + '"><span class="ti">' + ic(icon) + "</span><span><b>" + title + '</b><br><span>' + sub + "</span></span>" + (badge ? '<span class="tbadge">' + badge + "</span>" : "") + "</button>";
