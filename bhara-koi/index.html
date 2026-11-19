@@ -838,7 +838,7 @@
         noBillsT:"এই মাসের বিল তৈরি হয়নি", noBillsP:"বিল পেজ থেকে এই মাসের বিল তৈরি করুন — অটো সবগুলো অথবা নিজে ফ্ল্যাট বেছে।", goBillsPage:"বিল পেজে যান",
         allPaidT:"সব বিল পরিশোধিত", allPaidP:"কারো কোনো বকেয়া নেই।",
         savings:"সঞ্চয়", totalSavings:"মোট সঞ্চয়", savingsCount:"{n}টি সঞ্চয় হিসাব",
-        recentTx:"সাম্প্রতিক লেনদেন", rentOf:"{m}-এর ভাড়া", rentTaken:"ভাড়া আদায়", savDep:"সঞ্চয়ে জমা",
+        recentTx:"সাম্প্রতিক লেনদেন", allTxTitle:"সব লেনদেন", allTxSub:"সব টাকার আসা-যাওয়া — নতুন থেকে পুরোনো", rentOf:"{m}-এর ভাড়া", rentTaken:"ভাড়া আদায়", savDep:"সঞ্চয়ে জমা",
         noTxYet:"এখনো কোনো লেনদেন হয়নি — ভাড়া আদায়, খরচ, কর্মচারীর অ্যাডভান্স বা বেতন, মিস্ত্রির মজুরি, ধার দেনা, সঞ্চয়ে জমা — যেকোনো লেনদেন হলেই এখানে তারিখ ও সময়সহ দেখা যাবে।",
         chipPaid:"পরিশোধিত", chipPart:"আংশিক", chipDue:"বকেয়া", chipNoBill:"বিল হয়নি", chipVacant:"খালি", chipOccupied:"ভাড়া আছে", chipLeft:"চলে গেছেন",
         flatWord:"ফ্ল্যাট", floorWord:"তলা", perMonth:"/মাস", remaining:"বাকি",
@@ -1018,7 +1018,7 @@
         noBillsT:"No bills created this month", noBillsP:"Create this month's bills from the Bills page — all at once, or pick flats yourself.", goBillsPage:"Go to Bills page",
         allPaidT:"All bills paid", allPaidP:"Nobody has any due.",
         savings:"Savings", totalSavings:"Total savings", savingsCount:"{n} savings accounts",
-        recentTx:"Recent transactions", rentOf:"Rent for {m}", rentTaken:"Rent collected", savDep:"Savings deposit",
+        recentTx:"Recent transactions", allTxTitle:"All transactions", allTxSub:"Every money movement — newest first", rentOf:"Rent for {m}", rentTaken:"Rent collected", savDep:"Savings deposit",
         noTxYet:"No transactions yet — rent collected, an expense, a staff advance or salary payment, a worker's charge, a loan given or returned, or a savings deposit will appear here with its date and time.",
         chipPaid:"Paid", chipPart:"Partial", chipDue:"Due", chipNoBill:"No bill yet", chipVacant:"Vacant", chipOccupied:"Occupied", chipLeft:"Moved out",
         flatWord:"Flat", floorWord:"Floor", perMonth:"/mo", remaining:"due",
@@ -1868,7 +1868,7 @@
       }
       return day + 86399999;
     }
-    function recentTxList(){
+    function recentTxList(all){
       var out = [];
       scopedBills().forEach(function(b){
         var t = tenantById(b.tenantId);
@@ -1928,7 +1928,21 @@
           title: L.trFeed + " — " + (wf ? wf.name : "") + " → " + (wt ? wt.name : ""),
           sub: [x.note || "", fmtDateTime(x.date, x.ts)].filter(Boolean).join(" · ") });
       });
-      return out.sort(function(a, b){ return b.key - a.key; }).slice(0, 10);
+      return out.sort(function(a, b){ return b.key - a.key; }).slice(0, all ? 100000 : 10);
+    }
+    function vAllTx(){
+      var txs = recentTxList(true);
+      var h = subHead(L.allTxTitle, L.allTxSub);
+      if(txs.length === 0){
+        h += '<div class="card" style="margin-top:14px"><div class="small muted">' + L.noTxYet + "</div></div>";
+      } else {
+        h += '<div class="card" style="margin-top:14px;padding-top:5px;padding-bottom:5px">' + txs.map(function(x){
+          return '<div class="pay-line"><div class="avatar ' + x.cls + '" style="width:38px;height:38px;border-radius:11px">' + ic(x.icon) + "</div>" +
+            '<div class="grow"><b>' + esc(x.title) + '</b><div class="tiny muted">' + esc(x.sub) + "</div></div>" +
+            '<div class="amt ' + (x.dir === "in" ? "green" : (x.dir === "out" ? "red" : "")) + '">' + (x.dir === "in" ? "+ " : (x.dir === "out" ? "− " : "")) + fmt(x.amount) + "</div></div>";
+        }).join("") + "</div>";
+      }
+      return h;
     }
 
     /* ================= monthly income / expense ================= */
@@ -2134,11 +2148,11 @@
       /* recent transactions — every money movement, newest first, with
          date (and time for records made from now on) */
       var txs = recentTxList();
-      h += '<div class="sec-head"><h2>' + L.recentTx + "</h2></div>";
+      h += '<div class="sec-head" data-sub="alltx" style="cursor:pointer"><h2>' + L.recentTx + '</h2><span class="small" style="color:var(--brand);font-weight:700;white-space:nowrap">' + L.seeAll + " ›</span></div>";
       if(txs.length === 0){
         h += '<div class="card"><div class="small muted">' + L.noTxYet + "</div></div>";
       } else {
-        h += '<div class="card" style="padding-top:5px;padding-bottom:5px">' + txs.map(function(x){
+        h += '<div class="card" data-sub="alltx" style="padding-top:5px;padding-bottom:5px;cursor:pointer">' + txs.map(function(x){
           return '<div class="pay-line"><div class="avatar ' + x.cls + '" style="width:38px;height:38px;border-radius:11px">' + ic(x.icon) + "</div>" +
             '<div class="grow"><b>' + esc(x.title) + '</b><div class="tiny muted">' + esc(x.sub) + "</div></div>" +
             '<div class="amt ' + (x.dir === "in" ? "green" : (x.dir === "out" ? "red" : "")) + '">' + (x.dir === "in" ? "+ " : (x.dir === "out" ? "− " : "")) + fmt(x.amount) + "</div></div>";
@@ -2722,6 +2736,7 @@
       if(sub === "monthly") return vReports();
       if(sub === "monthdetail") return vMonthDetail();
       if(sub === "report") return vReports();
+      if(sub === "alltx") return vAllTx();
       if(sub === "backup") return vBackup();
       if(sub === "notifications") return vNotifications();
       if(sub === "settings") return vSettingsPage();
