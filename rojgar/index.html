@@ -307,6 +307,9 @@ const I={
  alert:'<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
  phone:'<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>',
  msg:'<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',
+ brief:'<rect x="3" y="7.5" width="18" height="12" rx="2.5"/><path d="M9 7.5V6A2.5 2.5 0 0 1 11.5 3.5h1A2.5 2.5 0 0 1 15 6v1.5M3 12.5h18"/>',
+ swap:'<path d="M4 7h14M14 3l4 4-4 4M20 17H6M10 13l-4 4 4 4"/>',
+ gem:'<path d="M7 4h10l3.5 5L12 20 3.5 9Z"/><path d="M3.5 9h17M8.5 9 12 4l3.5 5L12 20 8.5 9"/>',
  plus:'<path d="M5 12h14"/><path d="M12 5v14"/>',
  chart:'<path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>',
  down:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
@@ -961,7 +964,7 @@ function renderLoans(){
   let h='<button class="btn ghost small" onclick="closeSub()" style="margin-bottom:10px">\u2190 '+t("back")+'</button>';
   h+='<div class="addbar"><button class="btn" onclick="openLoan()">'+svgIcon(I.plus,"sm")+t("ln_new")+'</button></div>';
   h+='<div class="card"><div class="kv"><span>'+t("ln_total_recv")+'</span><b style="color:#0b7a55">'+money(tt.recv)+'</b></div><div class="kv"><span>'+t("ln_total_pay")+'</span><b style="color:var(--red)">'+money(tt.pay)+'</b></div></div>';
-  if(!(DB.loans||[]).length)h+='<div class="card"><div class="empty"><div class="eic">'+svgIcon(I.book)+'</div>'+t("ln_empty")+'<br>'+t("ln_empty_sub")+'</div></div>';
+  if(!(DB.loans||[]).length)h+='<div class="card"><div class="empty"><div class="eic">'+svgIcon(I.swap)+'</div>'+t("ln_empty")+'<br>'+t("ln_empty_sub")+'</div></div>';
   const groups={};
   (DB.loans||[]).forEach(l=>{const k=(l.person||"").trim().toLowerCase();if(!groups[k])groups[k]={name:l.person,phone:l.phone||"",items:[]};groups[k].items.push(l);if(!groups[k].phone&&l.phone)groups[k].phone=l.phone;});
   Object.values(groups).forEach(g=>{
@@ -1164,11 +1167,11 @@ function renderMore(){
     +mrow(I.store,"#e3e9ff","#3348c5",t("m_shop"),esc(bizDisplay()),"openSub(\'shop\')")
     +mrow(I.wallet,"#dcf5e9","#0b7a55",t("wallets"),money(totBal),"openSub(\'wallets\')")
     +mrow(I.chart,"#efe4ff","#7c3aed",t("m_analytics"),"","openSub(\'report\')")
-    +mrow(I.phone,"#e0f2fe","#0369a1",t("m_staff"),bn((DB.staff||[]).length),"openSub(\'staff\')")
-    +mrow(I.book,"#ffedd5","#c2410c",t("m_loans"),money(loanTotals().recv),"openSub(\'loans\')")
+    +mrow(I.brief,"#e0f2fe","#0369a1",t("m_staff"),bn((DB.staff||[]).length),"openSub(\'staff\')")
+    +mrow(I.swap,"#ffedd5","#c2410c",t("m_loans"),money(loanTotals().recv),"openSub(\'loans\')")
     +mrow(I.trend,"#dcf5e9","#0b7a55",t("m_savings"),money(savTotal()),"openSub(\'savings\')")
     +mrow(I.down,"#efe4ff","#7c3aed",t("m_bankloan"),money(bankLoanDue()),"openSub(\'bankloans\')")
-    +mrow(I.receipt,"#ffe4ef","#be185d",t("m_sub"),"","openSub(\'subscription\')")
+    +mrow(I.gem,"#ffe4ef","#be185d",t("m_sub"),"","openSub(\'subscription\')")
     +'</div>';
   h+='<div class="section-t">'+t("m_settings")+'</div>';
   h+='<div class="card"><h3>'+svgIcon(I.book,"sm")+t("set_lang")+'</h3><div class="seg" style="margin:0"><button class="'+(DB.lang!=="en"?"on":"")+'" onclick="setLang(\'bn\')">বাংলা</button><button class="'+(DB.lang==="en"?"on":"")+'" onclick="setLang(\'en\')">English</button></div></div>';
