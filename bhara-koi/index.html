@@ -202,6 +202,7 @@
       /* guest room with a guest staying: a warm amber-tinted card */
       .card.flat-guest{ background:var(--amber-soft); border-color:transparent; }
       .card.bill-paid{ background:var(--brand-soft); border-color:transparent; }
+      .card.comp-done{ background:var(--brand-soft); border-color:transparent; }
       .card.flat-guest .avatar{ background:var(--amber); color:#fff; }
       .card.flat-guest .chip.amber{ background:var(--card); }
       /* the flats list is a two-per-row grid of compact cards */
@@ -3355,7 +3356,7 @@
           var reviewHtml = rev ? '<div class="review-box"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span>' + L.reviewWord + "</span>" + starsHTML(num(rev.stars)) + "</div>" +
             (rev.text ? '<div style="margin-top:5px;white-space:pre-wrap">' + esc(rev.text) + "</div>" : "") +
             (rev.date ? '<div class="small muted" style="margin-top:4px">' + fmtDate(rev.date) + "</div>" : "") + "</div>" : "";
-          return '<div class="card" style="margin-top:10px"><div class="row"><div class="avatar ' + (resolved ? "" : "amber") + '">' + (t ? ic("qTenant") : (f && flatType(f) === "owner" ? ic("king") : (f && flatType(f) === "guest" ? ic("bed") : (name ? initials(name) : ic("complaint"))))) + '</div>' +
+          return '<div class="card' + (resolved ? " comp-done" : "") + '" style="margin-top:10px"><div class="row"><div class="avatar ' + (resolved ? "" : "amber") + '">' + (t ? ic("qTenant") : (f && flatType(f) === "owner" ? ic("king") : (f && flatType(f) === "guest" ? ic("bed") : (name ? initials(name) : ic("complaint"))))) + '</div>' +
             '<div class="grow"><b>' + esc(name || L.complaints) + '</b><div class="small muted">' + flatLabel(f) + " · " + fmtDate(c.date) + "</div></div>" +
             (resolved ? '<span class="chip ok">' + L.chipResolved + '</span>' : '<span class="chip part">' + L.chipOpen + "</span>") + "</div>" +
             (c.category ? '<div style="margin-top:6px"><span class="chip free">' + esc(compCatLabel(c.category)) + "</span></div>" : "") +
