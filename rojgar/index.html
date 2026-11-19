@@ -181,7 +181,7 @@ svg text{font-family:inherit}
 .app{display:flex;align-items:center;justify-content:center}
 .oic{width:.9em;height:.9em;border-radius:0;margin:0 .06em}
 
-.credit{display:flex;align-items:center;justify-content:center;gap:8px}.aqic{height:24px;width:auto}.wdeck{cursor:pointer}.wcard{position:relative;border-radius:18px;padding:12px 16px;color:#fff;height:96px;box-shadow:0 10px 24px rgba(20,30,80,.16)}.wcard+.wcard{margin-top:-44px}.wcard.full{height:auto}.wrow{display:flex;justify-content:space-between;gap:10px;font-weight:700;font-size:15px}.wfront{margin-top:12px}.wflbl{font-size:11px;letter-spacing:.08em;opacity:.85}.wbig{font-size:24px;font-weight:800}.bizlogo{height:38px;width:auto;max-width:120px;object-fit:contain;border-radius:8px;flex:none}.bizgrp{display:flex;align-items:center;gap:10px;min-width:0}.bizgrp .biz{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}</style>
+.credit{display:flex;align-items:center;justify-content:center;gap:8px}.aqic{height:24px;width:auto}.wdeck{cursor:pointer}.wcard{position:relative;border-radius:26px;padding:12px 16px;color:#fff;height:96px;box-shadow:0 10px 24px rgba(20,30,80,.16)}.wcard+.wcard{margin-top:-44px}.wcard.full{height:auto}.wrow{display:flex;justify-content:space-between;gap:10px;font-weight:700;font-size:15px}.wfront{margin-top:12px}.wflbl{font-size:11px;letter-spacing:.08em;opacity:.85}.wbig{font-size:24px;font-weight:800}.wname{display:flex;align-items:center;gap:9px}.wic{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;flex:none}.wic svg{width:17px;height:17px}.bizlogo{height:38px;width:auto;max-width:120px;object-fit:contain;border-radius:8px;flex:none}.bizgrp{display:flex;align-items:center;gap:10px;min-width:0}.bizgrp .biz{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}</style>
 </head>
 <body>
 <header>
@@ -317,6 +317,7 @@ const I={
  heart:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>'
 };
 let DB=load();
+fixSeedWallets();
 function blank(){return {bizName:"",bizLogo:"",wallets:defaultWallets(),products:[],sales:[],dues:[],payments:[],purchases:[],expenses:[],lang:"bn",theme:"system"};}
 function load(){try{const r=localStorage.getItem(KEY);if(r){const d=JSON.parse(r);return Object.assign(blank(),d);}}catch(e){}return blank();}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(DB));}catch(e){}}
@@ -542,8 +543,20 @@ function renderDues(){
   document.getElementById("page-dues").innerHTML='<button class="btn ghost small" onclick="closeSub()" style="margin-bottom:10px">\u2190 '+t("back")+'</button>'+h;
 }
 const KIND_COLORS={cash:["#0ea968","#0b7a55"],bkash:["#e2136e","#a30d50"],nagad:["#f97b1d","#dd5800"],rocket:["#9b3fa0","#6d1f74"],bank:["#3b6fe0","#2749a8"],other:["#64748b","#475569"]};
+const KIND_ICONS={cash:"wallet",bkash:"phone",nagad:"phone",rocket:"phone",bank:"store",other:"wallet"};
 const KIND_KEYS={cash:"k_cash",bkash:"k_bkash",nagad:"k_nagad",rocket:"k_rocket",bank:"k_bank",other:"k_other"};
-function defaultWallets(){return [{id:uid(),name:"ক্যাশ",kind:"cash",opening:0},{id:uid(),name:"বিকাশ",kind:"bkash",opening:0},{id:uid(),name:"নগদ",kind:"nagad",opening:0},{id:uid(),name:"ব্যাংক",kind:"bank",opening:0}];}
+function defaultWallets(){return [{id:uid(),name:"ক্যাশ",kind:"cash",opening:0}];}
+function fixSeedWallets(){
+  const ws=DB.wallets||[];
+  if(ws.length!==4)return;
+  if(ws.map(w=>w.kind).sort().join(",")!=="bank,bkash,cash,nagad")return;
+  if(!ws.every(w=>!w.opening))return;
+  const cash=ws.find(w=>w.kind==="cash");
+  const used=[].concat(DB.sales,DB.payments,DB.purchases,DB.expenses).some(x=>x.walletId&&x.walletId!==cash.id);
+  if(used)return;
+  DB.wallets=[cash];
+  save();
+}
 function walletById(id){return (DB.wallets||[]).find(w=>w.id===id);}
 function defaultWalletId(kind){
   const ws=DB.wallets||[]; if(!ws.length)return "";
@@ -574,7 +587,7 @@ function walletDeck(){
   show.forEach((w,i)=>{
     const c=KIND_COLORS[w.kind]||KIND_COLORS.other;
     const front=i===show.length-1;
-    h+='<div class="wcard" style="background:linear-gradient(135deg,'+c[0]+','+c[1]+');z-index:'+(i+1)+'"><div class="wrow"><span>'+esc(w.name)+'</span><span>'+money(walletBal(w))+'</span></div>'+(front?'<div class="wfront"><span class="wflbl">'+t("w_bal")+'</span><div class="wbig">'+money(walletBal(w))+'</div></div>':"")+'</div>';
+    h+='<div class="wcard" style="background:linear-gradient(135deg,'+c[0]+','+c[1]+');z-index:'+(i+1)+'"><div class="wrow"><span class="wname"><span class="wic">'+svgIcon(I[KIND_ICONS[w.kind]||"wallet"],"sm")+'</span>'+esc(w.name)+'</span><span>'+money(walletBal(w))+'</span></div>'+(front?'<div class="wfront"><span class="wflbl">'+t("w_bal")+'</span><div class="wbig">'+money(walletBal(w))+'</div></div>':"")+'</div>';
   });
   h+='</div><div class="note" style="margin-top:8px">'+t("w_total")+': <b>'+money(tot)+'</b> \u00B7 '+t("w_tap")+'</div>';
   return h;
@@ -587,7 +600,7 @@ function renderWallets(){
   if(!ws.length)h+='<div class="card"><div class="empty">'+t("w_empty")+'</div></div>';
   ws.forEach(w=>{
     const c=KIND_COLORS[w.kind]||KIND_COLORS.other;
-    h+='<div class="wcard full" style="background:linear-gradient(135deg,'+c[0]+','+c[1]+')"><div class="wrow"><span>'+esc(w.name)+'</span><span>'+t(KIND_KEYS[w.kind]||"k_other")+'</span></div><div class="wfront"><span class="wflbl">'+t("w_bal")+'</span><div class="wbig">'+money(walletBal(w))+'</div></div></div>'
+    h+='<div class="wcard full" style="background:linear-gradient(135deg,'+c[0]+','+c[1]+')"><div class="wrow"><span class="wname"><span class="wic">'+svgIcon(I[KIND_ICONS[w.kind]||"wallet"],"sm")+'</span>'+esc(w.name)+'</span><span>'+t(KIND_KEYS[w.kind]||"k_other")+'</span></div><div class="wfront"><span class="wflbl">'+t("w_bal")+'</span><div class="wbig">'+money(walletBal(w))+'</div></div></div>'
       +'<div class="btnrow" style="margin:8px 0 16px"><button class="btn small ghost" onclick="openWallet(\''+w.id+'\')">'+svgIcon(I.edit,"sm")+t("btn_edit")+'</button><button class="btn small red" onclick="delWallet(\''+w.id+'\')">'+svgIcon(I.trash,"sm")+t("btn_del")+'</button></div>';
   });
   document.getElementById("page-wallets").innerHTML=h;
