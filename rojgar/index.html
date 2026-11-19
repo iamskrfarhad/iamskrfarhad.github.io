@@ -195,7 +195,7 @@ svg text{font-family:inherit}
 </header>
 <main>
   <section class="page" id="page-home"></section>
-  <section class="page" id="page-sales"></section><section class="page" id="page-orders"></section>
+  <section class="page" id="page-sales"></section>
   
   
   <section class="page" id="page-more"></section>
@@ -204,7 +204,7 @@ svg text{font-family:inherit}
 <nav id="tabbar">
   <button data-tab="home" class="on"><svg class="icn" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>হোম</button>
   <button data-tab="sales"><svg class="icn" viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M14 8H8"/><path d="M16 12H8"/><path d="M13 16H8"/></svg>বিক্রি</button>
-  <button data-tab="orders"><svg class="icn" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 12h6"/><path d="M9 16h4"/></svg>অর্ডার</button>
+  
   <button data-tab="products"><svg class="icn" viewBox="0 0 24 24"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg>প্রোডাক্ট</button>
   <button data-tab="more"><svg class="icn" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>আরও</button>
 </nav>
@@ -217,7 +217,7 @@ const BND="০১২৩৪৫৬৭৮৯";
 const EXCATS=["দোকান ভাড়া","বিদ্যুৎ বিল","পানি বিল","গ্যাস বিল","পরিবহন","কর্মচারীর বেতন","প্যাকেজিং","অন্যান্য"];
 const UNITS=["পিস","কেজি","গ্রাম","লিটার","মিলি","ডজন","হালি","বাক্স","প্যাকেট","জোড়া","সেট","গজ","মিটার","ফুট","ইঞ্চি"];
 const STR={
-bn:{tab_home:"হোম",tab_sales:"বিক্রি",tab_dues:"বাকি",tab_products:"প্রোডাক্ট",kpi_exp:"আজকের খরচ",back:"ফিরুন",exp_title:"সব খরচ",e_today:"আজকে",e_yday:"গতকাল",e_week:"এই সপ্তাহ",e_month:"এই মাস",e_custom:"কাস্টম",e_from:"শুরুর তারিখ",e_to:"শেষের তারিখ",e_total:"মোট খরচ",e_empty:"এই সময়ে কোনো খরচ নেই",m_open:"দেখুন",st_value:"স্টকের মোট মূল্য (কেনা দামে)",st_count:"টি পণ্য",tab_orders:"অর্ডার",o_new:"নতুন অর্ডার",o_prod:"পণ্য",o_noprod:"পণ্য ছাড়া (সাধারণ)",o_addr:"ঠিকানা",o_addr_ph:"গ্রাম/এলাকা, থানা, জেলা",o_pend:"অপেক্ষমাণ",o_done:"সম্পন্ন",o_cancel:"বাতিল",o_complete:"সম্পন্ন করুন",o_empty:"এখনো কোনো অর্ডার নেই।",o_empty_sub:"নতুন অর্ডার দিয়ে শুরু করুন।",o_pending_n:"টি অর্ডার অপেক্ষমাণ",o_ecust:"ক্রেতার নাম লিখুন।",o_howpay:"টাকা কীভাবে পেলেন?",o_all:"সব",o_unpaid:"অপরিশোধিত",o_paid:"পরিশোধিত",o_online:"অনলাইন",o_shop:"দোকান",o_src:"অর্ডারের ধরন",o_search_ph:"নাম বা ফোন দিয়ে খুঁজুন...",o_return:"রিটার্ন করুন",o_ret_qty:"কত পিস রিটার্ন করবেন?",o_ret_ordered:"অর্ডার ছিল",o_ret_already:"আগে রিটার্ন হয়েছে",o_ret_left:"রিটার্ন করা যাবে",o_ret_done:"রিটার্ন হয়েছে",o_ret_part:"আংশিক রিটার্ন",o_ret_refund:"ফেরতের টাকা",e_ret_qty:"সঠিক পরিমাণ দিন।",hero_ord:"অপেক্ষমাণ অর্ডার",qa_order:"অর্ডার যোগ",o_today:"আজকের অর্ডার",o_pend_amt:"অপেক্ষমাণ অর্ডারের মোট",wallets:"ওয়ালেট",w_total:"মোট ব্যালেন্স",w_add:"নতুন ওয়ালেট",w_name:"ওয়ালেটের নাম",w_kind:"ওয়ালেটের ধরন",w_open:"শুরুর ব্যালেন্স",w_bal:"ব্যালেন্স",f_wallet:"টাকা জমা হবে যে ওয়ালেটে",f_wallet_out:"টাকা যাবে যে ওয়ালেট থেকে",k_cash:"ক্যাশ",k_bkash:"বিকাশ",k_nagad:"নগদ",k_rocket:"রকেট",k_bank:"ব্যাংক",k_other:"অন্যান্য",w_tap:"সব ওয়ালেট দেখতে চাপ দিন",w_empty:"কোনো ওয়ালেট নেই — নতুন ওয়ালেট যোগ করুন",e_wname:"ওয়ালেটের নাম দিন",m_shop:"ম্যানেজ শপ",m_analytics:"অ্যানালিটিক্স",m_sub:"সাবস্ক্রিপশন",m_settings:"সেটিংস",m_dues:"বাকির খাতা",m_sub_free:"বর্তমানে রোজগারের সব ফিচার সম্পূর্ণ ফ্রি — কোনো সাবস্ক্রিপশন বা পেমেন্ট লাগবে না।",tab_stock:"স্টক",tab_more:"আরও",slogan:"ব্যবসার হিসাব, সহজে",default_biz:"আমার ব্যবসা",
+bn:{tab_home:"হোম",tab_sales:"সেলস",tab_dues:"বাকি",tab_products:"প্রোডাক্ট",kpi_exp:"আজকের খরচ",back:"ফিরুন",exp_title:"সব খরচ",e_today:"আজকে",e_yday:"গতকাল",e_week:"এই সপ্তাহ",e_month:"এই মাস",e_custom:"কাস্টম",e_from:"শুরুর তারিখ",e_to:"শেষের তারিখ",e_total:"মোট খরচ",e_empty:"এই সময়ে কোনো খরচ নেই",m_open:"দেখুন",st_value:"স্টকের মোট মূল্য (কেনা দামে)",st_count:"টি পণ্য",tab_orders:"অর্ডার",o_new:"নতুন অর্ডার",o_prod:"পণ্য",o_noprod:"পণ্য ছাড়া (সাধারণ)",o_addr:"ঠিকানা",o_addr_ph:"গ্রাম/এলাকা, থানা, জেলা",o_pend:"অপেক্ষমাণ",o_done:"সম্পন্ন",o_cancel:"বাতিল",o_complete:"সম্পন্ন করুন",o_empty:"এখনো কোনো অর্ডার নেই।",o_empty_sub:"নতুন অর্ডার দিয়ে শুরু করুন।",o_pending_n:"টি অর্ডার অপেক্ষমাণ",o_ecust:"ক্রেতার নাম লিখুন।",o_howpay:"টাকা কীভাবে পেলেন?",o_all:"সব",o_unpaid:"অপরিশোধিত",o_paid:"পরিশোধিত",o_online:"অনলাইন",o_shop:"দোকান",o_src:"অর্ডারের ধরন",o_search_ph:"নাম বা ফোন দিয়ে খুঁজুন...",o_return:"রিটার্ন করুন",o_ret_qty:"কত পিস রিটার্ন করবেন?",o_ret_ordered:"অর্ডার ছিল",o_ret_already:"আগে রিটার্ন হয়েছে",o_ret_left:"রিটার্ন করা যাবে",o_ret_done:"রিটার্ন হয়েছে",o_ret_part:"আংশিক রিটার্ন",o_ret_refund:"ফেরতের টাকা",e_ret_qty:"সঠিক পরিমাণ দিন।",hero_ord:"অপেক্ষমাণ অর্ডার",qa_order:"অর্ডার যোগ",o_today:"আজকের অর্ডার",o_pend_amt:"অপেক্ষমাণ অর্ডারের মোট",wallets:"ওয়ালেট",w_total:"মোট ব্যালেন্স",w_add:"নতুন ওয়ালেট",w_name:"ওয়ালেটের নাম",w_kind:"ওয়ালেটের ধরন",w_open:"শুরুর ব্যালেন্স",w_bal:"ব্যালেন্স",f_wallet:"টাকা জমা হবে যে ওয়ালেটে",f_wallet_out:"টাকা যাবে যে ওয়ালেট থেকে",k_cash:"ক্যাশ",k_bkash:"বিকাশ",k_nagad:"নগদ",k_rocket:"রকেট",k_bank:"ব্যাংক",k_other:"অন্যান্য",w_tap:"সব ওয়ালেট দেখতে চাপ দিন",w_empty:"কোনো ওয়ালেট নেই — নতুন ওয়ালেট যোগ করুন",e_wname:"ওয়ালেটের নাম দিন",m_shop:"ম্যানেজ শপ",m_analytics:"অ্যানালিটিক্স",m_sub:"সাবস্ক্রিপশন",m_settings:"সেটিংস",m_dues:"বাকির খাতা",m_sub_free:"বর্তমানে রোজগারের সব ফিচার সম্পূর্ণ ফ্রি — কোনো সাবস্ক্রিপশন বা পেমেন্ট লাগবে না।",tab_stock:"স্টক",tab_more:"আরও",slogan:"ব্যবসার হিসাব, সহজে",default_biz:"আমার ব্যবসা",
 g_m:"শুভ সকাল",g_a:"শুভ দুপুর",g_e:"শুভ বিকেল",g_n:"শুভ সন্ধ্যা",
 hero_profit:"এই মাসের লাভ",pill_none:"এই মাসে এখনো বিক্রি হয়নি",pill_nocomp:"গত মাসের সঙ্গে তুলনা নেই",pill_vs:"গত মাসের চেয়ে",hero_sales:"বিক্রি",hero_due:"মোট বাকি",
 kpi_today_sales:"আজকের বিক্রি",kpi_collect:"আজকের বাকি আদায়",kpi_due:"মোট বাকি আছে",quick:"তাড়াতাড়ি করুন",qa_sale:"নতুন বিক্রি",qa_due:"বাকি যোগ",qa_product:"পণ্য যোগ",qa_expense:"খরচ যোগ",
@@ -288,7 +288,7 @@ function applyTheme(){
 try{if(window.matchMedia)window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>{if((DB.theme||"system")==="system")applyTheme();});}catch(e){}
 function applyLang(){
   document.documentElement.lang=(DB.lang==="en"?"en":"bn");
-  const labels=[t("tab_home"),t("tab_sales"),t("tab_orders"),t("tab_products"),t("tab_more")];
+  const labels=[t("tab_home"),t("tab_sales"),t("tab_products"),t("tab_more")];
   document.querySelectorAll("#tabbar button").forEach((b,i)=>{if(b.lastChild)b.lastChild.textContent=labels[i];});
   try{const sg=document.querySelector(".slogan"); if(sg)sg.textContent=t("slogan");}catch(e){}
 }
@@ -351,7 +351,7 @@ function render(){
   document.querySelectorAll("#tabbar button").forEach(b=>b.classList.toggle("on",!subPage&&b.dataset.tab===tab));
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("on"));
   document.getElementById("page-"+cur).classList.add("on");
-  ({home:renderHome,sales:renderSales,orders:renderOrders,more:renderMore,products:renderProducts,expenses:renderExpenses,report:renderReport,wallets:renderWallets,subscription:renderSubscription,shop:renderShop})[cur]();
+  ({home:renderHome,sales:renderSales,more:renderMore,products:renderProducts,expenses:renderExpenses,report:renderReport,wallets:renderWallets,subscription:renderSubscription,shop:renderShop})[cur]();
 }
 function daySales(ds){return DB.sales.filter(s=>s.date===ds);}
 function monthSales(){return DB.sales.filter(s=>s.date.startsWith(thisMonth()));}
@@ -510,19 +510,19 @@ function drawDonut(){
 }
 
 function goStock(){tab="products";render();}
-function goOrders(){subPage=null;tab="orders";render();}
+function goOrders(){subPage=null;tab="sales";salesView="online";render();}
 let ordFilter="all",ordQuery="";
-function setOrdFilter(f){ordFilter=f;renderOrders();}
+function setOrdFilter(f){ordFilter=f;renderOrdersBody();}
 function ordSearch(v){ordQuery=v;drawOrders();}
 function ordById(id){return DB.orders.find(o=>o.id===id);}
 function ordNo(o){return o.no||(DB.orders.indexOf(o)+1);}
-function renderOrders(){
+function renderOrdersBody(){
   let h='<div class="addbar"><button class="btn" onclick="openOrder()">'+svgIcon(I.plus,"sm")+t("o_new")+'</button></div>';
   h+='<input class="search" placeholder="'+t("o_search_ph")+'" value="'+esc(ordQuery)+'" oninput="ordSearch(this.value)">';
   const F=[["all","o_all"],["pending","o_pend"],["done","o_done"],["cancel","o_cancel"]];
   h+='<div class="seg">'+F.map(f=>'<button class="'+(ordFilter===f[0]?"on":"")+'" onclick="setOrdFilter(\''+f[0]+'\')">'+t(f[1])+'</button>').join("")+'</div>';
   h+='<div id="ordList"></div>';
-  document.getElementById("page-orders").innerHTML=h;
+  document.getElementById("ordWrap").innerHTML=h;
   drawOrders();
 }
 function drawOrders(){
@@ -576,7 +576,7 @@ function saveOrder(){
   if(price<=0)return ferr(t("e_price"));
   const no=DB.orders.reduce((m,o)=>Math.max(m,o.no||0),0)+1;
   DB.orders.push({id:uid(),no:no,date:today(),customer:cust,phone:gv("oPhone"),address:gv("oAddr"),src:gv("oSrc"),productId:p?p.id:"",desc:desc,qty:qty,total:Math.round(qty*price),status:"pending"});
-  save();closeSheet();tab="orders";render();
+  save();closeSheet();tab="sales";salesView="online";render();
 }
 function cancelOrder(id){const o=ordById(id);if(o){o.status="cancel";save();render();}}
 function delOrder(id){if(!confirm(t("confirm_del")))return;DB.orders=DB.orders.filter(o=>o.id!==id);save();render();}
@@ -637,7 +637,14 @@ function saveReturn(id){
   o.refunded=(o.refunded||0)+refund;
   save();closeSheet();render();
 }
+let salesView="online";
+function setSalesView(v){salesView=v;renderSales();}
 function renderSales(){
+  const seg='<div class="seg" style="margin-bottom:12px"><button class="'+(salesView==="online"?"on":"")+'" onclick="setSalesView(\'online\')">'+t("o_online")+'</button><button class="'+(salesView==="shop"?"on":"")+'" onclick="setSalesView(\'shop\')">'+t("o_shop")+'</button></div>';
+  if(salesView==="shop"){document.getElementById("page-sales").innerHTML=seg+shopSalesHTML();}
+  else{document.getElementById("page-sales").innerHTML=seg+'<div id="ordWrap"></div>';renderOrdersBody();}
+}
+function shopSalesHTML(){
   const list=[...DB.sales].sort((a,b)=>b.date.localeCompare(a.date)||b.id.localeCompare(a.id));
   const mt=monthSales().reduce((a,s)=>a+s.total,0);
   let h='<div class="addbar"><button class="btn" onclick="openSale()">'+svgIcon(I.plus,"sm")+t("new_sale")+'</button></div>';
@@ -646,7 +653,7 @@ function renderSales(){
   if(!list.length)h+='<div class="empty"><div class="eic">'+svgIcon(I.receipt)+'</div>'+t("empty_sales")+'</div>';
   list.forEach(s=>{h+='<div class="row"><div class="ic g">'+svgIcon(I.receipt)+'</div><div class="grow"><div class="t">'+esc(s.desc)+'</div><div class="s">'+fmtDate(s.date)+' · '+(s.pay==="baki"?(t("tx_due")+" · "+esc(s.customer||"")):s.pay==="mobile"?t("pay_mobile"):t("pay_cash"))+(s.qty?' · '+t("qty_w")+' '+bn(s.qty):"")+'</div></div><div class="amt pos">'+money(s.total)+'</div></div>';});
   h+='</div>';
-  document.getElementById("page-sales").innerHTML=h;
+  return h;
 }
 const KIND_COLORS={cash:["#0ea968","#0b7a55"],bkash:["#e2136e","#a30d50"],nagad:["#f97b1d","#dd5800"],rocket:["#9b3fa0","#6d1f74"],bank:["#3b6fe0","#2749a8"],other:["#64748b","#475569"]};
 const KIND_ICONS={cash:"wallet",bkash:"phone",nagad:"phone",rocket:"phone",bank:"store",other:"wallet"};
@@ -891,7 +898,7 @@ function saveSale(){
   const sale={id:uid(),date:today(),desc:desc,productId:p?p.id:"",qty:qty,total:total,cost:p?Math.round(p.buy*qty):0,pay:pay,walletId:wv("sWallet"),customer:"",phone:""};
   DB.sales.push(sale);
   if(p)p.qty-=qty;
-  save();closeSheet();tab="sales";render();
+  save();closeSheet();tab="sales";salesView="shop";render();
 }
 let tmpProdImg="";
 function prodImgPick(input){
