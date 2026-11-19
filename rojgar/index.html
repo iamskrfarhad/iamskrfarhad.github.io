@@ -336,6 +336,7 @@ function render(){
   applyLang();
   document.getElementById("bizName").textContent=bizDisplay();
   const bl=document.getElementById("bizLogo"); if(bl){ if(DB.bizLogo){bl.src=DB.bizLogo; bl.style.display="";} else {bl.removeAttribute("src"); bl.style.display="none";} }
+  const bnEl=document.getElementById("bizName"); if(bnEl) bnEl.style.display=DB.bizLogo?"none":"";
   document.getElementById("todayLine").textContent=greet()+"\n"+fmtDate(today());
   document.querySelectorAll("#tabbar button").forEach(b=>b.classList.toggle("on",b.dataset.tab===tab));
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("on"));
