@@ -137,6 +137,7 @@
 .tiles .ti:has(>svg[data-ic="wrench"]), .quick button .qi:has(>svg[data-ic="wrench"]), .empty .eic:has(>svg[data-ic="wrench"]), .avatar:has(>svg[data-ic="wrench"]){ background:linear-gradient(135deg,#FBBF24,#D97706); color:#fff }
 .tiles .ti:has(>svg[data-ic="staff"]), .quick button .qi:has(>svg[data-ic="staff"]), .empty .eic:has(>svg[data-ic="staff"]), .avatar:has(>svg[data-ic="staff"]){ background:linear-gradient(135deg,#FDBA74,#EA580C); color:#fff }
 .tiles .ti:has(>svg[data-ic="swap"]), .quick button .qi:has(>svg[data-ic="swap"]), .empty .eic:has(>svg[data-ic="swap"]), .avatar:has(>svg[data-ic="swap"]){ background:linear-gradient(135deg,#2DD4BF,#0D9488); color:#fff }
+.tiles .ti:has(>svg[data-ic="repeat"]), .quick button .qi:has(>svg[data-ic="repeat"]), .empty .eic:has(>svg[data-ic="repeat"]), .avatar:has(>svg[data-ic="repeat"]){ background:linear-gradient(135deg,#38BDF8,#2563EB); color:#fff }
 .tiles .ti:has(>svg[data-ic="chart"]), .quick button .qi:has(>svg[data-ic="chart"]), .empty .eic:has(>svg[data-ic="chart"]), .avatar:has(>svg[data-ic="chart"]){ background:linear-gradient(135deg,#818CF8,#4F46E5); color:#fff }
 .tiles .ti:has(>svg[data-ic="receipt"]), .quick button .qi:has(>svg[data-ic="receipt"]), .empty .eic:has(>svg[data-ic="receipt"]), .avatar:has(>svg[data-ic="receipt"]){ background:linear-gradient(135deg,#FBBF24,#F97316); color:#fff }
 .tiles .ti:has(>svg[data-ic="qBill"]), .quick button .qi:has(>svg[data-ic="qBill"]), .empty .eic:has(>svg[data-ic="qBill"]), .avatar:has(>svg[data-ic="qBill"]){ background:linear-gradient(135deg,#FBBF24,#F97316); color:#fff }
@@ -1720,6 +1721,7 @@
         staff:'<rect x="4" y="3" width="16" height="18" rx="2.5"/><circle cx="12" cy="10" r="2.6"/><path d="M8 17.2c.7-1.9 2.2-2.8 4-2.8s3.3.9 4 2.8"/>',
         chart:'<path d="M3.5 20.5h17"/><path d="M6.5 20.5v-5.5M11 20.5V8M15.5 20.5v-8.5M20 20.5V5"/>',
         swap:'<path d="M4 7.5h12.5m0 0L13 4m3.5 3.5L13 11M20 16.5H7.5m0 0L11 13m-3.5 3.5L11 20"/>',
+        repeat:'<path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/>',
         /* quick-action story icons — flat like the rest, but each one
            carries its own little scene so the tile reads at a glance:
            tenant = person + key under a roof, bill = receipt with a big
@@ -1943,7 +1945,7 @@
          expense), with both wallet names so the move is traceable */
       (DB.transfers || []).forEach(function(x){
         var wf = walletById(x.fromId), wt = walletById(x.toId);
-        out.push({ key: txSortKey(x.date, x.ts), icon: "swap", cls: "blue", dir: "move", amount: x.amount,
+        out.push({ key: txSortKey(x.date, x.ts), icon: "repeat", cls: "blue", dir: "move", amount: x.amount,
           title: L.trFeed + " — " + (wf ? wf.name : "") + " → " + (wt ? wt.name : ""),
           sub: [x.note || "", fmtDateTime(x.date, x.ts)].filter(Boolean).join(" · ") });
       });
@@ -2842,7 +2844,7 @@
         var tot = DB.wallets.reduce(function(a,w){ return a + walletBalance(w); }, 0);
         h += '<div class="hero" style="margin-top:14px"><div class="month">' + L.allWalletBalance + '</div><div class="big">' + fmt(tot) + "</div></div>";
         if(DB.wallets.length >= 2){
-          h += '<button type="button" class="btn block" style="margin-top:12px" data-act="transfer">' + ic("swap") + " " + L.transferWord + "</button>";
+          h += '<button type="button" class="btn block" style="margin-top:12px" data-act="transfer">' + ic("repeat") + " " + L.transferWord + "</button>";
         }
         h += DB.wallets.map(function(w, i){ return walletCardHTML(w, i, true); }).join("");
       }
