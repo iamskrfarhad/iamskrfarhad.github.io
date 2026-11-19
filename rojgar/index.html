@@ -932,13 +932,12 @@ function openStaffTx(kind,sid){
     +'<div class="f"><label>'+t("f_date")+'</label><input id="sxDate" type="date" value="'+today()+'"></div>'
     +'<div class="f"><label>'+t("st_formonth")+'</label><input id="sxMonth" type="month" value="'+staffMonth+'"></div>'
     +walletField("sxWallet","f_wallet_out","cash")
-    +'<div class="f"><label>'+t("f_note")+'</label><input id="sxNote"></div>'
     +'<div class="btnrow"><button class="btn" onclick="saveStaffTx(\''+kind+'\',\''+sid+'\')">'+t("save")+'</button><button class="btn ghost" onclick="closeSheet()">'+t("cancel")+'</button></div>');
 }
 function saveStaffTx(kind,sid){
   const amt=num(gv("sxAmt"));
   if(amt<=0)return ferr(t("e_amt"));
-  DB.staffTx.push({id:uid(),staffId:sid,kind:kind,amount:amt,date:gv("sxDate")||today(),workMonth:gv("sxMonth")||staffMonth,walletId:wv("sxWallet"),note:gv("sxNote")});
+  DB.staffTx.push({id:uid(),staffId:sid,kind:kind,amount:amt,date:gv("sxDate")||today(),workMonth:gv("sxMonth")||staffMonth,walletId:wv("sxWallet"),note:""});
   save();closeSheet();openSub("staff");
 }
 function delStaffTx(id){if(!confirm(t("confirm_del")))return;DB.staffTx=DB.staffTx.filter(x=>x.id!==id);save();openSub("staff");}
