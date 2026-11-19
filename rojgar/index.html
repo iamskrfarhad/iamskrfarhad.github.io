@@ -214,6 +214,7 @@ svg text{font-family:inherit}
 const KEY="rojgarDB_v1";
 const BND="০১২৩৪৫৬৭৮৯";
 const EXCATS=["দোকান ভাড়া","বিদ্যুৎ বিল","পানি বিল","গ্যাস বিল","পরিবহন","কর্মচারীর বেতন","প্যাকেজিং","অন্যান্য"];
+const UNITS=["পিস","কেজি","গ্রাম","লিটার","মিলি","ডজন","হালি","বাক্স","প্যাকেট","জোড়া","সেট","গজ","মিটার","ফুট","ইঞ্চি"];
 const STR={
 bn:{tab_home:"হোম",tab_sales:"বিক্রি",tab_dues:"বাকি",tab_stock:"স্টক",tab_more:"আরও",slogan:"ব্যবসার হিসাব, সহজে",default_biz:"আমার ব্যবসা",
 g_m:"শুভ সকাল",g_a:"শুভ দুপুর",g_e:"শুভ বিকেল",g_n:"শুভ সন্ধ্যা",
@@ -234,7 +235,7 @@ save:"সেভ করুন",cancel:"বাতিল",
 f_sale:"নতুন বিক্রি",f_product:"পণ্য (স্টক থেকে বাছাই করুন, না চাইলে খালি রাখুন)",f_noproduct:"— পণ্য ছাড়া —",f_desc:"বিবরণ",f_desc_ph:"কী বিক্রি হলো",f_qty:"পরিমাণ",f_price:"একটির দাম (৳)",f_payway:"টাকা পেলেন যেভাবে",f_cname:"ক্রেতার নাম",f_name_ph:"নাম",f_phone:"ক্রেতার ফোন",
 f_due:"নতুন বাকি",f_phone2:"ফোন নম্বর",f_due_amt:"বাকির পরিমাণ (৳)",f_note:"কিসের বাকি (নোট)",f_note_ph:"যেমন: চাল ও তেল",
 f_pay:"পরিশোধ নিন",f_pay_amt:"কত টাকা দিলেন (৳)",
-f_prod_new:"নতুন পণ্য",f_prod_edit:"পণ্য বদলান",f_prod_name:"পণ্যের নাম",f_prod_ph:"যেমন: মিনিকেট চাল",f_buy:"কেনা দাম (৳)",f_sell:"বিক্রির দাম (৳)",f_open_stock:"শুরুর স্টক (কতটি আছে)",f_low_at:"স্টক এর নিচে নামলে সতর্ক করবে",
+f_prod_new:"নতুন পণ্য",f_prod_edit:"পণ্য বদলান",f_prod_name:"পণ্যের নাম",f_prod_ph:"যেমন: মিনিকেট চাল",f_cat:"ক্যাটাগরি",f_sub:"সাব-ক্যাটাগরি",f_code:"পণ্যের কোড (SKU)",f_brand:"ব্র্যান্ড",f_unit:"একক",f_old:"আগের দাম (ছাড় বোঝাতে, চাইলে)",f_photo:"পণ্যের ছবি",p_add:"ছবি দিন",p_change:"ছবি বদলান",p_remove:"ছবি মুছুন",all_cat:"সব ক্যাটাগরি",cat_ph:"যেমন: পোশাক",sub_ph:"যেমন: হিজাব",code_ph:"যেমন: HJ-101",brand_ph:"যেমন: Dua",unit_ph:"পিস",f_buy:"কেনা দাম (৳)",f_sell:"বিক্রির দাম (৳)",f_open_stock:"শুরুর স্টক (কতটি আছে)",f_low_at:"স্টক এর নিচে নামলে সতর্ক করবে",
 f_pur:"মাল কিনুন",f_pur_qty:"কতটি কিনলেন",f_pur_cost:"একটির কেনা দাম (৳)",
 f_exp:"খরচ যোগ",f_exp_cat:"খরচের ধরন",f_exp_desc:"বিবরণ",f_exp_ph:"কিসের খরচ",f_amt:"পরিমাণ (৳)",
 f_biz:"ব্যবসার নাম",f_name:"নাম",f_logo:"ব্যবসার লোগো",logo_add:"লোগো দিন",logo_change:"লোগো বদলান",logo_remove:"লোগো মুছুন",logo_hint:"ট্রান্সপারেন্ট PNG হলে সবচেয়ে ভালো দেখাবে।",
@@ -263,7 +264,7 @@ save:"Save",cancel:"Cancel",
 f_sale:"New sale",f_product:"Product (pick from stock, or leave empty)",f_noproduct:"— No product —",f_desc:"Description",f_desc_ph:"What was sold",f_qty:"Quantity",f_price:"Unit price (৳)",f_payway:"Payment method",f_cname:"Customer name",f_name_ph:"Name",f_phone:"Customer phone",
 f_due:"New due",f_phone2:"Phone number",f_due_amt:"Due amount (৳)",f_note:"Note (what for)",f_note_ph:"e.g. rice & oil",
 f_pay:"Take payment",f_pay_amt:"Amount paid (৳)",
-f_prod_new:"New product",f_prod_edit:"Edit product",f_prod_name:"Product name",f_prod_ph:"e.g. Miniket rice",f_buy:"Buy price (৳)",f_sell:"Sell price (৳)",f_open_stock:"Opening stock (how many)",f_low_at:"Alert when stock falls below",
+f_prod_new:"New product",f_prod_edit:"Edit product",f_prod_name:"Product name",f_prod_ph:"e.g. Miniket rice",f_cat:"Category",f_sub:"Subcategory",f_code:"Product code (SKU)",f_brand:"Brand",f_unit:"Unit",f_old:"Regular/old price (for discounts, optional)",f_photo:"Product photo",p_add:"Add photo",p_change:"Change photo",p_remove:"Remove photo",all_cat:"All categories",cat_ph:"e.g. Clothing",sub_ph:"e.g. Hijab",code_ph:"e.g. HJ-101",brand_ph:"e.g. Dua",unit_ph:"pcs",f_buy:"Buy price (৳)",f_sell:"Sell price (৳)",f_open_stock:"Opening stock (how many)",f_low_at:"Alert when stock falls below",
 f_pur:"Buy stock",f_pur_qty:"How many did you buy",f_pur_cost:"Unit buy price (৳)",
 f_exp:"Add expense",f_exp_cat:"Expense type",f_exp_desc:"Description",f_exp_ph:"What for",f_amt:"Amount (৳)",
 f_biz:"Business name",f_name:"Name",f_logo:"Business logo",logo_add:"Add logo",logo_change:"Change logo",logo_remove:"Remove logo",logo_hint:"A transparent PNG looks best.",
@@ -531,21 +532,23 @@ function renderDues(){
 }
 function renderStock(){
   let h='<div class="addbar"><button class="btn" onclick="openProduct()">'+svgIcon(I.plus,"sm")+t("new_product")+'</button></div>';
-  h+='<input class="search" id="stockSearch" placeholder="'+t("search_ph")+'" oninput="drawStock(this.value)"><div id="stockList"></div>';
+  h+='<input class="search" id="stockSearch" placeholder="'+t("search_ph")+'" oninput="drawStock(this.value)"><select class="search" id="stockCat" onchange="drawStock(document.getElementById(\'stockSearch\').value)"><option value="">'+t("all_cat")+'</option>'+[...new Set(DB.products.map(x=>x.cat).filter(Boolean))].map(c=>'<option value="'+esc(c)+'"'+(stockCatSel===c?" selected":"")+'>'+esc(c)+'</option>').join("")+'</select><div id="stockList"></div>';
   document.getElementById("page-stock").innerHTML=h;
   drawStock("");
 }
+let stockCatSel="";
 function drawStock(q){
   q=(q||"").trim().toLowerCase();
-  const list=DB.products.filter(p=>!q||p.name.toLowerCase().includes(q));
+  const catEl=document.getElementById("stockCat"); if(catEl)stockCatSel=catEl.value;
+  const list=DB.products.filter(p=>(!stockCatSel||(p.cat||"")===stockCatSel)&&(!q||p.name.toLowerCase().includes(q)||(p.cat||"").toLowerCase().includes(q)||(p.sub||"").toLowerCase().includes(q)||(p.code||"").toLowerCase().includes(q)||(p.brand||"").toLowerCase().includes(q)));
   let h="";
   if(!list.length)h='<div class="card"><div class="empty"><div class="eic">'+svgIcon(I.box)+'</div>'+(DB.products.length?t("empty_search"):t("empty_stock")+"<br>"+t("empty_stock_sub"))+'</div></div>';
   list.forEach(p=>{
     const low=p.qty<=(p.low||5);
-    h+='<div class="card"><h3>'+esc(p.name)+(low?'<span class="chip due">'+t("chip_low")+'</span>':"")+'</h3>'
-      +'<div class="kv"><span>'+t("stock_w")+'</span><b class="'+(low?"warn":"")+'">'+bn(p.qty)+' '+t("pcs")+'</b></div>'
+    h+='<div class="card"><div style="display:flex;gap:12px;align-items:flex-start">'+(p.img?'<img src="'+p.img+'" style="width:56px;height:56px;object-fit:cover;border-radius:12px;flex:none">':"")+'<div style="flex:1;min-width:0"><h3 style="margin:0">'+esc(p.name)+(low?'<span class="chip due">'+t("chip_low")+'</span>':"")+'</h3>'+((p.cat||p.sub)?'<div class="note">'+esc(p.cat||"")+(p.sub?" › "+esc(p.sub):"")+'</div>':"")+((p.brand||p.code)?'<div class="note">'+esc(p.brand||"")+(p.code?(p.brand?" · ":"")+esc(p.code):"")+'</div>':"")+'</div></div>'
+      +'<div class="kv"><span>'+t("stock_w")+'</span><b class="'+(low?"warn":"")+'">'+bn(p.qty)+' '+(p.unit||t("pcs"))+'</b></div>'
       +'<div class="kv"><span>'+t("buy_price")+'</span><span>'+money(p.buy)+'</span></div>'
-      +'<div class="kv"><span>'+t("sell_price")+'</span><span>'+money(p.sell)+'</span></div>'
+      +'<div class="kv"><span>'+t("sell_price")+'</span><span>'+money(p.sell)+((p.old&&p.old>p.sell)?' <s style="opacity:.55">'+money(p.old)+'</s>':"")+'</span></div>'
       +'<div class="btnrow"><button class="btn small" onclick="openPurchase(\''+p.id+'\')">'+svgIcon(I.cart,"sm")+t("btn_buy")+'</button>'
       +'<button class="btn small ghost" onclick="openSale(\''+p.id+'\')">'+svgIcon(I.receipt,"sm")+t("btn_sell")+'</button>'
       +'<button class="btn small ghost" onclick="openProduct(\''+p.id+'\')">'+svgIcon(I.edit,"sm")+t("btn_edit")+'</button>'
@@ -586,7 +589,7 @@ function sheetHead(t){return '<h3>'+t+'</h3><div class="err" id="ferr"></div>';}
 function ferr(m){document.getElementById("ferr").textContent=m;}
 function gv(id){const el=document.getElementById(id);return el?el.value.trim():"";}
 function openSale(preId){
-  const opts=DB.products.map(p=>'<option value="'+p.id+'"'+(p.id===preId?" selected":"")+'>'+esc(p.name)+' ('+t("stock_w")+' '+bn(p.qty)+')</option>').join("");
+  const opts=DB.products.map(p=>'<option value="'+p.id+'"'+(p.id===preId?" selected":"")+'>'+esc(p.name)+' ('+t("stock_w")+' '+bn(p.qty)+' '+(p.unit||t("pcs"))+')</option>').join("");
   openSheet(sheetHead(t("f_sale"))
     +'<div class="f"><label>'+t("f_product")+'</label><select id="sProd" onchange="saleProdChange()"><option value="">'+t("f_noproduct")+'</option>'+opts+'</select></div>'
     +'<div class="f"><label>'+t("f_desc")+'</label><input id="sDesc" placeholder="'+t("f_desc_ph")+'"></div>'
@@ -641,12 +644,30 @@ function savePay(name){
   DB.payments.push({id:uid(),date:today(),customer:name,amount:num(gv("pAmt"))});
   save();closeSheet();tab="dues";render();
 }
+let tmpProdImg="";
+function prodImgPick(input){
+  const f=input.files&&input.files[0]; if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{ const img=new Image(); img.onload=()=>{ const mx=512; const sc=Math.min(1,mx/Math.max(img.width,img.height)); const w=Math.max(1,Math.round(img.width*sc)),hh=Math.max(1,Math.round(img.height*sc)); const c=document.createElement("canvas"); c.width=w; c.height=hh; const x=c.getContext("2d"); x.fillStyle="#ffffff"; x.fillRect(0,0,w,hh); x.drawImage(img,0,0,w,hh); tmpProdImg=c.toDataURL("image/jpeg",0.85); const pv=document.getElementById("prImgPrev"); if(pv){pv.src=tmpProdImg; pv.style.display="";} const rm=document.getElementById("prImgRemove"); if(rm)rm.style.display=""; }; img.src=r.result; };
+  r.readAsDataURL(f);
+}
+function prodImgClear(){ tmpProdImg=""; const pv=document.getElementById("prImgPrev"); if(pv){pv.removeAttribute("src"); pv.style.display="none";} const rm=document.getElementById("prImgRemove"); if(rm)rm.style.display="none"; }
 function openProduct(id){
   const p=id?prod(id):null;
+  tmpProdImg=p?(p.img||""):"";
+  const cats=[...new Set(DB.products.map(x=>x.cat).filter(Boolean))];
+  const subs=[...new Set(DB.products.map(x=>x.sub).filter(Boolean))];
   openSheet(sheetHead(p?t("f_prod_edit"):t("f_prod_new"))
+    +'<div class="f"><label>'+t("f_photo")+'</label><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><img id="prImgPrev" src="'+(p&&p.img?p.img:"")+'" style="width:52px;height:52px;object-fit:cover;border-radius:12px;'+(p&&p.img?"":"display:none")+'"><label class="btn small ghost" style="margin:0;cursor:pointer">'+(p&&p.img?t("p_change"):t("p_add"))+'<input type="file" accept="image/*" style="display:none" onchange="prodImgPick(this)"></label><button type="button" class="btn small red" id="prImgRemove" style="'+(p&&p.img?"":"display:none")+'" onclick="prodImgClear()">'+t("p_remove")+'</button></div></div>'
     +'<div class="f"><label>'+t("f_prod_name")+'</label><input id="prName" value="'+(p?esc(p.name):"")+'" placeholder="'+t("f_prod_ph")+'"></div>'
+    +'<div class="f"><label>'+t("f_cat")+'</label><input id="prCat" list="catList" value="'+(p?esc(p.cat||""):"")+'" placeholder="'+t("cat_ph")+'"><datalist id="catList">'+cats.map(c=>'<option value="'+esc(c)+'">').join("")+'</datalist></div>'
+    +'<div class="f"><label>'+t("f_sub")+'</label><input id="prSub" list="subList" value="'+(p?esc(p.sub||""):"")+'" placeholder="'+t("sub_ph")+'"><datalist id="subList">'+subs.map(c=>'<option value="'+esc(c)+'">').join("")+'</datalist></div>'
+    +'<div class="f"><label>'+t("f_code")+'</label><input id="prCode" value="'+(p?esc(p.code||""):"")+'" placeholder="'+t("code_ph")+'"></div>'
+    +'<div class="f"><label>'+t("f_brand")+'</label><input id="prBrand" value="'+(p?esc(p.brand||""):"")+'" placeholder="'+t("brand_ph")+'"></div>'
     +'<div class="f"><label>'+t("f_buy")+'</label><input id="prBuy" inputmode="decimal" value="'+(p?bn(p.buy):"")+'" placeholder="0"></div>'
     +'<div class="f"><label>'+t("f_sell")+'</label><input id="prSell" inputmode="decimal" value="'+(p?bn(p.sell):"")+'" placeholder="0"></div>'
+    +'<div class="f"><label>'+t("f_old")+'</label><input id="prOld" inputmode="decimal" value="'+(p&&p.old?bn(p.old):"")+'" placeholder="0"></div>'
+    +'<div class="f"><label>'+t("f_unit")+'</label><input id="prUnit" list="unitList" value="'+(p?esc(p.unit||""):"")+'" placeholder="'+t("unit_ph")+'"><datalist id="unitList">'+UNITS.map(u=>'<option value="'+u+'">').join("")+'</datalist></div>'
     +(p?"":'<div class="f"><label>'+t("f_open_stock")+'</label><input id="prQty" inputmode="decimal" value="'+bn(0)+'"></div>')
     +'<div class="f"><label>'+t("f_low_at")+'</label><input id="prLow" inputmode="decimal" value="'+(p?bn(p.low||5):bn(5))+'"></div>'
     +'<div class="btnrow"><button class="btn" onclick="saveProduct(\''+(id||"")+'\')">'+t("save")+'</button><button class="btn ghost" onclick="closeSheet()">'+t("cancel")+'</button></div>');
@@ -655,8 +676,9 @@ function saveProduct(id){
   const name=gv("prName"),buy=num(gv("prBuy")),sell=num(gv("prSell")),low=num(gv("prLow"));
   if(!name)return ferr(t("e_pname"));
   if(sell<=0)return ferr(t("e_sell"));
-  if(id){const p=prod(id);p.name=name;p.buy=buy;p.sell=sell;p.low=low||5;}
-  else DB.products.push({id:uid(),name:name,buy:buy,sell:sell,qty:num(gv("prQty")),low:low||5});
+  const extra={cat:gv("prCat").trim(),sub:gv("prSub").trim(),code:gv("prCode").trim(),brand:gv("prBrand").trim(),unit:gv("prUnit").trim(),old:num(gv("prOld")),img:tmpProdImg||""};
+  if(id){const p=prod(id);Object.assign(p,{name:name,buy:buy,sell:sell,low:low||5},extra);}
+  else DB.products.push(Object.assign({id:uid(),name:name,buy:buy,sell:sell,qty:num(gv("prQty")),low:low||5},extra));
   save();closeSheet();tab="stock";render();
 }
 function delProduct(id){if(!confirm(t("confirm_del")))return;DB.products=DB.products.filter(p=>p.id!==id);save();render();}
