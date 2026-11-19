@@ -3780,8 +3780,13 @@
         return '<div style="display:flex;justify-content:space-between;padding:5px 0"><span>' + fmtDate(p.date) + (w ? " · " + esc(w.name) : "") + '</span><span>' + fmt(p.amount) + '</span></div>';
       }).join("");
       var due = billDue(b);
-      return '<div style="text-align:center;margin-bottom:6px"><div style="font-size:22px;font-weight:800">' + esc(bld ? bld.name : L.appName) + '</div>' +
-        '<div style="color:#555">' + (due <= 0 ? L.waReceiptWord : L.bills) + " — " + monthLabel(b.month) + '</div></div>' +
+      return '<div style="background:#013626;color:#fff;border-radius:12px;padding:18px 20px;display:flex;justify-content:space-between;align-items:flex-start;gap:14px">' +
+        '<div><div style="font-size:23px;font-weight:800;line-height:1.25">' + esc(bld ? bld.name : L.appName) + '</div>' +
+        (bld && bld.address ? '<div style="color:#bfe3d4;font-size:13.5px;margin-top:4px">' + L.fbAddress + ": " + esc(bld.address) + '</div>' : "") +
+        (bld && (bld.ownerName || bld.ownerPhone) ? '<div style="color:#bfe3d4;font-size:13.5px;margin-top:2px">' + L.ownerWord + ": " + esc(bld.ownerName || "") + (bld.ownerPhone ? " · " + esc(bld.ownerPhone) : "") + '</div>' : "") +
+        '</div>' +
+        '<div style="text-align:right;flex:none"><div style="display:inline-block;background:rgba(255,255,255,.16);border-radius:999px;padding:5px 12px;font-weight:700;font-size:13.5px">' + (due <= 0 ? L.waReceiptWord : L.bills) + '</div>' +
+        '<div style="color:#bfe3d4;font-size:13.5px;margin-top:5px">' + monthLabel(b.month) + '</div></div></div>' +
         '<div style="margin:14px 0;padding:12px;background:#f4f7f5;border-radius:10px"><div><b>' + esc(t ? t.name : "") + '</b></div>' +
         '<div style="color:#555">' + esc(f ? flatLabel(f) : "") + (t && t.phone ? " · " + esc(t.phone) : "") + '</div></div>' +
         rows +
