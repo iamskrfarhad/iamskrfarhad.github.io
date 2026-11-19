@@ -593,7 +593,7 @@ function walletDeck(){
     const c=KIND_COLORS[w.kind]||KIND_COLORS.other;
     h+='<div class="wcard" style="background:linear-gradient(135deg,'+c[0]+','+c[1]+');z-index:'+(i+1)+'"><div class="wrow"><span class="wname"><span class="wic">'+svgIcon(I[KIND_ICONS[w.kind]||"wallet"],"sm")+'</span>'+esc(dispWName(w))+'</span><span>'+money(walletBal(w))+'</span></div>'+'</div>';
   });
-  h+='</div><div class="note" style="margin-top:8px">'+t("w_total")+': <b>'+money(tot)+'</b> \u00B7 '+t("w_tap")+'</div>';
+  h+='</div><div class="note" onclick="openSub(\'wallets\')" style="margin-top:8px;cursor:pointer">'+t("w_total")+': <b>'+money(tot)+'</b> \u00B7 '+t("w_tap")+'</div>';
   return h;
 }
 function renderWallets(){
