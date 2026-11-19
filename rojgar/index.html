@@ -197,7 +197,7 @@ svg text{font-family:inherit}
   <section class="page" id="page-home"></section>
   <section class="page" id="page-sales"></section>
   <section class="page" id="page-dues"></section>
-  <section class="page" id="page-stock"></section>
+  
   <section class="page" id="page-more"></section>
 <section class="page" id="page-products"></section><section class="page" id="page-expenses"></section><section class="page" id="page-report"></section><section class="page" id="page-wallets"></section><section class="page" id="page-subscription"></section><section class="page" id="page-shop"></section>
 </main>
@@ -205,7 +205,6 @@ svg text{font-family:inherit}
   <button data-tab="home" class="on"><svg class="icn" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>হোম</button>
   <button data-tab="sales"><svg class="icn" viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M14 8H8"/><path d="M16 12H8"/><path d="M13 16H8"/></svg>বিক্রি</button>
   <button data-tab="products"><svg class="icn" viewBox="0 0 24 24"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg>প্রোডাক্ট</button>
-  <button data-tab="stock"><svg class="icn" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>স্টক</button>
   <button data-tab="more"><svg class="icn" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>আরও</button>
 </nav>
 <div class="sheetwrap" id="sheetWrap"><div class="sheet" id="sheet"></div></div>
@@ -288,7 +287,7 @@ function applyTheme(){
 try{if(window.matchMedia)window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>{if((DB.theme||"system")==="system")applyTheme();});}catch(e){}
 function applyLang(){
   document.documentElement.lang=(DB.lang==="en"?"en":"bn");
-  const labels=[t("tab_home"),t("tab_sales"),t("tab_products"),t("tab_stock"),t("tab_more")];
+  const labels=[t("tab_home"),t("tab_sales"),t("tab_products"),t("tab_more")];
   document.querySelectorAll("#tabbar button").forEach((b,i)=>{if(b.lastChild)b.lastChild.textContent=labels[i];});
   try{const sg=document.querySelector(".slogan"); if(sg)sg.textContent=t("slogan");}catch(e){}
 }
@@ -350,7 +349,7 @@ function render(){
   document.querySelectorAll("#tabbar button").forEach(b=>b.classList.toggle("on",!subPage&&b.dataset.tab===tab));
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("on"));
   document.getElementById("page-"+cur).classList.add("on");
-  ({home:renderHome,sales:renderSales,dues:renderDues,stock:renderStock,more:renderMore,products:renderProducts,expenses:renderExpenses,report:renderReport,wallets:renderWallets,subscription:renderSubscription,shop:renderShop})[cur]();
+  ({home:renderHome,sales:renderSales,dues:renderDues,more:renderMore,products:renderProducts,expenses:renderExpenses,report:renderReport,wallets:renderWallets,subscription:renderSubscription,shop:renderShop})[cur]();
 }
 function daySales(ds){return DB.sales.filter(s=>s.date===ds);}
 function monthSales(){return DB.sales.filter(s=>s.date.startsWith(thisMonth()));}
@@ -511,7 +510,7 @@ function drawDonut(){
     +'</div></div>';
 }
 
-function goStock(){tab="stock";render();}
+function goStock(){tab="products";render();}
 function renderSales(){
   const list=[...DB.sales].sort((a,b)=>b.date.localeCompare(a.date)||b.id.localeCompare(a.id));
   const mt=monthSales().reduce((a,s)=>a+s.total,0);
@@ -700,7 +699,10 @@ function renderStock(){
   document.getElementById("page-stock").innerHTML=h;
 }
 function renderProducts(){
-  let h='<div class="addbar"><button class="btn" onclick="openProduct()">'+svgIcon(I.plus,"sm")+t("new_product")+'</button></div>';
+  const val=DB.products.reduce((a,p)=>a+(p.qty||0)*(p.buy||0),0);
+  const lowN=DB.products.filter(p=>p.qty<=(p.low||5)).length;
+  let h='<div class="card"><h3>'+svgIcon(I.box,"sm")+t("tab_stock")+'</h3><div class="kv"><span>'+t("st_value")+'</span><b>'+money(val)+'</b></div><div class="note">'+bn(DB.products.length)+' '+t("st_count")+(lowN?' \u00B7 <span class="warn">'+bn(lowN)+' '+t("chip_low")+'</span>':"")+'</div></div>';
+  h+='<div class="addbar"><button class="btn" onclick="openProduct()">'+svgIcon(I.plus,"sm")+t("new_product")+'</button></div>';
   h+='<input class="search" id="stockSearch" placeholder="'+t("search_ph")+'" oninput="drawProducts(this.value)"><select class="search" id="stockCat" onchange="drawProducts(document.getElementById(\'stockSearch\').value)"><option value="">'+t("all_cat")+'</option>'+[...new Set(DB.products.map(x=>x.cat).filter(Boolean))].map(c=>'<option value="'+esc(c)+'"'+(stockCatSel===c?" selected":"")+'>'+esc(c)+'</option>').join("")+'</select><div id="stockList"></div>';
   document.getElementById("page-products").innerHTML=h;
   drawProducts("");
@@ -871,7 +873,7 @@ function savePurchase(id){
   if(cost<=0)return ferr(t("e_buy"));
   p.qty+=qty;p.buy=cost;
   DB.purchases.push({id:uid(),date:today(),productId:id,name:p.name,qty:qty,cost:Math.round(qty*cost),walletId:wv("puWallet")});
-  save();closeSheet();tab="stock";render();
+  save();closeSheet();tab="products";render();
 }
 function openExpense(){
   const opts=EXCATS.map(c=>'<option value="'+c+'">'+esc(catName(c))+'</option>').join("");
