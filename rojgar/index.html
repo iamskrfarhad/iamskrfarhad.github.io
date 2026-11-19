@@ -200,7 +200,7 @@ svg text{font-family:inherit}
   
   
   <section class="page" id="page-more"></section>
-<section class="page" id="page-products"></section><section class="page" id="page-expenses"></section><section class="page" id="page-report"></section><section class="page" id="page-wallets"></section><section class="page" id="page-subscription"></section><section class="page" id="page-shop"></section>
+<section class="page" id="page-products"></section><section class="page" id="page-expenses"></section><section class="page" id="page-report"></section><section class="page" id="page-wallets"></section><section class="page" id="page-staff"></section><section class="page" id="page-subscription"></section><section class="page" id="page-shop"></section>
 </main>
 <nav id="tabbar">
   <button data-tab="home" class="on"><svg class="icn" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>হোম</button>
@@ -219,7 +219,7 @@ const BND="০১২৩৪৫৬৭৮৯";
 const EXCATS=["দোকান ভাড়া","বিদ্যুৎ বিল","পানি বিল","গ্যাস বিল","পরিবহন","কর্মচারীর বেতন","প্যাকেজিং","অন্যান্য"];
 const UNITS=["পিস","কেজি","গ্রাম","লিটার","মিলি","ডজন","হালি","বাক্স","প্যাকেট","জোড়া","সেট","গজ","মিটার","ফুট","ইঞ্চি"];
 const STR={
-bn:{tab_home:"হোম",tab_msgs:"মেসেজ",tab_sales:"সেলস",msg_soon:"AI সেলস এজেন্ট শীঘ্রই আসছে",msg_sub:"এখানে আপনার ফেসবুক পেজের কাস্টমারের মেসেজ আর AI এজেন্ট থাকবে।",tab_dues:"বাকি",tab_products:"প্রোডাক্ট",kpi_exp:"আজকের খরচ",back:"ফিরুন",exp_title:"সব খরচ",e_today:"আজকে",e_yday:"গতকাল",e_week:"এই সপ্তাহ",e_month:"এই মাস",e_custom:"কাস্টম",e_from:"শুরুর তারিখ",e_to:"শেষের তারিখ",e_total:"মোট খরচ",e_empty:"এই সময়ে কোনো খরচ নেই",m_open:"দেখুন",st_value:"স্টকের মোট মূল্য (কেনা দামে)",st_count:"টি পণ্য",tab_orders:"অর্ডার",o_new:"নতুন অর্ডার",o_prod:"পণ্য",o_noprod:"পণ্য ছাড়া (সাধারণ)",o_addr:"ঠিকানা",o_addr_ph:"গ্রাম/এলাকা, থানা, জেলা",o_pend:"অপেক্ষমাণ",o_done:"সম্পন্ন",o_cancel:"বাতিল",o_complete:"সম্পন্ন করুন",o_empty:"এখনো কোনো অর্ডার নেই।",o_empty_sub:"নতুন অর্ডার দিয়ে শুরু করুন।",o_pending_n:"টি অর্ডার অপেক্ষমাণ",o_ecust:"ক্রেতার নাম লিখুন।",o_howpay:"টাকা কীভাবে পেলেন?",o_all:"সব",o_unpaid:"অপরিশোধিত",o_paid:"পরিশোধিত",o_online:"অনলাইন",o_shop:"দোকান",o_src:"অর্ডারের ধরন",o_search_ph:"নাম বা ফোন দিয়ে খুঁজুন...",o_return:"রিটার্ন করুন",o_ret_qty:"কত পিস রিটার্ন করবেন?",o_ret_ordered:"অর্ডার ছিল",o_ret_already:"আগে রিটার্ন হয়েছে",o_ret_left:"রিটার্ন করা যাবে",o_ret_done:"রিটার্ন হয়েছে",o_ret_part:"আংশিক রিটার্ন",o_ret_refund:"ফেরতের টাকা",e_ret_qty:"সঠিক পরিমাণ দিন।",hero_ord:"অপেক্ষমাণ অর্ডার",qa_order:"অর্ডার যোগ",f_colors:"রঙের অপশন",f_sizes:"সাইজের অপশন",f_variant:"ভেরিয়েন্ট",f_var_stock:"ভেরিয়েন্ট অনুযায়ী স্টক",e_var:"একটি ভেরিয়েন্ট বাছুন।",o_today:"আজকের অর্ডার",o_pend_amt:"অপেক্ষমাণ অর্ডারের মোট",wallets:"ওয়ালেট",w_total:"মোট ব্যালেন্স",w_add:"নতুন ওয়ালেট",w_name:"ওয়ালেটের নাম",w_kind:"ওয়ালেটের ধরন",w_open:"শুরুর ব্যালেন্স",w_bal:"ব্যালেন্স",f_wallet:"টাকা জমা হবে যে ওয়ালেটে",f_wallet_out:"টাকা যাবে যে ওয়ালেট থেকে",k_cash:"ক্যাশ",k_bkash:"বিকাশ",k_nagad:"নগদ",k_rocket:"রকেট",k_bank:"ব্যাংক",k_other:"অন্যান্য",w_tap:"সব ওয়ালেট দেখতে চাপ দিন",w_empty:"কোনো ওয়ালেট নেই — নতুন ওয়ালেট যোগ করুন",e_wname:"ওয়ালেটের নাম দিন",m_shop:"ম্যানেজ শপ",m_analytics:"অ্যানালিটিক্স",m_sub:"সাবস্ক্রিপশন",m_settings:"সেটিংস",m_dues:"বাকির খাতা",m_sub_free:"বর্তমানে রোজগারের সব ফিচার সম্পূর্ণ ফ্রি — কোনো সাবস্ক্রিপশন বা পেমেন্ট লাগবে না।",tab_stock:"স্টক",tab_more:"আরও",slogan:"ব্যবসার হিসাব, সহজে",default_biz:"আমার ব্যবসা",
+bn:{tab_home:"হোম",tab_msgs:"মেসেজ",tab_sales:"সেলস",msg_soon:"AI সেলস এজেন্ট শীঘ্রই আসছে",msg_sub:"এখানে আপনার ফেসবুক পেজের কাস্টমারের মেসেজ আর AI এজেন্ট থাকবে।",m_staff:"কর্মচারী",st_new:"নতুন কর্মচারী",st_edit:"কর্মচারী এডিট",f_role:"পদবি",f_salary:"মাসিক বেতন",f_join:"যোগদানের তারিখ",f_note:"নোট",st_adv_btn:"অ্যাডভান্স দিন",st_pay_btn:"বেতন দিন",st_salary_w:"মাসিক বেতন",st_adv_w:"অ্যাডভান্স",st_paid_w:"বেতন দেওয়া হয়েছে",st_due_w:"বাকি আছে",st_empty:"এখনো কোনো কর্মচারী নেই।",st_empty_sub:"নতুন কর্মচারী যোগ করুন।",st_formonth:"যে মাসের বেতন",st_history:"এই মাসের লেনদেন",e_staff_name:"কর্মচারীর নাম দিন।",e_salary:"মাসিক বেতন দিন।",tx_salary:"বেতন",tx_advance:"অ্যাডভান্স",tab_dues:"বাকি",tab_products:"প্রোডাক্ট",kpi_exp:"আজকের খরচ",back:"ফিরুন",exp_title:"সব খরচ",e_today:"আজকে",e_yday:"গতকাল",e_week:"এই সপ্তাহ",e_month:"এই মাস",e_custom:"কাস্টম",e_from:"শুরুর তারিখ",e_to:"শেষের তারিখ",e_total:"মোট খরচ",e_empty:"এই সময়ে কোনো খরচ নেই",m_open:"দেখুন",st_value:"স্টকের মোট মূল্য (কেনা দামে)",st_count:"টি পণ্য",tab_orders:"অর্ডার",o_new:"নতুন অর্ডার",o_prod:"পণ্য",o_noprod:"পণ্য ছাড়া (সাধারণ)",o_addr:"ঠিকানা",o_addr_ph:"গ্রাম/এলাকা, থানা, জেলা",o_pend:"অপেক্ষমাণ",o_done:"সম্পন্ন",o_cancel:"বাতিল",o_complete:"সম্পন্ন করুন",o_empty:"এখনো কোনো অর্ডার নেই।",o_empty_sub:"নতুন অর্ডার দিয়ে শুরু করুন।",o_pending_n:"টি অর্ডার অপেক্ষমাণ",o_ecust:"ক্রেতার নাম লিখুন।",o_howpay:"টাকা কীভাবে পেলেন?",o_all:"সব",o_unpaid:"অপরিশোধিত",o_paid:"পরিশোধিত",o_online:"অনলাইন",o_shop:"দোকান",o_src:"অর্ডারের ধরন",o_search_ph:"নাম বা ফোন দিয়ে খুঁজুন...",o_return:"রিটার্ন করুন",o_ret_qty:"কত পিস রিটার্ন করবেন?",o_ret_ordered:"অর্ডার ছিল",o_ret_already:"আগে রিটার্ন হয়েছে",o_ret_left:"রিটার্ন করা যাবে",o_ret_done:"রিটার্ন হয়েছে",o_ret_part:"আংশিক রিটার্ন",o_ret_refund:"ফেরতের টাকা",e_ret_qty:"সঠিক পরিমাণ দিন।",hero_ord:"অপেক্ষমাণ অর্ডার",qa_order:"অর্ডার যোগ",f_colors:"রঙের অপশন",f_sizes:"সাইজের অপশন",f_variant:"ভেরিয়েন্ট",f_var_stock:"ভেরিয়েন্ট অনুযায়ী স্টক",e_var:"একটি ভেরিয়েন্ট বাছুন।",o_today:"আজকের অর্ডার",o_pend_amt:"অপেক্ষমাণ অর্ডারের মোট",wallets:"ওয়ালেট",w_total:"মোট ব্যালেন্স",w_add:"নতুন ওয়ালেট",w_name:"ওয়ালেটের নাম",w_kind:"ওয়ালেটের ধরন",w_open:"শুরুর ব্যালেন্স",w_bal:"ব্যালেন্স",f_wallet:"টাকা জমা হবে যে ওয়ালেটে",f_wallet_out:"টাকা যাবে যে ওয়ালেট থেকে",k_cash:"ক্যাশ",k_bkash:"বিকাশ",k_nagad:"নগদ",k_rocket:"রকেট",k_bank:"ব্যাংক",k_other:"অন্যান্য",w_tap:"সব ওয়ালেট দেখতে চাপ দিন",w_empty:"কোনো ওয়ালেট নেই — নতুন ওয়ালেট যোগ করুন",e_wname:"ওয়ালেটের নাম দিন",m_shop:"ম্যানেজ শপ",m_analytics:"অ্যানালিটিক্স",m_sub:"সাবস্ক্রিপশন",m_settings:"সেটিংস",m_dues:"বাকির খাতা",m_sub_free:"বর্তমানে রোজগারের সব ফিচার সম্পূর্ণ ফ্রি — কোনো সাবস্ক্রিপশন বা পেমেন্ট লাগবে না।",tab_stock:"স্টক",tab_more:"আরও",slogan:"ব্যবসার হিসাব, সহজে",default_biz:"আমার ব্যবসা",
 g_m:"শুভ সকাল",g_a:"শুভ দুপুর",g_e:"শুভ বিকেল",g_n:"শুভ সন্ধ্যা",
 hero_profit:"এই মাসের লাভ",pill_none:"এই মাসে এখনো বিক্রি হয়নি",pill_nocomp:"গত মাসের সঙ্গে তুলনা নেই",pill_vs:"গত মাসের চেয়ে",hero_sales:"বিক্রি",hero_due:"মোট বাকি",
 kpi_today_sales:"আজকের বিক্রি",kpi_collect:"আজকের বাকি আদায়",kpi_due:"মোট বাকি আছে",quick:"তাড়াতাড়ি করুন",qa_sale:"নতুন বিক্রি",qa_due:"বাকি যোগ",qa_product:"পণ্য যোগ",qa_expense:"খরচ যোগ",
@@ -248,7 +248,7 @@ months:["জানুয়ারি","ফেব্রুয়ারি","ম�
 mshort:["জানু","ফেব্রু","মার্চ","এপ্রিল","মে","জুন","জুলা","আগ","সেপ্টে","অক্টো","নভে","ডিসে"],
 wd:["রবি","সোম","মঙ্গল","বুধ","বৃহ","শুক্র","শনি"],
 wa_msg:"আসসালামু আলাইকুম, আপনার কাছে {biz}-এ {amt} বাকি আছে। অনুগ্রহ করে পরিশোধ করবেন। ধন্যবাদ।",wa_biz:"আমাদের দোকানে"},
-en:{tab_home:"Home",tab_msgs:"Messages",tab_sales:"Sales",msg_soon:"AI sales agent coming soon",msg_sub:"Your Facebook page customer messages and the AI agent will live here.",tab_dues:"Dues",tab_products:"Products",kpi_exp:"Today's expenses",back:"Back",exp_title:"All expenses",e_today:"Today",e_yday:"Yesterday",e_week:"This week",e_month:"This month",e_custom:"Custom",e_from:"From date",e_to:"To date",e_total:"Total expenses",e_empty:"No expenses in this period",m_open:"View",st_value:"Total stock value (at buy price)",st_count:"items",tab_orders:"Orders",o_new:"New Order",o_prod:"Product",o_noprod:"No product (general)",o_addr:"Address",o_addr_ph:"Village/area, thana, district",o_pend:"Pending",o_done:"Completed",o_cancel:"Cancelled",o_complete:"Complete",o_empty:"No orders yet.",o_empty_sub:"Start with a new order.",o_pending_n:"orders pending",o_ecust:"Enter the customer name.",o_howpay:"How was the payment received?",o_all:"All",o_unpaid:"Unpaid",o_paid:"Paid",o_online:"Online",o_shop:"In Shop",o_src:"Order type",o_search_ph:"Search by name or phone...",o_return:"Return",o_ret_qty:"How many pieces to return?",o_ret_ordered:"Ordered",o_ret_already:"Already returned",o_ret_left:"Can return",o_ret_done:"Returned",o_ret_part:"Partial return",o_ret_refund:"Refund amount",e_ret_qty:"Enter a valid quantity.",hero_ord:"Pending orders",qa_order:"Add order",f_colors:"Color options",f_sizes:"Size options",f_variant:"Variant",f_var_stock:"Stock by variant",e_var:"Please choose a variant.",o_today:"Today's orders",o_pend_amt:"Total of pending orders",wallets:"Wallets",w_total:"Total balance",w_add:"Add wallet",w_name:"Wallet name",w_kind:"Wallet type",w_open:"Opening balance",w_bal:"Balance",f_wallet:"Money goes into wallet",f_wallet_out:"Money comes from wallet",k_cash:"Cash",k_bkash:"bKash",k_nagad:"Nagad",k_rocket:"Rocket",k_bank:"Bank",k_other:"Other",w_tap:"Tap to see all wallets",w_empty:"No wallets yet — add one",e_wname:"Enter wallet name",m_shop:"Manage Shop",m_analytics:"Analytics",m_sub:"Subscription",m_settings:"Settings",m_dues:"Dues Ledger",m_sub_free:"All Rojgar features are completely free right now — no subscription or payment needed.",tab_stock:"Stock",tab_more:"More",slogan:"Business accounts, made easy",default_biz:"My Business",
+en:{tab_home:"Home",tab_msgs:"Messages",tab_sales:"Sales",msg_soon:"AI sales agent coming soon",msg_sub:"Your Facebook page customer messages and the AI agent will live here.",m_staff:"Employees",st_new:"New employee",st_edit:"Edit employee",f_role:"Role",f_salary:"Monthly salary",f_join:"Joining date",f_note:"Note",st_adv_btn:"Give advance",st_pay_btn:"Pay salary",st_salary_w:"Monthly salary",st_adv_w:"Advance",st_paid_w:"Salary paid",st_due_w:"Due",st_empty:"No employees yet.",st_empty_sub:"Add a new employee.",st_formonth:"Salary for month",st_history:"This month\u2019s transactions",e_staff_name:"Enter the employee name.",e_salary:"Enter the monthly salary.",tx_salary:"Salary",tx_advance:"Advance",tab_dues:"Dues",tab_products:"Products",kpi_exp:"Today's expenses",back:"Back",exp_title:"All expenses",e_today:"Today",e_yday:"Yesterday",e_week:"This week",e_month:"This month",e_custom:"Custom",e_from:"From date",e_to:"To date",e_total:"Total expenses",e_empty:"No expenses in this period",m_open:"View",st_value:"Total stock value (at buy price)",st_count:"items",tab_orders:"Orders",o_new:"New Order",o_prod:"Product",o_noprod:"No product (general)",o_addr:"Address",o_addr_ph:"Village/area, thana, district",o_pend:"Pending",o_done:"Completed",o_cancel:"Cancelled",o_complete:"Complete",o_empty:"No orders yet.",o_empty_sub:"Start with a new order.",o_pending_n:"orders pending",o_ecust:"Enter the customer name.",o_howpay:"How was the payment received?",o_all:"All",o_unpaid:"Unpaid",o_paid:"Paid",o_online:"Online",o_shop:"In Shop",o_src:"Order type",o_search_ph:"Search by name or phone...",o_return:"Return",o_ret_qty:"How many pieces to return?",o_ret_ordered:"Ordered",o_ret_already:"Already returned",o_ret_left:"Can return",o_ret_done:"Returned",o_ret_part:"Partial return",o_ret_refund:"Refund amount",e_ret_qty:"Enter a valid quantity.",hero_ord:"Pending orders",qa_order:"Add order",f_colors:"Color options",f_sizes:"Size options",f_variant:"Variant",f_var_stock:"Stock by variant",e_var:"Please choose a variant.",o_today:"Today's orders",o_pend_amt:"Total of pending orders",wallets:"Wallets",w_total:"Total balance",w_add:"Add wallet",w_name:"Wallet name",w_kind:"Wallet type",w_open:"Opening balance",w_bal:"Balance",f_wallet:"Money goes into wallet",f_wallet_out:"Money comes from wallet",k_cash:"Cash",k_bkash:"bKash",k_nagad:"Nagad",k_rocket:"Rocket",k_bank:"Bank",k_other:"Other",w_tap:"Tap to see all wallets",w_empty:"No wallets yet — add one",e_wname:"Enter wallet name",m_shop:"Manage Shop",m_analytics:"Analytics",m_sub:"Subscription",m_settings:"Settings",m_dues:"Dues Ledger",m_sub_free:"All Rojgar features are completely free right now — no subscription or payment needed.",tab_stock:"Stock",tab_more:"More",slogan:"Business accounts, made easy",default_biz:"My Business",
 g_m:"Good morning",g_a:"Good afternoon",g_e:"Good evening",g_n:"Good evening",
 hero_profit:"This month's profit",pill_none:"No sales yet this month",pill_nocomp:"No comparison with last month",pill_vs:"vs last month",hero_sales:"Sales",hero_due:"Total due",
 kpi_today_sales:"Today's sales",kpi_collect:"Dues collected today",kpi_due:"Total dues outstanding",quick:"Quick actions",qa_sale:"New sale",qa_due:"Add due",qa_product:"Add product",qa_expense:"Add expense",
@@ -321,7 +321,7 @@ const I={
 let DB=load();
 fixSeedWallets();
 if(DB.bizLogo&&DB.bizLogoDark===undefined){detectLogoDark(DB.bizLogo,function(dk){DB.bizLogoDark=dk;save();render();});}
-function blank(){return {bizName:"",bizLogo:"",wallets:defaultWallets(),products:[],orders:[],sales:[],dues:[],payments:[],purchases:[],expenses:[],lang:"bn",theme:"system"};}
+function blank(){return {bizName:"",bizLogo:"",wallets:defaultWallets(),products:[],orders:[],sales:[],dues:[],payments:[],purchases:[],expenses:[],staff:[],staffTx:[],lang:"bn",theme:"system"};}
 function load(){try{const r=localStorage.getItem(KEY);if(r){const d=JSON.parse(r);return Object.assign(blank(),d);}}catch(e){}return blank();}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(DB));}catch(e){}}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
@@ -353,7 +353,7 @@ function render(){
   document.querySelectorAll("#tabbar button").forEach(b=>b.classList.toggle("on",!subPage&&b.dataset.tab===tab));
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("on"));
   document.getElementById("page-"+cur).classList.add("on");
-  ({home:renderHome,msgs:renderMsgs,sales:renderSales,more:renderMore,products:renderProducts,expenses:renderExpenses,report:renderReport,wallets:renderWallets,subscription:renderSubscription,shop:renderShop})[cur]();
+  ({home:renderHome,msgs:renderMsgs,sales:renderSales,more:renderMore,products:renderProducts,expenses:renderExpenses,report:renderReport,wallets:renderWallets,staff:renderStaff,subscription:renderSubscription,shop:renderShop})[cur]();
 }
 function daySales(ds){return DB.sales.filter(s=>s.date===ds);}
 function monthSales(){return DB.sales.filter(s=>s.date.startsWith(thisMonth()));}
@@ -372,7 +372,7 @@ function renderHome(){
   function mProfit(mk){
     const s=DB.sales.filter(x=>x.date.startsWith(mk)).reduce((a,x)=>a+x.total,0);
     const pu=DB.purchases.filter(x=>x.date.startsWith(mk)).reduce((a,x)=>a+x.cost,0);
-    const e=DB.expenses.filter(x=>x.date.startsWith(mk)).reduce((a,x)=>a+x.amount,0);
+    const e=DB.expenses.filter(x=>x.date.startsWith(mk)).reduce((a,x)=>a+x.amount,0)+(DB.staffTx||[]).filter(x=>x.date.startsWith(mk)).reduce((a,x)=>a+x.amount,0);
     return {s:s,p:s-pu-e};
   }
   const cur=mProfit(cm), prev=mProfit(pm);
@@ -388,6 +388,7 @@ function renderHome(){
   DB.sales.forEach(s=>recent.push({d:s.date,ic:I.receipt,cls:"g",t:s.desc+(s.variant?" ("+s.variant+")":""),s:fmtDate(s.date)+" · "+(s.pay==="mobile"?t("pay_mobile"):t("pay_cash")),amt:s.total,pos:true}));
   DB.purchases.forEach(p=>recent.push({d:p.date,ic:I.box,cls:"t",t:t("tx_buy")+": "+p.name,s:fmtDate(p.date),amt:p.cost,pos:false}));
   DB.expenses.forEach(e=>recent.push({d:e.date,ic:I.wallet,cls:"r",t:e.desc||catName(e.cat),s:fmtDate(e.date)+" · "+catName(e.cat),amt:e.amount,pos:false}));
+  (DB.staffTx||[]).forEach(x=>{const s=staffById(x.staffId);recent.push({d:x.date,ic:I.wallet,cls:"r",t:(x.kind==="advance"?t("tx_advance"):t("tx_salary"))+": "+(s?s.name:""),s:fmtDate(x.date),amt:x.amount,pos:false});});
   recent.sort((a,b)=>b.d.localeCompare(a.d));
   let h="";
   h+='<div class="hero"><div class="hlbl">'+t("hero_profit")+'</div><div class="hval">'+money(cur.p)+'</div><span class="hpill">'+pill+'</span>'
@@ -494,7 +495,7 @@ function inRange(ds){
 function drawDonut(){
   const el=document.getElementById("donutCard"); if(!el)return;
   const sales=DB.sales.filter(s=>inRange(s.date)).reduce((a,s)=>a+s.total,0);
-  const out=DB.purchases.filter(x=>inRange(x.date)).reduce((a,x)=>a+x.cost,0)+DB.expenses.filter(x=>inRange(x.date)).reduce((a,x)=>a+x.amount,0);
+  const out=DB.purchases.filter(x=>inRange(x.date)).reduce((a,x)=>a+x.cost,0)+DB.expenses.filter(x=>inRange(x.date)).reduce((a,x)=>a+x.amount,0)+(DB.staffTx||[]).filter(x=>inRange(x.date)).reduce((a,x)=>a+x.amount,0);
   const profit=sales-out;
   const mx=Math.max(sales,out,1);
   function ring(r,frac,color){
@@ -700,6 +701,7 @@ function walletBal(w){
   DB.sales.forEach(s=>{if(s.pay!=="baki"&&flowWalletId(s)===w.id)b+=s.total;});
   DB.purchases.forEach(p=>{if(flowWalletId(p)===w.id)b-=p.cost;});
   DB.expenses.forEach(e=>{if(flowWalletId(e)===w.id)b-=e.amount;});
+  (DB.staffTx||[]).forEach(x=>{if(flowWalletId(x)===w.id)b-=x.amount;});
   return b;
 }
 function walletOpts(selId){return (DB.wallets||[]).map(w=>'<option value="'+w.id+'"'+(w.id===selId?" selected":"")+'>'+esc(dispWName(w))+'</option>').join("");}
@@ -753,7 +755,7 @@ function delWallet(id){if(!confirm(t("confirm_del")))return;DB.wallets=DB.wallet
 function monthStats(mk){
   const s=DB.sales.filter(x=>x.date.startsWith(mk));
   const pu=DB.purchases.filter(x=>x.date.startsWith(mk)).reduce((a,x)=>a+x.cost,0);
-  const e=DB.expenses.filter(x=>x.date.startsWith(mk)).reduce((a,x)=>a+x.amount,0);
+  const e=DB.expenses.filter(x=>x.date.startsWith(mk)).reduce((a,x)=>a+x.amount,0)+(DB.staffTx||[]).filter(x=>x.date.startsWith(mk)).reduce((a,x)=>a+x.amount,0);
   const st=s.reduce((a,x)=>a+x.total,0);
   return {n:s.length,s:st,pu:pu,e:e,p:st-pu-e};
 }
@@ -863,12 +865,91 @@ function renderShop(){
   document.getElementById("page-shop").innerHTML='<button class="btn ghost small" onclick="closeSub()" style="margin-bottom:10px">\u2190 '+t("back")+'</button>'
     +'<div class="card"><h3>'+svgIcon(I.store,"sm")+t("biz_name")+'</h3><div class="note">'+t("now_w")+': '+(DB.bizLogo?'<img class="'+(DB.bizLogoDark?"bizlogo-w":"")+'" src="'+DB.bizLogo+'" style="height:22px;width:auto;max-width:80px;object-fit:contain;vertical-align:-5px;border-radius:5px"> ':'')+'<b>'+esc(bizDisplay())+'</b></div><div class="btnrow"><button class="btn small ghost" onclick="openBiz()">'+svgIcon(I.edit,"sm")+t("change_name")+'</button></div></div>';
 }
+const ROLES=[["ম্যানেজার","Manager"],["সেলসম্যান","Salesman"],["ক্যাশিয়ার","Cashier"],["ডেলিভারি ম্যান","Delivery man"],["অন্যান্য","Other"]];
+const MNAMES={bn:["জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন","জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"],en:["January","February","March","April","May","June","July","August","September","October","November","December"]};
+function roleName(r){const f=ROLES.find(x=>x[0]===r);return f?(DB.lang==="en"?f[1]:f[0]):(r||"");}
+function staffById(id){return (DB.staff||[]).find(s=>s.id===id);}
+function staffSummary(s,mk){let adv=0,paid=0;(DB.staffTx||[]).forEach(x=>{if(x.staffId!==s.id||x.workMonth!==mk)return;if(x.kind==="advance")adv+=x.amount;else paid+=x.amount;});const sal=s.salary||0;return {salary:sal,adv:adv,paid:paid,due:Math.max(0,sal-adv-paid)};}
+let staffMonth=thisMonth();
+function staffMonthLabel(mk){return MNAMES[DB.lang][parseInt(mk.slice(5,7),10)-1]+" "+bn(mk.slice(0,4));}
+function shiftStaffMonth(d){const dt=new Date(staffMonth+"-02T00:00:00");dt.setMonth(dt.getMonth()+d);staffMonth=dt.getFullYear()+"-"+String(dt.getMonth()+1).padStart(2,"0");openSub("staff");}
+function renderStaff(){
+  const mk=staffMonth;
+  let h='<button class="btn ghost small" onclick="closeSub()" style="margin-bottom:10px">\u2190 '+t("back")+'</button>';
+  h+='<div class="addbar"><button class="btn" onclick="openStaff()">'+svgIcon(I.plus,"sm")+t("st_new")+'</button></div>';
+  h+='<div class="card" style="display:flex;align-items:center;gap:10px"><button class="btn small ghost" onclick="shiftStaffMonth(-1)">\u2039</button><b style="flex:1;text-align:center">'+staffMonthLabel(mk)+'</b><button class="btn small ghost" onclick="shiftStaffMonth(1)">\u203A</button></div>';
+  if(!(DB.staff||[]).length)h+='<div class="card"><div class="empty"><div class="eic">'+svgIcon(I.phone)+'</div>'+t("st_empty")+'<br>'+t("st_empty_sub")+'</div></div>';
+  (DB.staff||[]).forEach(s=>{
+    const sm=staffSummary(s,mk);
+    const txs=(DB.staffTx||[]).filter(x=>x.staffId===s.id&&x.workMonth===mk).sort((a,b)=>b.date.localeCompare(a.date));
+    h+='<div class="card"><div style="display:flex;gap:12px;align-items:flex-start"><div class="ic t">'+svgIcon(I.phone)+'</div><div style="flex:1;min-width:0"><div style="font-weight:700;font-size:15.5px">'+esc(s.name)+'</div><div class="s">'+esc(roleName(s.role))+(s.phone?' \u00B7 '+esc(s.phone):'')+'</div>'
+      +'<div class="kv"><span>'+t("st_salary_w")+'</span><b>'+money(sm.salary)+'</b></div>'
+      +'<div class="kv"><span>'+t("st_adv_w")+'</span><span>'+money(sm.adv)+'</span></div>'
+      +'<div class="kv"><span>'+t("st_paid_w")+'</span><span>'+money(sm.paid)+'</span></div>'
+      +'<div class="kv"><span>'+t("st_due_w")+'</span><b style="color:'+(sm.due>0?"var(--red)":"inherit")+'">'+money(sm.due)+'</b></div></div></div>'
+      +'<div class="btnrow">'
+      +(sm.due>0?'<button class="btn small" onclick="openStaffTx(\'salary\',\''+s.id+'\')">'+t("st_pay_btn")+'</button>':"")
+      +'<button class="btn small ghost" onclick="openStaffTx(\'advance\',\''+s.id+'\')">'+t("st_adv_btn")+'</button>'
+      +(s.phone?'<a class="btn small ghost" href="tel:'+esc(s.phone.replace(/[^0-9+]/g,""))+'">'+svgIcon(I.phone,"sm")+t("btn_call")+'</a>':"")
+      +'<button class="btn small ghost" onclick="openStaff(\''+s.id+'\')">'+svgIcon(I.edit,"sm")+t("btn_edit")+'</button>'
+      +'<button class="btn small red" onclick="delStaff(\''+s.id+'\')">'+svgIcon(I.trash,"sm")+t("btn_del")+'</button></div>';
+    if(txs.length){
+      h+='<div style="border-top:1px solid var(--line);margin-top:10px;padding-top:8px"><div class="s" style="font-weight:700;margin-bottom:4px">'+t("st_history")+'</div>'
+        +txs.map(x=>'<div class="kv"><span>'+(x.kind==="advance"?t("tx_advance"):t("tx_salary"))+' \u00B7 '+fmtDate(x.date)+'</span><span>'+money(x.amount)+' <a href="javascript:void(0)" onclick="delStaffTx(\''+x.id+'\')" style="color:var(--red);text-decoration:none">\u2715</a></span></div>').join("")+'</div>';
+    }
+    h+='</div>';
+  });
+  document.getElementById("page-staff").innerHTML=h;
+}
+function openStaff(id){
+  const s=id?staffById(id):null;
+  const rOpts=ROLES.map(r=>'<option value="'+r[0]+'"'+(s&&s.role===r[0]?" selected":"")+'>'+esc(DB.lang==="en"?r[1]:r[0])+'</option>').join("");
+  openSheet(sheetHead(s?t("st_edit"):t("st_new"))
+    +'<div class="f"><label>'+t("f_cname")+'</label><input id="stName" value="'+(s?esc(s.name):"")+'" placeholder="'+t("f_name_ph")+'"></div>'
+    +'<div class="f"><label>'+t("f_role")+'</label><select id="stRole">'+rOpts+'</select></div>'
+    +'<div class="f"><label>'+t("f_phone2")+'</label><input id="stPhone" inputmode="tel" value="'+(s?esc(s.phone||""):"")+'" placeholder="01XXXXXXXXX"></div>'
+    +'<div class="f"><label>'+t("f_salary")+'</label><input id="stSalary" inputmode="decimal" value="'+(s?bn(s.salary):"")+'" placeholder="0"></div>'
+    +'<div class="f"><label>'+t("f_join")+'</label><input id="stJoin" type="date" value="'+(s&&s.joinDate?s.joinDate:today())+'"></div>'
+    +'<div class="f"><label>'+t("f_note")+'</label><input id="stNote" value="'+(s?esc(s.note||""):"")+'"></div>'
+    +'<div class="btnrow"><button class="btn" onclick="saveStaff(\''+(id||"")+'\')">'+t("save")+'</button><button class="btn ghost" onclick="closeSheet()">'+t("cancel")+'</button></div>');
+}
+function saveStaff(id){
+  const name=gv("stName").trim();
+  if(!name)return ferr(t("e_staff_name"));
+  const salary=num(gv("stSalary"));
+  if(salary<=0)return ferr(t("e_salary"));
+  const data={name:name,role:gv("stRole"),phone:gv("stPhone"),salary:salary,joinDate:gv("stJoin"),note:gv("stNote")};
+  if(id){Object.assign(staffById(id),data);}
+  else DB.staff.push(Object.assign({id:uid()},data));
+  save();closeSheet();openSub("staff");
+}
+function delStaff(id){if(!confirm(t("confirm_del")))return;DB.staff=DB.staff.filter(s=>s.id!==id);DB.staffTx=DB.staffTx.filter(x=>x.staffId!==id);save();openSub("staff");}
+function openStaffTx(kind,sid){
+  const s=staffById(sid); if(!s)return;
+  const sm=staffSummary(s,staffMonth);
+  openSheet(sheetHead((kind==="advance"?t("st_adv_btn"):t("st_pay_btn"))+" \u2014 "+esc(s.name))
+    +'<div class="note" style="margin-bottom:10px">'+staffMonthLabel(staffMonth)+' \u00B7 '+t("st_salary_w")+' '+money(sm.salary)+' \u00B7 '+t("st_adv_w")+' '+money(sm.adv)+' \u00B7 '+t("st_due_w")+' '+money(sm.due)+'</div>'
+    +'<div class="f"><label>'+t("f_amt")+'</label><input id="sxAmt" inputmode="decimal" value="'+(kind==="salary"&&sm.due>0?bn(sm.due):"")+'" placeholder="0"></div>'
+    +'<div class="f"><label>'+t("f_date")+'</label><input id="sxDate" type="date" value="'+today()+'"></div>'
+    +'<div class="f"><label>'+t("st_formonth")+'</label><input id="sxMonth" type="month" value="'+staffMonth+'"></div>'
+    +walletField("sxWallet","f_wallet_out","cash")
+    +'<div class="f"><label>'+t("f_note")+'</label><input id="sxNote"></div>'
+    +'<div class="btnrow"><button class="btn" onclick="saveStaffTx(\''+kind+'\',\''+sid+'\')">'+t("save")+'</button><button class="btn ghost" onclick="closeSheet()">'+t("cancel")+'</button></div>');
+}
+function saveStaffTx(kind,sid){
+  const amt=num(gv("sxAmt"));
+  if(amt<=0)return ferr(t("e_amt"));
+  DB.staffTx.push({id:uid(),staffId:sid,kind:kind,amount:amt,date:gv("sxDate")||today(),workMonth:gv("sxMonth")||staffMonth,walletId:wv("sxWallet"),note:gv("sxNote")});
+  save();closeSheet();openSub("staff");
+}
+function delStaffTx(id){if(!confirm(t("confirm_del")))return;DB.staffTx=DB.staffTx.filter(x=>x.id!==id);save();openSub("staff");}
 function renderMore(){
   const totBal=(DB.wallets||[]).reduce((a,w)=>a+walletBal(w),0);
   let h='<div class="card menu">'
     +mrow(I.store,"#e3e9ff","#3348c5",t("m_shop"),esc(bizDisplay()),"openSub(\'shop\')")
     +mrow(I.wallet,"#dcf5e9","#0b7a55",t("wallets"),money(totBal),"openSub(\'wallets\')")
     +mrow(I.chart,"#efe4ff","#7c3aed",t("m_analytics"),"","openSub(\'report\')")
+    +mrow(I.phone,"#e0f2fe","#0369a1",t("m_staff"),bn((DB.staff||[]).length),"openSub(\'staff\')")
     +mrow(I.receipt,"#ffe4ef","#be185d",t("m_sub"),"","openSub(\'subscription\')")
     +'</div>';
   h+='<div class="section-t">'+t("m_settings")+'</div>';
