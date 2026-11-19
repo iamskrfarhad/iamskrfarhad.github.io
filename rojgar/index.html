@@ -181,7 +181,7 @@ svg text{font-family:inherit}
 .app{display:flex;align-items:center;justify-content:center}
 .oic{width:.9em;height:.9em;border-radius:0;margin:0 .06em}
 
-.credit{display:flex;align-items:center;justify-content:center;gap:8px}.aqic{height:24px;width:auto}.bizlogo{height:38px;width:auto;max-width:120px;object-fit:contain;border-radius:8px;flex:none}.bizgrp{display:flex;align-items:center;gap:10px;min-width:0}.bizgrp .biz{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}</style>
+.credit{display:flex;align-items:center;justify-content:center;gap:8px}.aqic{height:24px;width:auto}.wdeck{cursor:pointer}.wcard{position:relative;border-radius:18px;padding:12px 16px;color:#fff;height:96px;box-shadow:0 10px 24px rgba(20,30,80,.16)}.wcard+.wcard{margin-top:-44px}.wcard.full{height:auto}.wrow{display:flex;justify-content:space-between;gap:10px;font-weight:700;font-size:15px}.wfront{margin-top:12px}.wflbl{font-size:11px;letter-spacing:.08em;opacity:.85}.wbig{font-size:24px;font-weight:800}.bizlogo{height:38px;width:auto;max-width:120px;object-fit:contain;border-radius:8px;flex:none}.bizgrp{display:flex;align-items:center;gap:10px;min-width:0}.bizgrp .biz{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}</style>
 </head>
 <body>
 <header>
@@ -199,7 +199,7 @@ svg text{font-family:inherit}
   <section class="page" id="page-dues"></section>
   <section class="page" id="page-stock"></section>
   <section class="page" id="page-more"></section>
-<section class="page" id="page-products"></section><section class="page" id="page-expenses"></section><section class="page" id="page-report"></section>
+<section class="page" id="page-products"></section><section class="page" id="page-expenses"></section><section class="page" id="page-report"></section><section class="page" id="page-wallets"></section>
 </main>
 <nav id="tabbar">
   <button data-tab="home" class="on"><svg class="icn" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>হোম</button>
@@ -217,7 +217,7 @@ const BND="০১২৩৪৫৬৭৮৯";
 const EXCATS=["দোকান ভাড়া","বিদ্যুৎ বিল","পানি বিল","গ্যাস বিল","পরিবহন","কর্মচারীর বেতন","প্যাকেজিং","অন্যান্য"];
 const UNITS=["পিস","কেজি","গ্রাম","লিটার","মিলি","ডজন","হালি","বাক্স","প্যাকেট","জোড়া","সেট","গজ","মিটার","ফুট","ইঞ্চি"];
 const STR={
-bn:{tab_home:"হোম",tab_sales:"বিক্রি",tab_dues:"বাকি",tab_products:"প্রোডাক্ট",kpi_exp:"আজকের খরচ",back:"ফিরুন",exp_title:"সব খরচ",e_today:"আজকে",e_yday:"গতকাল",e_week:"এই সপ্তাহ",e_month:"এই মাস",e_custom:"কাস্টম",e_from:"শুরুর তারিখ",e_to:"শেষের তারিখ",e_total:"মোট খরচ",e_empty:"এই সময়ে কোনো খরচ নেই",m_open:"দেখুন",st_value:"স্টকের মোট মূল্য (কেনা দামে)",st_count:"টি পণ্য",tab_stock:"স্টক",tab_more:"আরও",slogan:"ব্যবসার হিসাব, সহজে",default_biz:"আমার ব্যবসা",
+bn:{tab_home:"হোম",tab_sales:"বিক্রি",tab_dues:"বাকি",tab_products:"প্রোডাক্ট",kpi_exp:"আজকের খরচ",back:"ফিরুন",exp_title:"সব খরচ",e_today:"আজকে",e_yday:"গতকাল",e_week:"এই সপ্তাহ",e_month:"এই মাস",e_custom:"কাস্টম",e_from:"শুরুর তারিখ",e_to:"শেষের তারিখ",e_total:"মোট খরচ",e_empty:"এই সময়ে কোনো খরচ নেই",m_open:"দেখুন",st_value:"স্টকের মোট মূল্য (কেনা দামে)",st_count:"টি পণ্য",wallets:"ওয়ালেট",w_total:"মোট ব্যালেন্স",w_add:"নতুন ওয়ালেট",w_name:"ওয়ালেটের নাম",w_kind:"ওয়ালেটের ধরন",w_open:"শুরুর ব্যালেন্স",w_bal:"ব্যালেন্স",f_wallet:"টাকা জমা হবে যে ওয়ালেটে",f_wallet_out:"টাকা যাবে যে ওয়ালেট থেকে",k_cash:"ক্যাশ",k_bkash:"বিকাশ",k_nagad:"নগদ",k_rocket:"রকেট",k_bank:"ব্যাংক",k_other:"অন্যান্য",w_tap:"সব ওয়ালেট দেখতে চাপ দিন",w_empty:"কোনো ওয়ালেট নেই — নতুন ওয়ালেট যোগ করুন",e_wname:"ওয়ালেটের নাম দিন",tab_stock:"স্টক",tab_more:"আরও",slogan:"ব্যবসার হিসাব, সহজে",default_biz:"আমার ব্যবসা",
 g_m:"শুভ সকাল",g_a:"শুভ দুপুর",g_e:"শুভ বিকেল",g_n:"শুভ সন্ধ্যা",
 hero_profit:"এই মাসের লাভ",pill_none:"এই মাসে এখনো বিক্রি হয়নি",pill_nocomp:"গত মাসের সঙ্গে তুলনা নেই",pill_vs:"গত মাসের চেয়ে",hero_sales:"বিক্রি",hero_due:"মোট বাকি",
 kpi_today_sales:"আজকের বিক্রি",kpi_collect:"আজকের বাকি আদায়",kpi_due:"মোট বাকি আছে",quick:"তাড়াতাড়ি করুন",qa_sale:"নতুন বিক্রি",qa_due:"বাকি যোগ",qa_product:"পণ্য যোগ",qa_expense:"খরচ যোগ",
@@ -246,7 +246,7 @@ months:["জানুয়ারি","ফেব্রুয়ারি","ম�
 mshort:["জানু","ফেব্রু","মার্চ","এপ্রিল","মে","জুন","জুলা","আগ","সেপ্টে","অক্টো","নভে","ডিসে"],
 wd:["রবি","সোম","মঙ্গল","বুধ","বৃহ","শুক্র","শনি"],
 wa_msg:"আসসালামু আলাইকুম, আপনার কাছে {biz}-এ {amt} বাকি আছে। অনুগ্রহ করে পরিশোধ করবেন। ধন্যবাদ।",wa_biz:"আমাদের দোকানে"},
-en:{tab_home:"Home",tab_sales:"Sales",tab_dues:"Dues",tab_products:"Products",kpi_exp:"Today's expenses",back:"Back",exp_title:"All expenses",e_today:"Today",e_yday:"Yesterday",e_week:"This week",e_month:"This month",e_custom:"Custom",e_from:"From date",e_to:"To date",e_total:"Total expenses",e_empty:"No expenses in this period",m_open:"View",st_value:"Total stock value (at buy price)",st_count:"items",tab_stock:"Stock",tab_more:"More",slogan:"Business accounts, made easy",default_biz:"My Business",
+en:{tab_home:"Home",tab_sales:"Sales",tab_dues:"Dues",tab_products:"Products",kpi_exp:"Today's expenses",back:"Back",exp_title:"All expenses",e_today:"Today",e_yday:"Yesterday",e_week:"This week",e_month:"This month",e_custom:"Custom",e_from:"From date",e_to:"To date",e_total:"Total expenses",e_empty:"No expenses in this period",m_open:"View",st_value:"Total stock value (at buy price)",st_count:"items",wallets:"Wallets",w_total:"Total balance",w_add:"Add wallet",w_name:"Wallet name",w_kind:"Wallet type",w_open:"Opening balance",w_bal:"Balance",f_wallet:"Money goes into wallet",f_wallet_out:"Money comes from wallet",k_cash:"Cash",k_bkash:"bKash",k_nagad:"Nagad",k_rocket:"Rocket",k_bank:"Bank",k_other:"Other",w_tap:"Tap to see all wallets",w_empty:"No wallets yet — add one",e_wname:"Enter wallet name",tab_stock:"Stock",tab_more:"More",slogan:"Business accounts, made easy",default_biz:"My Business",
 g_m:"Good morning",g_a:"Good afternoon",g_e:"Good evening",g_n:"Good evening",
 hero_profit:"This month's profit",pill_none:"No sales yet this month",pill_nocomp:"No comparison with last month",pill_vs:"vs last month",hero_sales:"Sales",hero_due:"Total due",
 kpi_today_sales:"Today's sales",kpi_collect:"Dues collected today",kpi_due:"Total dues outstanding",quick:"Quick actions",qa_sale:"New sale",qa_due:"Add due",qa_product:"Add product",qa_expense:"Add expense",
@@ -317,7 +317,7 @@ const I={
  heart:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>'
 };
 let DB=load();
-function blank(){return {bizName:"",bizLogo:"",products:[],sales:[],dues:[],payments:[],purchases:[],expenses:[],lang:"bn",theme:"system"};}
+function blank(){return {bizName:"",bizLogo:"",wallets:defaultWallets(),products:[],sales:[],dues:[],payments:[],purchases:[],expenses:[],lang:"bn",theme:"system"};}
 function load(){try{const r=localStorage.getItem(KEY);if(r){const d=JSON.parse(r);return Object.assign(blank(),d);}}catch(e){}return blank();}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(DB));}catch(e){}}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
@@ -348,7 +348,7 @@ function render(){
   document.querySelectorAll("#tabbar button").forEach(b=>b.classList.toggle("on",!subPage&&b.dataset.tab===tab));
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("on"));
   document.getElementById("page-"+cur).classList.add("on");
-  ({home:renderHome,sales:renderSales,dues:renderDues,stock:renderStock,more:renderMore,products:renderProducts,expenses:renderExpenses,report:renderReport})[cur]();
+  ({home:renderHome,sales:renderSales,dues:renderDues,stock:renderStock,more:renderMore,products:renderProducts,expenses:renderExpenses,report:renderReport,wallets:renderWallets})[cur]();
 }
 function daySales(ds){return DB.sales.filter(s=>s.date===ds);}
 function monthSales(){return DB.sales.filter(s=>s.date.startsWith(thisMonth()));}
@@ -396,6 +396,7 @@ function renderHome(){
     +'<button onclick="openDue()"><span class="qic q2">'+svgIcon(I.book)+'</span>'+t("qa_due")+'</button>'
     +'<button onclick="openProduct()"><span class="qic q3">'+svgIcon(I.box)+'</span>'+t("qa_product")+'</button>'
     +'<button onclick="openExpense()"><span class="qic q4">'+svgIcon(I.wallet)+'</span>'+t("qa_expense")+'</button></div>';
+  h+=walletDeck();
   if(low.length)h+='<div class="banner" onclick="goStock()">'+svgIcon(I.alert,"sm")+'<span>'+bn(low.length)+' '+t("low_msg")+'</span></div>';
   h+='<div class="card" id="chartCard" onclick="openSub(\'report\')" style="cursor:pointer"></div>';
   h+='<div class="card" id="donutCard"></div>';
@@ -540,6 +541,74 @@ function renderDues(){
   });
   document.getElementById("page-dues").innerHTML='<button class="btn ghost small" onclick="closeSub()" style="margin-bottom:10px">\u2190 '+t("back")+'</button>'+h;
 }
+const KIND_COLORS={cash:["#0ea968","#0b7a55"],bkash:["#e2136e","#a30d50"],nagad:["#f97b1d","#dd5800"],rocket:["#9b3fa0","#6d1f74"],bank:["#3b6fe0","#2749a8"],other:["#64748b","#475569"]};
+const KIND_KEYS={cash:"k_cash",bkash:"k_bkash",nagad:"k_nagad",rocket:"k_rocket",bank:"k_bank",other:"k_other"};
+function defaultWallets(){return [{id:uid(),name:"ক্যাশ",kind:"cash",opening:0},{id:uid(),name:"বিকাশ",kind:"bkash",opening:0},{id:uid(),name:"নগদ",kind:"nagad",opening:0},{id:uid(),name:"ব্যাংক",kind:"bank",opening:0}];}
+function walletById(id){return (DB.wallets||[]).find(w=>w.id===id);}
+function defaultWalletId(kind){
+  const ws=DB.wallets||[]; if(!ws.length)return "";
+  if(kind==="mobile"){const m=ws.find(w=>["bkash","nagad","rocket"].indexOf(w.kind)>=0); if(m)return m.id;}
+  const c=ws.find(w=>w.kind===(kind||"cash")); if(c)return c.id;
+  return ws[0].id;
+}
+function flowWalletId(x){ if(x.walletId&&walletById(x.walletId))return x.walletId; return defaultWalletId("cash"); }
+function walletBal(w){
+  let b=+w.opening||0;
+  DB.sales.forEach(s=>{if(s.pay!=="baki"&&flowWalletId(s)===w.id)b+=s.total;});
+  DB.payments.forEach(p=>{if(flowWalletId(p)===w.id)b+=p.amount;});
+  DB.purchases.forEach(p=>{if(flowWalletId(p)===w.id)b-=p.cost;});
+  DB.expenses.forEach(e=>{if(flowWalletId(e)===w.id)b-=e.amount;});
+  return b;
+}
+function walletOpts(selId){return (DB.wallets||[]).map(w=>'<option value="'+w.id+'"'+(w.id===selId?" selected":"")+'>'+esc(w.name)+'</option>').join("");}
+function walletField(id,labelKey,prefKind){
+  if(!(DB.wallets||[]).length)return "";
+  return '<div class="f"><label>'+t(labelKey)+'</label><select id="'+id+'">'+walletOpts(defaultWalletId(prefKind))+'</select></div>';
+}
+function wv(id){const e=document.getElementById(id);return e?e.value:"";}
+function walletDeck(){
+  const ws=DB.wallets||[]; if(!ws.length)return "";
+  const tot=ws.reduce((a,w)=>a+walletBal(w),0);
+  const show=ws.slice(0,4).slice().reverse();
+  let h='<div class="section-t">'+t("wallets")+'</div><div class="wdeck" onclick="openSub(\'wallets\')">';
+  show.forEach((w,i)=>{
+    const c=KIND_COLORS[w.kind]||KIND_COLORS.other;
+    const front=i===show.length-1;
+    h+='<div class="wcard" style="background:linear-gradient(135deg,'+c[0]+','+c[1]+');z-index:'+(i+1)+'"><div class="wrow"><span>'+esc(w.name)+'</span><span>'+money(walletBal(w))+'</span></div>'+(front?'<div class="wfront"><span class="wflbl">'+t("w_bal")+'</span><div class="wbig">'+money(walletBal(w))+'</div></div>':"")+'</div>';
+  });
+  h+='</div><div class="note" style="margin-top:8px">'+t("w_total")+': <b>'+money(tot)+'</b> \u00B7 '+t("w_tap")+'</div>';
+  return h;
+}
+function renderWallets(){
+  const ws=DB.wallets||[];
+  const tot=ws.reduce((a,w)=>a+walletBal(w),0);
+  let h='<button class="btn ghost small" onclick="closeSub()" style="margin-bottom:10px">\u2190 '+t("back")+'</button>';
+  h+='<div class="card"><h3>'+svgIcon(I.wallet,"sm")+t("wallets")+'</h3><div class="kv"><span>'+t("w_total")+'</span><b>'+money(tot)+'</b></div><div class="btnrow"><button class="btn" onclick="openWallet()">'+svgIcon(I.plus,"sm")+t("w_add")+'</button></div></div>';
+  if(!ws.length)h+='<div class="card"><div class="empty">'+t("w_empty")+'</div></div>';
+  ws.forEach(w=>{
+    const c=KIND_COLORS[w.kind]||KIND_COLORS.other;
+    h+='<div class="wcard full" style="background:linear-gradient(135deg,'+c[0]+','+c[1]+')"><div class="wrow"><span>'+esc(w.name)+'</span><span>'+t(KIND_KEYS[w.kind]||"k_other")+'</span></div><div class="wfront"><span class="wflbl">'+t("w_bal")+'</span><div class="wbig">'+money(walletBal(w))+'</div></div></div>'
+      +'<div class="btnrow" style="margin:8px 0 16px"><button class="btn small ghost" onclick="openWallet(\''+w.id+'\')">'+svgIcon(I.edit,"sm")+t("btn_edit")+'</button><button class="btn small red" onclick="delWallet(\''+w.id+'\')">'+svgIcon(I.trash,"sm")+t("btn_del")+'</button></div>';
+  });
+  document.getElementById("page-wallets").innerHTML=h;
+}
+function openWallet(id){
+  const w=id?walletById(id):null;
+  const kinds=["cash","bkash","nagad","rocket","bank","other"];
+  openSheet(sheetHead(w?esc(w.name):t("w_add"))
+    +'<div class="f"><label>'+t("w_name")+'</label><input id="wName" value="'+(w?esc(w.name):"")+'"></div>'
+    +'<div class="f"><label>'+t("w_kind")+'</label><select id="wKind">'+kinds.map(k=>'<option value="'+k+'"'+(w&&w.kind===k?" selected":"")+'>'+t(KIND_KEYS[k])+'</option>').join("")+'</select></div>'
+    +'<div class="f"><label>'+t("w_open")+'</label><input id="wOpen" inputmode="decimal" value="'+(w?bn(w.opening||0):bn(0))+'"></div>'
+    +'<div class="btnrow"><button class="btn" onclick="saveWallet(\''+(id||"")+'\')">'+t("save")+'</button><button class="btn ghost" onclick="closeSheet()">'+t("cancel")+'</button></div>');
+}
+function saveWallet(id){
+  const name=gv("wName").trim();
+  if(!name)return ferr(t("e_wname"));
+  if(id){const w=walletById(id); if(w){w.name=name; w.kind=gv("wKind"); w.opening=num(gv("wOpen"));}}
+  else DB.wallets.push({id:uid(),name:name,kind:gv("wKind"),opening:num(gv("wOpen"))});
+  save();closeSheet();render();
+}
+function delWallet(id){if(!confirm(t("confirm_del")))return;DB.wallets=DB.wallets.filter(w=>w.id!==id);save();render();}
 function monthStats(mk){
   const s=DB.sales.filter(x=>x.date.startsWith(mk));
   const pu=DB.purchases.filter(x=>x.date.startsWith(mk)).reduce((a,x)=>a+x.cost,0);
@@ -679,12 +748,13 @@ function openSale(preId){
     +'<div class="f"><label>'+t("f_qty")+'</label><input id="sQty" inputmode="decimal" value="'+bn(1)+'"></div>'
     +'<div class="f"><label>'+t("f_price")+'</label><input id="sPrice" inputmode="decimal" placeholder="0"></div>'
     +'<div class="f"><label>'+t("f_payway")+'</label><select id="sPay" onchange="salePayChange()"><option value="cash">'+t("pay_cash")+'</option><option value="mobile">'+t("pay_mobile")+'</option><option value="baki">'+t("pay_baki")+'</option></select></div>'
+    +'<div class="f" id="sWalletBox"><label>'+t("f_wallet")+'</label><select id="sWallet">'+walletOpts(defaultWalletId("cash"))+'</select></div>'
     +'<div id="bakiBox" style="display:none"><div class="f"><label>'+t("f_cname")+'</label><input id="sCust" placeholder="'+t("f_name_ph")+'"></div><div class="f"><label>'+t("f_phone")+'</label><input id="sPhone" inputmode="tel" placeholder="01XXXXXXXXX"></div></div>'
     +'<div class="btnrow"><button class="btn" onclick="saveSale()">'+t("save")+'</button><button class="btn ghost" onclick="closeSheet()">'+t("cancel")+'</button></div>');
   if(preId)saleProdChange();
 }
 function saleProdChange(){const p=prod(gv("sProd"));if(p){document.getElementById("sDesc").value=p.name;document.getElementById("sPrice").value=bn(p.sell);}}
-function salePayChange(){document.getElementById("bakiBox").style.display=gv("sPay")==="baki"?"block":"none";}
+function salePayChange(){const pay=gv("sPay");document.getElementById("bakiBox").style.display=pay==="baki"?"block":"none";const wb=document.getElementById("sWalletBox");if(wb)wb.style.display=pay==="baki"?"none":"block";const sw=document.getElementById("sWallet");if(sw&&pay!=="baki")sw.value=defaultWalletId(pay==="mobile"?"mobile":"cash");}
 function saveSale(){
   const p=prod(gv("sProd"));const qty=num(gv("sQty"))||1;const price=num(gv("sPrice"));
   const desc=gv("sDesc")||(p?p.name:"");
@@ -693,7 +763,7 @@ function saveSale(){
   if(p&&qty>p.qty)return ferr(t("e_stock1")+" "+bn(p.qty)+" "+t("e_stock2"));
   const pay=gv("sPay");const total=Math.round(qty*price);
   if(pay==="baki"&&!gv("sCust"))return ferr(t("e_baki_name"));
-  const sale={id:uid(),date:today(),desc:desc,productId:p?p.id:"",qty:qty,total:total,cost:p?Math.round(p.buy*qty):0,pay:pay,customer:gv("sCust"),phone:gv("sPhone")};
+  const sale={id:uid(),date:today(),desc:desc,productId:p?p.id:"",qty:qty,total:total,cost:p?Math.round(p.buy*qty):0,pay:pay,walletId:pay==="baki"?"":wv("sWallet"),customer:gv("sCust"),phone:gv("sPhone")};
   DB.sales.push(sale);
   if(p)p.qty-=qty;
   if(pay==="baki")DB.dues.push({id:uid(),date:today(),customer:gv("sCust"),phone:gv("sPhone"),amount:total,paid:0,note:desc});
@@ -717,6 +787,7 @@ function saveDue(){
 function openPay(name){
   openSheet(sheetHead(t("f_pay")+" — "+esc(name))
     +'<div class="f"><label>'+t("f_pay_amt")+'</label><input id="pAmt" inputmode="decimal" placeholder="0"></div>'
+    +walletField("pWallet","f_wallet","cash")
     +'<div class="btnrow"><button class="btn" onclick="savePay(\''+esc(name).replace(/'/g,"\\'")+'\')">'+t("save")+'</button><button class="btn ghost" onclick="closeSheet()">'+t("cancel")+'</button></div>');
 }
 function savePay(name){
@@ -724,7 +795,7 @@ function savePay(name){
   if(amt<=0)return ferr(t("e_amt"));
   const items=DB.dues.filter(d=>d.customer.trim().toLowerCase()===name.trim().toLowerCase()&&(d.amount-d.paid)>0).sort((a,b)=>a.date.localeCompare(b.date));
   for(const d of items){if(amt<=0)break;const take=Math.min(amt,d.amount-d.paid);d.paid+=take;amt-=take;}
-  DB.payments.push({id:uid(),date:today(),customer:name,amount:num(gv("pAmt"))});
+  DB.payments.push({id:uid(),date:today(),customer:name,amount:num(gv("pAmt")),walletId:wv("pWallet")});
   save();closeSheet();openSub("dues");
 }
 let tmpProdImg="";
@@ -770,6 +841,7 @@ function openPurchase(id){
   openSheet(sheetHead(t("f_pur")+" — "+esc(p.name))
     +'<div class="f"><label>'+t("f_pur_qty")+'</label><input id="puQty" inputmode="decimal" value="'+bn(1)+'"></div>'
     +'<div class="f"><label>'+t("f_pur_cost")+'</label><input id="puCost" inputmode="decimal" value="'+bn(p.buy)+'"></div>'
+    +walletField("puWallet","f_wallet_out","cash")
     +'<div class="btnrow"><button class="btn" onclick="savePurchase(\''+id+'\')">'+t("save")+'</button><button class="btn ghost" onclick="closeSheet()">'+t("cancel")+'</button></div>');
 }
 function savePurchase(id){
@@ -777,7 +849,7 @@ function savePurchase(id){
   if(qty<=0)return ferr(t("e_amt"));
   if(cost<=0)return ferr(t("e_buy"));
   p.qty+=qty;p.buy=cost;
-  DB.purchases.push({id:uid(),date:today(),productId:id,name:p.name,qty:qty,cost:Math.round(qty*cost)});
+  DB.purchases.push({id:uid(),date:today(),productId:id,name:p.name,qty:qty,cost:Math.round(qty*cost),walletId:wv("puWallet")});
   save();closeSheet();tab="stock";render();
 }
 function openExpense(){
@@ -786,12 +858,13 @@ function openExpense(){
     +'<div class="f"><label>'+t("f_exp_cat")+'</label><select id="eCat">'+opts+'</select></div>'
     +'<div class="f"><label>'+t("f_exp_desc")+'</label><input id="eDesc" placeholder="'+t("f_exp_ph")+'"></div>'
     +'<div class="f"><label>'+t("f_amt")+'</label><input id="eAmt" inputmode="decimal" placeholder="0"></div>'
+    +walletField("eWallet","f_wallet_out","cash")
     +'<div class="btnrow"><button class="btn" onclick="saveExpense()">'+t("save")+'</button><button class="btn ghost" onclick="closeSheet()">'+t("cancel")+'</button></div>');
 }
 function saveExpense(){
   const amt=num(gv("eAmt"));
   if(amt<=0)return ferr(t("e_exp_amt"));
-  DB.expenses.push({id:uid(),date:today(),cat:gv("eCat"),desc:gv("eDesc"),amount:amt});
+  DB.expenses.push({id:uid(),date:today(),cat:gv("eCat"),desc:gv("eDesc"),amount:amt,walletId:wv("eWallet")});
   save();closeSheet();render();
 }
 let tmpBizLogo="";
