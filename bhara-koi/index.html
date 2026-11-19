@@ -176,7 +176,9 @@
       body .sheet{ border-radius:26px 26px 0 0; }
       body .toast{ bottom:108px; border-radius:14px; box-shadow:0 12px 30px rgba(0,0,0,.3); }
       body form input:not([type="checkbox"]), body form select, body form textarea, body .pick-field{ border-radius:14px; }
-      .bk-svg19 svg{ width:19px; height:19px; }
+      .bk-ic14{ display:inline-block; width:14px; height:14px; vertical-align:-2px; color:var(--brand); }
+      .bk-ic14 svg{ width:14px; height:14px; display:block; }
+.bk-svg19 svg{ width:19px; height:19px; }
       .bk-svg20 svg{ width:20px; height:20px; }
       .bk-seg svg{ width:18px; height:18px; }
       .bk-row{ display:flex; align-items:center; gap:12px; cursor:pointer; margin:0; }
@@ -1723,6 +1725,7 @@
         chart:'<path d="M3.5 20.5h17"/><path d="M6.5 20.5v-5.5M11 20.5V8M15.5 20.5v-8.5M20 20.5V5"/>',
         swap:'<path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/>',
         repeat:'<path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/>',
+        pin:'<path d="M12 21s-6.5-5.3-6.5-10.2A6.5 6.5 0 0 1 12 4.5a6.5 6.5 0 0 1 6.5 6.3C18.5 15.7 12 21 12 21z"/><circle cx="12" cy="10.6" r="2.3"/>',
         /* quick-action story icons — flat like the rest, but each one
            carries its own little scene so the tile reads at a glance:
            tenant = person + key under a roof, bill = receipt with a big
@@ -2348,7 +2351,9 @@
           var wa = t.phone ? waLink(t.phone) : "";
           return '<div class="card"><div class="row"><div class="avatar">' + ic("qTenant") + "</div>" +
             '<div class="grow"><b>' + esc(t.name) + (t.active === false ? ' <span class="chip free">' + L.chipLeft + "</span>" : "") + '</b>' +
-            '<div class="small muted">' + flatLabel(f) + (t.phone ? " · " + esc(t.phone) : "") + "</div></div>" + right + "</div>" + emg +
+            '<div class="small muted">' + flatLabel(f) + (t.phone ? " · " + esc(t.phone) : "") + "</div>" +
+            (function(){ var bd = f ? buildingById(f.buildingId) : null; return bd && bd.address ? '<div class="small muted" style="margin-top:2px"><span class="bk-ic14">' + ic("pin") + "</span> " + esc(bd.address) + "</div>" : ""; })() +
+            "</div>" + right + "</div>" + emg +
             '<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn soft small" data-act="edit-tenant" data-id="' + t.id + '">' + ic("edit") + " " + L.edit + "</button>" +
             (t.phone ? '<a class="btn ghost small" style="text-decoration:none" href="' + telLink(t.phone) + '">' + ic("phone") + " " + L.call + "</a>" : "") +
             (wa ? '<a class="btn wa small" style="text-decoration:none" href="' + wa + '" target="_blank" rel="noopener">' + brandIc("whatsapp") + " " + L.whatsapp + "</a>" : "") +
@@ -2777,11 +2782,14 @@
           var income = flats.reduce(function(a,f){ return a + (isRentalFlat(f) ? flatMonthlyTotal(f) : 0); }, 0);
           var meta = L.bMeta.replace("{f}", bnNum(b.floors)).replace("{n}", bnNum(flats.length)).replace("{o}", bnNum(occ)).replace("{inc}", fmt(income));
           return '<div class="card" style="margin-top:10px"><div class="row"><div class="avatar">' + ic("building") + "</div>" +
-            '<div class="grow"><b>' + esc(b.name) + '</b><div class="small muted">' + esc(b.address || "") + "</div>" +
-            (b.ownerName ? '<div class="small muted">' + L.ownerWord + ": " + esc(b.ownerName) + "</div>" : "") +
+            '<div class="grow"><b>' + esc(b.name) + "</b>" +
+            (b.address ? '<div class="small muted" style="margin-top:2px"><span class="bk-ic14">' + ic("pin") + "</span> " + esc(b.address) + "</div>" : "") +
+            (b.ownerName || b.ownerPhone ? '<div class="small muted" style="margin-top:2px">' + L.ownerWord + ": " + esc(b.ownerName || "") + (b.ownerPhone ? " · " + esc(b.ownerPhone) : "") + "</div>" : "") +
+            (b.ownerAddress ? '<div class="small muted" style="margin-top:2px"><span class="bk-ic14">' + ic("pin") + "</span> " + esc(b.ownerAddress) + "</div>" : "") +
             '<div class="small muted">' + meta + "</div></div></div>" +
             '<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">' +
             (b.id === DB.activeBuildingId ? '<span class="chip ok" style="align-self:center">' + L.activeNow + "</span>" : '<button type="button" class="btn small" data-act="activate-building" data-id="' + b.id + '">' + L.makeActive + "</button>") +
+            (b.ownerPhone ? '<a class="btn ghost small" style="text-decoration:none" href="' + telLink(b.ownerPhone) + '">' + ic("phone") + " " + L.call + "</a>" : "") +
             '<button type="button" class="btn soft small" data-act="edit-building" data-id="' + b.id + '">' + ic("edit") + " " + L.edit + "</button>" +
             '<button type="button" class="btn ghost small" data-act="building-flats" data-id="' + b.id + '">' + L.viewFlats + "</button></div></div>";
         }).join("");
