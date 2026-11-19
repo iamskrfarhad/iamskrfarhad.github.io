@@ -3206,7 +3206,7 @@
                   '<button type="button" class="mini-btn" style="padding:6px 8px" data-act="edit-loantx" data-id="' + ln.id + "|" + x.id + '" aria-label="' + L.edit + '">' + ic("edit") + '</button>' +
                   '<button type="button" class="mini-btn red" style="padding:6px 8px" data-act="del-loantx" data-id="' + ln.id + "|" + x.id + '" aria-label="' + L.delete + '">' + ic("trash") + "</button></div>";
               }).join("");
-          return '<div class="card" style="margin-top:10px"><div class="row"><div class="avatar">' + initials(ln.name) + "</div>" +
+          return '<div class="card" style="margin-top:10px"><div class="row"><div class="avatar">' + ic("swap") + "</div>" +
             '<div class="grow"><b>' + esc(ln.name) + '</b><div class="small muted">' + (ln.phone ? esc(ln.phone) : "") + (ln.note ? (ln.phone ? " · " : "") + esc(ln.note) : "") + (ln.dueDate ? ((ln.phone || ln.note) ? " · " : "") + L.loanDueLine.replace("{d}", fmtDate(ln.dueDate)) : "") + "</div></div>" + chip + "</div>" +
             '<div style="display:flex;gap:8px;margin-top:10px">' +
             '<div style="flex:1;background:var(--card2);border-radius:10px;padding:7px 11px"><div class="tiny muted">' + L.lnGiven + '</div><b style="color:var(--red)">' + fmt(given) + "</b></div>" +
