@@ -961,7 +961,7 @@
         loanFormNew:"নতুন ধার হিসাব", loanFormEdit:"ধার হিসাব এডিট", loanFormSub:"কার সাথে ধার দেনা — নাম ও ফোন নম্বর দিন",
         loanName:"নাম *", loanDueDate:"সম্ভাব্য তারিখ (চাইলে)", loanDueLine:"সম্ভাব্য তারিখ: {d}", loanAdded:"ধার হিসাব যোগ হয়েছে", loanUpdated:"ধার হিসাব আপডেট হয়েছে", loanNeed:"নাম দিন",
         kindLoan:"ধার হিসাব", kindLoanTx:"লেনদেন",
-        lnPaben:"আপনি পাবেন", lnDeb:"ফিরিয়ে দেওয়ার বাকি", lnSettled:"হিসাব মিলে গেছে", lnGiven:"ধার দিয়েছেন", lnTaken:"ফেরত পেয়েছেন",
+        lnPaben:"আপনি পাবেন", lnDeb:"ফিরিয়ে দেওয়ার বাকি", lnSettled:"হিসাব মিলে গেছে", lnFull:"পুরোটা", lnGiven:"ধার দিয়েছেন", lnTaken:"ফেরত পেয়েছেন",
         loanGiveBtn:"ধার দিন", loanTakeBtn:"ফিরিয়ে নিন", loanGiveOf:"ধার দেওয়া", loanTakeOf:"ধার ফেরত",
         loanTxSub:"কোন ওয়ালেট থেকে গেল বা কোন ওয়ালেটে এলো — লিখে রাখুন", noLoanTx:"এখনো কোনো লেনদেন নেই",
         fMeter:"ইলেকট্রিক মিটার নাম্বার", meterWord:"মিটার নম্বর", pickChoose:"বেছে নিন",
@@ -1141,7 +1141,7 @@
         loanFormNew:"New loan record", loanFormEdit:"Edit loan record", loanFormSub:"Who the loan is with — name and phone number",
         loanName:"Name *", loanDueDate:"Expected date (optional)", loanDueLine:"Expected date: {d}", loanAdded:"Loan record added", loanUpdated:"Loan record updated", loanNeed:"Enter a name",
         kindLoan:"loan record", kindLoanTx:"transaction",
-        lnPaben:"You will get", lnDeb:"You owe", lnSettled:"Settled", lnGiven:"Lent", lnTaken:"Got back",
+        lnPaben:"You will get", lnDeb:"You owe", lnSettled:"Settled", lnFull:"Full amount", lnGiven:"Lent", lnTaken:"Got back",
         loanGiveBtn:"Lend money", loanTakeBtn:"Take back", loanGiveOf:"Loan given", loanTakeOf:"Loan returned",
         loanTxSub:"Record which wallet it left or entered", noLoanTx:"No transactions yet",
         fMeter:"Electric meter number", meterWord:"Meter no.", pickChoose:"Choose",
@@ -3133,22 +3133,23 @@
                 return '<div class="pay-line"><div class="avatar ' + (isGive ? "amber" : "") + '" style="width:36px;height:36px;border-radius:10px">' + ic("swap") + "</div>" +
                   '<div class="grow"><b>' + (isGive ? L.loanGiveOf : L.loanTakeOf) + " — " + fmt(x.amount) + '</b>' +
                   '<div class="tiny muted">' + fmtDateTime(x.date, x.ts) + (w ? " · " + esc(w.name) : "") + (x.note ? " · " + esc(x.note) : "") + "</div></div>" +
-                  '<button type="button" class="mini-btn" data-act="edit-loantx" data-id="' + ln.id + "|" + x.id + '">' + ic("edit") + " " + L.edit + '</button>' +
-                  '<button type="button" class="mini-btn red" data-act="del-loantx" data-id="' + ln.id + "|" + x.id + '">' + L.delete + "</button></div>";
+                  '<button type="button" class="mini-btn" style="padding:6px 8px" data-act="edit-loantx" data-id="' + ln.id + "|" + x.id + '" aria-label="' + L.edit + '">' + ic("edit") + '</button>' +
+                  '<button type="button" class="mini-btn red" style="padding:6px 8px" data-act="del-loantx" data-id="' + ln.id + "|" + x.id + '" aria-label="' + L.delete + '">' + ic("trash") + "</button></div>";
               }).join("");
           return '<div class="card" style="margin-top:10px"><div class="row"><div class="avatar">' + initials(ln.name) + "</div>" +
             '<div class="grow"><b>' + esc(ln.name) + '</b><div class="small muted">' + (ln.phone ? esc(ln.phone) : "") + (ln.note ? (ln.phone ? " · " : "") + esc(ln.note) : "") + (ln.dueDate ? ((ln.phone || ln.note) ? " · " : "") + L.loanDueLine.replace("{d}", fmtDate(ln.dueDate)) : "") + "</div></div>" + chip + "</div>" +
-            '<div class="brk">' +
-            '<div class="r"><span>' + L.lnGiven + '</span><span class="amt red">− ' + fmt(given) + "</span></div>" +
-            '<div class="r"><span>' + L.lnTaken + '</span><span class="amt green">+ ' + fmt(taken) + "</span></div>" +
+            '<div style="display:flex;gap:8px;margin-top:10px">' +
+            '<div style="flex:1;background:var(--card2);border-radius:10px;padding:7px 11px"><div class="tiny muted">' + L.lnGiven + '</div><b style="color:var(--red)">' + fmt(given) + "</b></div>" +
+            '<div style="flex:1;background:var(--card2);border-radius:10px;padding:7px 11px"><div class="tiny muted">' + L.lnTaken + '</div><b style="color:var(--brand)">' + fmt(taken) + "</b></div>" +
             "</div>" + txHtml +
-            '<div style="margin-top:11px;display:flex;gap:8px;flex-wrap:wrap">' +
-            '<button type="button" class="btn small" data-act="give-loan" data-id="' + ln.id + '">' + L.loanGiveBtn + "</button>" +
-            '<button type="button" class="btn soft small" data-act="take-loan" data-id="' + ln.id + '">' + L.loanTakeBtn + "</button>" +
-            (ln.phone ? '<a class="btn ghost small" style="text-decoration:none" href="' + telLink(ln.phone) + '">' + ic("phone") + " " + L.call + "</a>" : "") +
-            (wa ? '<a class="btn wa small" style="text-decoration:none" href="' + wa + '" target="_blank" rel="noopener">' + brandIc("whatsapp") + " " + L.whatsapp + "</a>" : "") +
-            '<button type="button" class="btn soft small" data-act="edit-loan" data-id="' + ln.id + '">' + ic("edit") + " " + L.edit + '</button>' +
-            '<button type="button" class="btn danger small" data-act="del-loan" data-id="' + ln.id + '">' + L.delete + "</button></div></div>";
+            '<div style="margin-top:11px;display:flex;gap:8px">' +
+            '<button type="button" class="btn small" style="flex:1" data-act="give-loan" data-id="' + ln.id + '">' + L.loanGiveBtn + "</button>" +
+            '<button type="button" class="btn soft small" style="flex:1" data-act="take-loan" data-id="' + ln.id + '">' + L.loanTakeBtn + "</button></div>" +
+            '<div style="margin-top:8px;display:flex;gap:8px">' +
+            (ln.phone ? '<a class="btn ghost small" style="flex:1;text-decoration:none" href="' + telLink(ln.phone) + '" aria-label="' + L.call + '">' + ic("phone") + "</a>" : "") +
+            (wa ? '<a class="btn wa small" style="flex:1;text-decoration:none" href="' + wa + '" target="_blank" rel="noopener" aria-label="' + L.whatsapp + '">' + brandIc("whatsapp") + "</a>" : "") +
+            '<button type="button" class="btn soft small" style="flex:1" data-act="edit-loan" data-id="' + ln.id + '" aria-label="' + L.edit + '">' + ic("edit") + "</button>" +
+            '<button type="button" class="btn danger small" style="flex:1" data-act="del-loan" data-id="' + ln.id + '" aria-label="' + L.delete + '">' + ic("trash") + "</button></div></div>";
         }).join("");
       }
       h += '<button type="button" class="fab" data-act="add-loan" aria-label="' + L.loanAdd + '">' + ic("plus") + "</button>";
@@ -3188,14 +3189,27 @@
       var k = tx ? tx.kind : kind;
       var isGive = k !== "take";
       var bal = loanBalance(ln);
+      var showSeg = !tx && !isGive && bal > 0;
+      var showNote = isGive || !!tx;
       var sub = esc(ln.name) + " · " + (bal > 0 ? L.lnPaben + " " + fmt(bal) : bal < 0 ? L.lnDeb + " " + fmt(-bal) : L.lnSettled) + " — " + L.loanTxSub;
       openSheet(sheetHead(tx ? L.edit + " — " + (isGive ? L.loanGiveOf : L.loanTakeOf) : (isGive ? L.loanGiveBtn : L.loanTakeBtn), sub) +
-      '<form id="fLoanTx"><div class="field"><label>' + L.txAmount + '</label><input name="amount" type="text" data-num="1" min="1" inputmode="numeric" required value="' + esc(tx ? tx.amount : "") + '"></div>' +
+      '<form id="fLoanTx">' + (showSeg ? '<div class="seg" id="lnSeg" style="margin-top:2px"><button type="button" data-lnseg="full" class="on">' + L.lnFull + '</button><button type="button" data-lnseg="part">' + L.chipPart + "</button></div>" : "") + '<div class="field"><label>' + L.txAmount + '</label><input name="amount" id="lnAmt" type="text" data-num="1" min="1" inputmode="numeric" required value="' + esc(tx ? tx.amount : (showSeg ? bal : "")) + '"' + (showSeg ? " readonly" : "") + '></div>' +
       '<div class="field"><label>' + L.txDate + '</label><input name="date" type="date" value="' + esc(tx ? (tx.date || todayISO()) : todayISO()) + '"></div>' +
       '<div class="field"><label>' + L.txWallet + '</label><select name="walletId">' + walletOptions(tx ? tx.walletId : "", true) + "</select></div>" +
-      '<div class="field"><label>' + L.txNote + '</label><input name="note" placeholder="' + L.txNotePh + '" value="' + esc(tx ? (tx.note || "") : "") + '"></div>' +
+      (showNote ? '<div class="field"><label>' + L.txNote + '</label><input name="note" placeholder="' + L.txNotePh + '" value="' + esc(tx ? (tx.note || "") : "") + '"></div>' : "") +
       '<div class="form-actions"><button type="button" class="btn ghost" data-close>' + L.cancel + '</button><button class="btn" type="submit">' + L.save + "</button></div></form>" +
       (tx ? deleteBtn(ln.id + "|" + tx.id, "loantx") : ""));
+      if(showSeg){
+        document.querySelectorAll("#lnSeg button").forEach(function(b){
+          b.addEventListener("click", function(){
+            document.querySelectorAll("#lnSeg button").forEach(function(x){ x.classList.remove("on"); });
+            b.classList.add("on");
+            var amt = $("#lnAmt");
+            if(b.getAttribute("data-lnseg") === "full"){ amt.value = bal; amt.readOnly = true; }
+            else { amt.readOnly = false; amt.value = ""; amt.focus(); }
+          });
+        });
+      }
       $("#fLoanTx").onsubmit = function(ev){
         ev.preventDefault();
         var fd = new FormData(ev.target);
