@@ -181,7 +181,7 @@ svg text{font-family:inherit}
 .app{display:flex;align-items:center;justify-content:center}
 .oic{width:.9em;height:.9em;border-radius:0;margin:0 .06em}
 
-.credit{display:flex;align-items:center;justify-content:center;gap:8px}.aqic{height:24px;width:auto}.wdeck{cursor:pointer}.wcard{position:relative;border-radius:26px;padding:12px 16px;color:#fff;height:118px;box-shadow:0 10px 24px rgba(20,30,80,.16)}.wcard+.wcard{margin-top:-58px}.wcard.full{height:auto}.wrow{display:flex;justify-content:space-between;gap:10px;font-weight:700;font-size:15px}.wfront{margin-top:12px}.wflbl{font-size:11px;letter-spacing:.08em;opacity:.85}.wbig{font-size:24px;font-weight:800}.wname{display:flex;align-items:center;gap:9px}.wic{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;flex:none}.wic svg{width:17px;height:17px}.bizlogo{height:38px;width:auto;max-width:120px;object-fit:contain;border-radius:8px;flex:none}.bizgrp{display:flex;align-items:center;gap:10px;min-width:0}.bizgrp .biz{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}</style>
+.credit{display:flex;align-items:center;justify-content:center;gap:8px}.aqic{height:24px;width:auto}.wdeck{cursor:pointer}.wcard{position:relative;border-radius:26px;padding:12px 16px;color:#fff;height:96px;box-shadow:0 10px 24px rgba(20,30,80,.16)}.wcard+.wcard{margin-top:-44px}.wcard.full{height:auto}.wrow{display:flex;justify-content:space-between;gap:10px;font-weight:700;font-size:15px}.wfront{margin-top:12px}.wflbl{font-size:11px;letter-spacing:.08em;opacity:.85}.wbig{font-size:24px;font-weight:800}.wname{display:flex;align-items:center;gap:9px}.wic{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;flex:none}.wic svg{width:17px;height:17px}.bizlogo{height:38px;width:auto;max-width:120px;object-fit:contain;border-radius:8px;flex:none}.bizgrp{display:flex;align-items:center;gap:10px;min-width:0}.bizgrp .biz{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}</style>
 </head>
 <body>
 <header>
@@ -591,8 +591,7 @@ function walletDeck(){
   let h='<div class="section-t">'+t("wallets")+'</div><div class="wdeck" onclick="openSub(\'wallets\')">';
   show.forEach((w,i)=>{
     const c=KIND_COLORS[w.kind]||KIND_COLORS.other;
-    const front=i===show.length-1;
-    h+='<div class="wcard" style="background:linear-gradient(135deg,'+c[0]+','+c[1]+');z-index:'+(i+1)+'"><div class="wrow"><span class="wname"><span class="wic">'+svgIcon(I[KIND_ICONS[w.kind]||"wallet"],"sm")+'</span>'+esc(dispWName(w))+'</span><span>'+money(walletBal(w))+'</span></div>'+(front?'<div class="wfront"><span class="wflbl">'+t("w_bal")+'</span><div class="wbig">'+money(walletBal(w))+'</div></div>':"")+'</div>';
+    h+='<div class="wcard" style="background:linear-gradient(135deg,'+c[0]+','+c[1]+');z-index:'+(i+1)+'"><div class="wrow"><span class="wname"><span class="wic">'+svgIcon(I[KIND_ICONS[w.kind]||"wallet"],"sm")+'</span>'+esc(dispWName(w))+'</span><span>'+money(walletBal(w))+'</span></div>'+'</div>';
   });
   h+='</div><div class="note" style="margin-top:8px">'+t("w_total")+': <b>'+money(tot)+'</b> \u00B7 '+t("w_tap")+'</div>';
   return h;
