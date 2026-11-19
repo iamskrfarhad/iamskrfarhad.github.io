@@ -381,6 +381,7 @@ function renderHome(){
     return {s:s,p:s-pu-e};
   }
   const cur=mProfit(cm), prev=mProfit(pm);
+  const mExp=DB.expenses.filter(x=>x.date.startsWith(cm)).reduce((a,x)=>a+x.amount,0)+(DB.staffTx||[]).filter(x=>x.date.startsWith(cm)).reduce((a,x)=>a+x.amount,0);
   let pill;
   if(prev.s===0&&cur.s===0) pill=t("pill_none");
   else if(prev.p===0) pill=t("pill_nocomp");
@@ -397,7 +398,7 @@ function renderHome(){
   recent.sort((a,b)=>b.d.localeCompare(a.d));
   let h="";
   h+='<div class="hero"><div class="hlbl">'+t("hero_profit")+'</div><div class="hval">'+money(cur.p)+'</div><span class="hpill">'+pill+'</span>'
-    +'<div class="hsub"><span>'+t("hero_sales")+' '+money(cur.s)+'</span><span>'+t("hero_ord")+' '+bn(pendOrd)+'</span></div></div>';
+    +'<div class="hsub"><span>'+t("hero_sales")+' '+money(cur.s)+'</span><span>'+t("r_exp")+' '+money(mExp)+'</span></div></div>';
   h+='<div class="kpis">'
     +'<div class="kpi"><div class="kic">'+svgIcon(I.receipt)+'</div><div class="kval">'+money(tSales)+'</div><div class="klbl">'+t("kpi_today_sales")+'</div></div>'
     +'<div class="kpi" onclick="openSub(\'expenses\')" style="cursor:pointer"><div class="kic">'+svgIcon(I.wallet)+'</div><div class="kval">'+money(tExp)+'</div><div class="klbl">'+t("kpi_exp")+'</div></div>'
