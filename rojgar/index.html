@@ -342,6 +342,15 @@ if(DB.bizLogo&&DB.bizLogoDark===undefined){detectLogoDark(DB.bizLogo,function(dk
 function blank(){return {bizName:"",bizLogo:"",wallets:defaultWallets(),products:[],orders:[],sales:[],dues:[],payments:[],purchases:[],expenses:[],staff:[],staffTx:[],loans:[],loanTx:[],savings:[],savTx:[],bankLoans:[],lang:"en",theme:"light",currency:"BDT"};}
 function load(){try{const r=localStorage.getItem(KEY);if(r){const d=JSON.parse(r);return Object.assign(blank(),d);}}catch(e){}return blank();}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(DB));}catch(e){}}
+(function(){try{
+  if(localStorage.getItem("rj-clean-zq-v1"))return;
+  let changed=false;
+  (DB.sales||[]).filter(s=>s.zref).forEach(s=>{const p=prod(s.productId);if(p)applyVar(p,s.variantId||"",s.qty||0);});
+  const ns=(DB.sales||[]).filter(s=>!s.zref); if(ns.length!==(DB.sales||[]).length){DB.sales=ns;changed=true;}
+  const no=(DB.orders||[]).filter(o=>!o.zref); if(no.length!==(DB.orders||[]).length){DB.orders=no;changed=true;}
+  localStorage.setItem("rj-clean-zq-v1","1");
+  if(changed)save();
+}catch(e){}})();
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
 function bn(n){if(DB.lang==="en")return String(n);return String(n).replace(/[0-9]/g,c=>BND[+c]);}
 function en(s){return String(s==null?"":s).replace(/[০-৯]/g,c=>BND.indexOf(c));}
