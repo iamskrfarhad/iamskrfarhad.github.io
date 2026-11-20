@@ -161,9 +161,25 @@
     for (var i = 0; i < ks.length; i++) { var a = db[ks[i]]; if (Array.isArray(a) && a.length) return false; }
     return true;
   }
+  function shopsBundle() {
+    try {
+      var reg = window.localStorage.getItem("rojgarShops_v1");
+      var slots = {};
+      if (reg) { var r = JSON.parse(reg); (r.list || []).forEach(function (s) { var v = window.localStorage.getItem("rjDB_" + s.id); if (v) slots[s.id] = v; }); }
+      return JSON.stringify({ reg: reg, slots: slots });
+    } catch (e) { return ""; }
+  }
+  function applyShops(str) {
+    try {
+      if (!str) return;
+      var b = JSON.parse(str); if (!b) return;
+      if (b.reg) window.localStorage.setItem("rojgarShops_v1", b.reg);
+      if (b.slots) Object.keys(b.slots).forEach(function (id) { window.localStorage.setItem("rjDB_" + id, b.slots[id]); });
+    } catch (e) {}
+  }
   function cloudSet(json, ts) {
     return fs.collection("users").doc(currentUser.uid).set(
-      { rojgarDb: json, rojgarUpdatedAt: ts, email: currentUser.email || "", name: currentUser.displayName || "" },
+      { rojgarDb: json, rojgarUpdatedAt: ts, rojgarShops: shopsBundle(), email: currentUser.email || "", name: currentUser.displayName || "" },
       { merge: true }
     );
   }
@@ -192,6 +208,8 @@
         if (window.sessionStorage.getItem("rj-owner-switched") === user.uid) { window.localStorage.setItem("rj-owner", user.uid); return false; }
         window.localStorage.removeItem(KEY);
         window.localStorage.removeItem(META);
+        try { var reg2 = window.localStorage.getItem("rojgarShops_v1"); if (reg2) { var rr = JSON.parse(reg2); (rr.list || []).forEach(function (s) { window.localStorage.removeItem("rjDB_" + s.id); }); } } catch (e) {}
+        window.localStorage.removeItem("rojgarShops_v1");
         window.localStorage.setItem("rj-owner", user.uid);
         try { window.sessionStorage.removeItem("rj-applied"); } catch (e) {}
         window.sessionStorage.setItem("rj-owner-switched", user.uid);
@@ -213,6 +231,7 @@
         if (cts > localTs() || localIsEmpty()) {
           if (sessionStorage.getItem("rj-applied")) { hideSyncing(); return; }
           applying = true;
+          applyShops(d.rojgarShops);
           try { window.localStorage.setItem(KEY, cdb); } catch (e) {}
           setMeta(cts);
           sessionStorage.setItem("rj-applied", "1");
