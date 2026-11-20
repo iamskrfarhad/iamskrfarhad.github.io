@@ -369,13 +369,16 @@ function switchShop(id){
   let data=null; try{data=localStorage.getItem(shopSlot(id));}catch(e){}
   try{ if(data)localStorage.setItem(KEY,data); else localStorage.removeItem(KEY); }catch(e){}
   r.active=id; rjShopsSave(r);
+  try{localStorage.setItem("rj-shops-dirty","1");}catch(e){}
   location.reload();
 }
 function openNewShop(){
   catPick="";
+  tmpBizLogo="";
   openSheet(sheetHead(t("sh_new"))
     +'<div class="f"><label>'+t("sh_name")+'</label><input id="nsName" placeholder="'+t("sh_name_ph")+'"></div>'
     +'<div class="f"><label>'+t("sh_cat")+'</label><div id="catChips" class="chiprow"></div></div>'
+    +'<div class="f"><label>'+t("f_logo")+'</label><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><img id="bizLogoPrev" src="" style="height:44px;width:auto;max-width:130px;object-fit:contain;border-radius:9px;display:none"><label class="btn small ghost" style="margin:0;cursor:pointer">'+t("logo_add")+'<input type="file" accept="image/*" style="display:none" onchange="bizLogoPick(this)"></label><button type="button" class="btn small red" id="bizLogoRemove" style="display:none" onclick="bizLogoClear()">'+t("logo_remove")+'</button></div><div class="note" style="margin-top:6px">'+t("logo_hint")+'</div></div>'
     +'<div class="err" id="ferr"></div><button class="btn" onclick="saveNewShop()">'+t("sh_create")+'</button>');
   renderCatChips();
 }
@@ -384,9 +387,13 @@ function saveNewShop(){
   if(!catPick)return ferr(t("e_bizcat"));
   const r=rjShops(); const id="s"+Date.now().toString(36)+Math.floor(Math.random()*99);
   const nb=blank(); nb.bizName=name; nb.bizCat=catPick; nb.lang=DB.lang; nb.theme=DB.theme; nb.currency=DB.currency;
-  try{localStorage.setItem(shopSlot(id),JSON.stringify(nb));}catch(e){}
-  r.list.push({id:id}); rjShopsSave(r);
-  closeSheet(); switchShop(id);
+  nb.bizLogo=tmpBizLogo||"";
+  const finish=function(){
+    try{localStorage.setItem(shopSlot(id),JSON.stringify(nb));}catch(e){}
+    r.list.push({id:id}); rjShopsSave(r);
+    closeSheet(); switchShop(id);
+  };
+  if(nb.bizLogo){ detectLogoDark(nb.bizLogo,function(dk){ nb.bizLogoDark=dk; finish(); }); } else { nb.bizLogoDark=false; finish(); }
 }
 function delShop(id){
   const r=rjShops(); if(r.list.length<=1)return; if(!confirm(t("confirm_del")))return;
@@ -394,10 +401,12 @@ function delShop(id){
   try{localStorage.removeItem(shopSlot(id));}catch(e){}
   if(r.active===id){
     r.active=r.list[0].id; rjShopsSave(r);
+    try{localStorage.setItem("rj-shops-dirty","1");}catch(e){}
     let data=null; try{data=localStorage.getItem(shopSlot(r.active));}catch(e){}
     try{ if(data)localStorage.setItem(KEY,data); else localStorage.removeItem(KEY); }catch(e){}
     location.reload(); return;
   }
+  try{localStorage.setItem("rj-shops-dirty","1");}catch(e){}
   rjShopsSave(r); render();
 }
 

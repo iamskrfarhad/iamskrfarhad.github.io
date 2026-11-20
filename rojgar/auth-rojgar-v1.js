@@ -157,6 +157,8 @@
   function localIsEmpty() {
     var db = savedDB();
     if (!db) return true;
+    if (db.bizName) return false;
+    try { var r0 = JSON.parse(window.localStorage.getItem("rojgarShops_v1") || "null"); if (r0 && r0.list && r0.list.length > 1) return false; } catch (e) {}
     var ks = ["products", "sales", "orders", "purchases", "expenses", "staff", "staffTx", "loans", "loanTx", "savings", "savTx", "bankLoans", "payments"];
     for (var i = 0; i < ks.length; i++) { var a = db[ks[i]]; if (Array.isArray(a) && a.length) return false; }
     return true;
@@ -176,6 +178,17 @@
       if (b.reg) window.localStorage.setItem("rojgarShops_v1", b.reg);
       if (b.slots) Object.keys(b.slots).forEach(function (id) { window.localStorage.setItem("rjDB_" + id, b.slots[id]); });
     } catch (e) {}
+  }
+  function shopsDirty() { try { return !!window.localStorage.getItem("rj-shops-dirty"); } catch (e) { return false; } }
+  function clearShopsDirty() { try { window.localStorage.removeItem("rj-shops-dirty"); } catch (e) {} }
+  function localShopsAhead(cloudBundleStr) {
+    try {
+      var lr = JSON.parse(window.localStorage.getItem("rojgarShops_v1") || "null");
+      if (!lr || !lr.list) return false;
+      var cids = {};
+      if (cloudBundleStr) { var cb = JSON.parse(cloudBundleStr); if (cb && cb.reg) { var cr = JSON.parse(cb.reg); (cr.list || []).forEach(function (s) { cids[s.id] = 1; }); } }
+      return lr.list.some(function (s) { return !cids[s.id]; });
+    } catch (e) { return false; }
   }
   function cloudSet(json, ts) {
     return fs.collection("users").doc(currentUser.uid).set(
@@ -222,13 +235,16 @@
   }
   function syncOnLogin() {
     var ref = fs.collection("users").doc(currentUser.uid);
+    var settled = false;
+    var to = window.setTimeout(function () { if (!settled) { settled = true; hideSyncing(); } }, 10000);
     ref.get().then(function (snap) {
+      if (settled) return; settled = true; window.clearTimeout(to);
       var local = window.localStorage.getItem(KEY);
       var d = snap.exists && snap.data ? snap.data() : null;
       if (d && d.rojgarDb) {
         var cdb = d.rojgarDb, cts = d.rojgarUpdatedAt || 0;
         if (cdb === local) { setMeta(cts); hideSyncing(); return; }
-        if (cts > localTs() || localIsEmpty()) {
+        if ((cts > localTs() || localIsEmpty()) && !shopsDirty() && !localShopsAhead(d.rojgarShops)) {
           if (sessionStorage.getItem("rj-applied")) { hideSyncing(); return; }
           applying = true;
           applyShops(d.rojgarShops);
@@ -238,16 +254,17 @@
           window.location.reload();
         } else if (local) {
           var ts = Date.now();
-          cloudSet(local, ts).then(function () { setMeta(ts); }).catch(function () {});
+          cloudSet(local, ts).then(function () { setMeta(ts); clearShopsDirty(); }).catch(function () {});
           hideSyncing();
         } else { hideSyncing(); }
       } else if (local) {
         var ts2 = Date.now();
-        cloudSet(local, ts2).then(function () { setMeta(ts2); }).catch(function () {});
+        cloudSet(local, ts2).then(function () { setMeta(ts2); clearShopsDirty(); }).catch(function () {});
         hideSyncing();
       } else { hideSyncing(); }
-    }).catch(function () { hideSyncing(); });
+    }).catch(function () { if (!settled) { settled = true; window.clearTimeout(to); } hideSyncing(); });
   }
+
 
   /* ---------------- helpers ---------------- */
   function el(tag, css, text) {
@@ -441,7 +458,7 @@
     if (!syncOv.parentNode) document.body.appendChild(syncOv);
     syncOv.style.display = "flex";
     window.clearTimeout(syncTO);
-    syncTO = window.setTimeout(hideSyncing, 30000);
+    syncTO = window.setTimeout(hideSyncing, 8000);
   }
   function hideSyncing() { if (syncOv) syncOv.style.display = "none"; window.clearTimeout(syncTO); }
 
@@ -496,7 +513,7 @@
       hideOverlay();
       renderAccount();
       if (ownerSwitch(currentUser)) return;
-      showSyncing();
+      if (localIsEmpty() || !localTs()) showSyncing();
       syncOnLogin();
     } else {
       renderAccount();
