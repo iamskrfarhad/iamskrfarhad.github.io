@@ -1309,7 +1309,7 @@ function openProductDetail(id){
 }
 function renderMore(){
   const totBal=(DB.wallets||[]).reduce((a,w)=>a+walletBal(w),0);
-  let h='<div class="card menu">'
+  let h='<div id="rjAccount"></div><div class="card menu">'
     +mrow(I.store,"#e3e9ff","#3348c5",t("m_shop"),esc(bizDisplay()),"openSub(\'shop\')")
     +mrow(I.wallet,"#dcf5e9","#0b7a55",t("wallets"),money(totBal),"openSub(\'wallets\')")
     +mrow(I.chart,"#efe4ff","#7c3aed",t("m_analytics"),"","openSub(\'report\')")
@@ -1531,5 +1531,9 @@ document.getElementById("restoreFile").addEventListener("change",function(){
 applyTheme();
 render();
 </script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="auth-rojgar-v1.js"></script>
 </body>
 </html>
