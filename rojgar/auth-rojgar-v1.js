@@ -185,6 +185,23 @@
       window.save = function () { var r = origSave.apply(this, arguments); schedulePush(); return r; };
     }
   } catch (e) {}
+  function ownerSwitch(user) {
+    try {
+      var owner = window.localStorage.getItem("rj-owner");
+      if (owner && owner !== user.uid) {
+        if (window.sessionStorage.getItem("rj-owner-switched") === user.uid) { window.localStorage.setItem("rj-owner", user.uid); return false; }
+        window.localStorage.removeItem(KEY);
+        window.localStorage.removeItem(META);
+        window.localStorage.setItem("rj-owner", user.uid);
+        try { window.sessionStorage.removeItem("rj-applied"); } catch (e) {}
+        window.sessionStorage.setItem("rj-owner-switched", user.uid);
+        window.location.reload();
+        return true;
+      }
+      if (owner !== user.uid) window.localStorage.setItem("rj-owner", user.uid);
+    } catch (e) {}
+    return false;
+  }
   function syncOnLogin() {
     var ref = fs.collection("users").doc(currentUser.uid);
     ref.get().then(function (snap) {
@@ -459,6 +476,7 @@
       try { sessionStorage.removeItem(SKIP); } catch (e) {}
       hideOverlay();
       renderAccount();
+      if (ownerSwitch(currentUser)) return;
       showSyncing();
       syncOnLogin();
     } else {
