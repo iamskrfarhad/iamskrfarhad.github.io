@@ -178,6 +178,8 @@
       body form input:not([type="checkbox"]), body form select, body form textarea, body .pick-field{ border-radius:14px; }
       .bk-ic14{ display:inline-block; width:14px; height:14px; vertical-align:-2px; color:var(--brand); }
       .bk-ic14 svg{ width:14px; height:14px; display:block; }
+.tiles .ti:has(>svg[data-ic="wifi"]),.quick button.qi:has(>svg[data-ic="wifi"]),.empty .eic:has(>svg[data-ic="wifi"]),.avatar:has(>svg[data-ic="wifi"]),.bldg-chip:has(>svg[data-ic="wifi"]){ background:linear-gradient(135deg,#38BDF8,#2563EB) }
+.tiles .ti:has(>svg[data-ic="tv"]),.quick button.qi:has(>svg[data-ic="tv"]),.empty .eic:has(>svg[data-ic="tv"]),.avatar:has(>svg[data-ic="tv"]),.bldg-chip:has(>svg[data-ic="tv"]){ background:linear-gradient(135deg,#A78BFA,#7C3AED) }
 .bk-svg19 svg{ width:19px; height:19px; }
       .bk-svg20 svg{ width:20px; height:20px; }
       .bk-seg svg{ width:18px; height:18px; }
@@ -920,7 +922,7 @@
         dpsInstLine:"মাসিক কিস্তি {amt}", dpsTermLine:"মেয়াদ {n} মাস · বাকি {m} মাস", dpsPaidThis:"এই মাসের কিস্তি দেওয়া হয়েছে", dpsDueThis:"এই মাসের কিস্তি বাকি", dueByLine:"লাগবে: {d}",
         withdraw:"টাকা তুলুন", wdTitle:"সঞ্চয় থেকে টাকা তুলুন", wdAmount:"তোলার পরিমাণ (৳) *", wdTo:"কোন ওয়ালেটে যাবে", wdSubmit:"তুলুন", withdrawn:"সঞ্চয় থেকে {amt} তোলা হয়েছে", wdLow:"সঞ্চয়ে এত টাকা জমা নেই", savWd:"সঞ্চয় থেকে তোলা",
         depTitle:"সঞ্চয়ে টাকা জমা", depSoFar:"এখন পর্যন্ত {amt}", sOpening:"আগে কত জমা ছিল (৳) — অ্যাপ শুরুর আগের জমা, ওয়ালেট থেকে কাটবে না", depAmount:"জমার পরিমাণ (৳) *", depFrom:"কোন ওয়ালেট থেকে", depSubmit:"জমা দিন",
-        expNew:"নতুন খরচ", expEdit:"খরচ এডিট", expSub:"বিল্ডিংয়ের খরচ যোগ করুন", eTitle:"খরচের বিবরণ *", eAmount:"পরিমাণ (৳) *", eCat:"ক্যাটাগরি", eFrom:"কোন ওয়ালেট থেকে খরচ হলো",
+        expNew:"নতুন খরচ", expEdit:"খরচ এডিট", expSub:"বিল্ডিংয়ের খরচ যোগ করুন", eTitle:"খরচের বিবরণ *", eAmount:"পরিমাণ (৳) *", eCat:"ক্যাটাগরি", eFrom:"কোন ওয়ালেট থেকে খরচ হলো", eBillMonth:"কোন মাসের বিল", eBillFor:"{month}-এর বিল",
         delTitle:"{name} মুছে ফেলবেন?", delText:"এই {name} ও এর সাথে জড়িত হিসাব মুছে যাবে। এই কাজ ফিরিয়ে আনা যাবে না।", delYes:"হ্যাঁ, মুছুন", delNo:"না",
         kindBuilding:"বিল্ডিং", kindFlat:"ফ্ল্যাট", kindTenant:"ভাড়াটিয়া", kindWallet:"ওয়ালেট", kindSaving:"সঞ্চয়", kindExpense:"খরচ",
         billExists:"এই ফ্ল্যাটের এই মাসের বিল আগেই তৈরি আছে",
@@ -1100,7 +1102,7 @@
         dpsInstLine:"Monthly installment {amt}", dpsTermLine:"Term {n} months · {m} left", dpsPaidThis:"This month's installment paid", dpsDueThis:"This month's installment due", dueByLine:"Needed by: {d}",
         withdraw:"Withdraw", wdTitle:"Withdraw from savings", wdAmount:"Withdrawal amount (৳) *", wdTo:"Into which wallet", wdSubmit:"Withdraw", withdrawn:"{amt} withdrawn from savings", wdLow:"Not that much saved yet", savWd:"Withdrawn from savings",
         depTitle:"Deposit to savings", depSoFar:"So far {amt}", sOpening:"Already saved before (৳) — saved before the app, not taken from any wallet", depAmount:"Deposit amount (৳) *", depFrom:"From which wallet", depSubmit:"Deposit",
-        expNew:"New expense", expEdit:"Edit expense", expSub:"Add a building expense", eTitle:"Expense description *", eAmount:"Amount (৳) *", eCat:"Category", eFrom:"Spent from which wallet",
+        expNew:"New expense", expEdit:"Edit expense", expSub:"Add a building expense", eTitle:"Expense description *", eAmount:"Amount (৳) *", eCat:"Category", eFrom:"Spent from which wallet", eBillMonth:"Bill for which month", eBillFor:"Bill for {month}",
         delTitle:"Delete this {name}?", delText:"This {name} and its related records will be deleted. This cannot be undone.", delYes:"Yes, delete", delNo:"No",
         kindBuilding:"building", kindFlat:"flat", kindTenant:"tenant", kindWallet:"wallet", kindSaving:"savings", kindExpense:"expense",
         billExists:"This flat already has a bill for this month",
@@ -1282,13 +1284,20 @@
       { key:"other",    bn:"অন্যান্য চার্জ", en:"Other charges" }
     ];
     function chargeLabel(c){ return DB.lang === "en" ? c.en : c.bn; }
-    var EXP_CATS = ["মেরামত","রং / পেইন্ট","লিফট","কমন বিদ্যুৎ","গ্যাস বিল","পানি","ময়লার বিল","পরিষ্কার","নিরাপত্তা গার্ড","দারোয়ান / কেয়ারটেকার","ঔষুধ","অন্যান্য"];
-    var EXP_CATS_EN = { "মেরামত":"Repair", "রং / পেইন্ট":"Paint", "লিফট":"Lift", "কমন বিদ্যুৎ":"Common electricity", "গ্যাস বিল":"Gas bill", "পানি":"Water", "ময়লার বিল":"Garbage bill", "পরিষ্কার":"Cleaning", "নিরাপত্তা গার্ড":"Security guard", "দারোয়ান / কেয়ারটেকার":"Caretaker", "ঔষুধ":"Medicine", "অন্যান্য":"Other", "মেরামত (অভিযোগ)":"Complaint repair" };
+    var EXP_CATS = ["মেরামত","রং / পেইন্ট","লিফট","কমন বিদ্যুৎ","গ্যাস বিল","পানি","ময়লার বিল","পরিষ্কার","নিরাপত্তা গার্ড","দারোয়ান / কেয়ারটেকার","ঔষুধ","ইন্টারনেট বিল","ডিস বিল","অন্যান্য"];
+    var EXP_CATS_EN = { "মেরামত":"Repair", "রং / পেইন্ট":"Paint", "লিফট":"Lift", "কমন বিদ্যুৎ":"Common electricity", "গ্যাস বিল":"Gas bill", "পানি":"Water", "ময়লার বিল":"Garbage bill", "পরিষ্কার":"Cleaning", "নিরাপত্তা গার্ড":"Security guard", "দারোয়ান / কেয়ারটেকার":"Caretaker", "ঔষুধ":"Medicine", "অন্যান্য":"Other", "ইন্টারনেট বিল":"Internet bill", "ডিস বিল":"Dish bill", "মেরামত (অভিযোগ)":"Complaint repair" };
     /* expense categories with their OWN icon; every other category uses
        the home quick-tile expense icon (qExpense) — the same rule the
        recent-transactions feed and the expense lists follow */
-    var EXP_CAT_ICONS = { "ঔষুধ":"pill", "গ্যাস বিল":"flame" };
+    var EXP_CAT_ICONS = { "ঔষুধ":"pill", "গ্যাস বিল":"flame", "ইন্টারনেট বিল":"wifi", "ডিস বিল":"tv" };
     function expCatIcon(c){ return EXP_CAT_ICONS[c] || "qExpense"; }
+    var BILL_CATS = ["কমন বিদ্যুৎ","গ্যাস বিল","পানি","ময়লার বিল","ইন্টারনেট বিল","ডিস বিল"];
+    function isBillCat(c){ return BILL_CATS.indexOf(c) >= 0; }
+    function billForLabel(e){ return (e && e.billMonth && isBillCat(e.category)) ? L.eBillFor.replace("{month}", monthLabel(e.billMonth)) : ""; }
+    function billMonthFieldHTML(wrapId, curCat, val){
+      return '<div class="field" id="' + wrapId + '" style="display:' + (isBillCat(curCat) ? "block" : "none") + '"><label>' + L.eBillMonth + '</label><input name="billMonth" type="month" value="' + esc(val || "") + '"></div>';
+    }
+    function toggleBillMonth(wrapId, cat){ var w = document.getElementById(wrapId); if(w) w.style.display = isBillCat(cat) ? "block" : "none"; }
     /* category stamped on complaint labour-charge payments — NOT offered in
        the plain expense form's category list, it comes only from complaints */
     var EXP_CAT_COMP = "মেরামত (অভিযোগ)";
@@ -1690,6 +1699,8 @@
         piggy:'<path d="M5 11a7 6.5 0 0 1 13.5-1.5c.8.3 1.5 1 1.5 2l-1.2 1.2c.1 1.5-.3 3-1 4.3H7.5A6.8 6.8 0 0 1 5 11z"/><path d="M8 20l1-2.4M16 20l-1-2.4"/><circle cx="15" cy="10.5" r=".9"/><path d="M12 4.5c1.5-1 3.5-.8 4.5.5"/>',
         expense:'<path d="M6 3h12v18l-2-1.4L14 21l-2-1.4L10 21l-2-1.4L6 21z"/><path d="M9 8h6M9 12h6"/>',
         pill:'<g transform="rotate(-45 12 12)"><rect x="3.2" y="8.6" width="17.6" height="6.8" rx="3.4"/><path d="M12 8.6v6.8"/></g>',
+        wifi:'<path d="M2 8.82a15 15 0 0 1 4.17-2.65 17 17 0 0 1 11.66 0A15 15 0 0 1 22 8.82"/><path d="M5 12.86a10 10 0 0 1 3.22-2.26 13 13 0 0 1 7.56 0A10 10 0 0 1 19 12.86"/><path d="M8.5 16.43a5 5 0 0 1 7 0"/><path d="M12 20h.01"/>',
+        tv:'<rect width="20" height="15" x="2" y="7" rx="2"/><polyline points="17 2 12 7 7 2"/>',
         flame:'<path d="M12 3.2c.7 3 2.1 4.5 3.4 6 1.2 1.3 2.1 2.8 2.1 4.7a5.5 5.5 0 0 1-11 0c0-2.1 1-3.7 2.2-5.3 1.4-1.8 2.8-3.4 3.3-6.4z"/><path d="M12 20.8a2.6 2.6 0 0 1-2.6-2.6c0-1.5 1.2-2.4 2.6-4.2 1.4 1.8 2.6 2.7 2.6 4.2a2.6 2.6 0 0 1-2.6 2.6z"/>',
         plus:'<path d="M12 5v14M5 12h14"/>',
         chevL:'<path d="M14.5 5.5L8 12l6.5 6.5"/>',
@@ -1908,7 +1919,7 @@
         var w = walletById(e.walletId);
         out.push({ key: txSortKey(e.date, e.ts), icon: expCatIcon(e.category), cls: "red", dir: "out", amount: e.amount,
           title: e.title || catLabel(e.category),
-          sub: [catLabel(e.category), w ? w.name : "", fmtDateTime(e.date, e.ts)].filter(Boolean).join(" · ") });
+          sub: [catLabel(e.category), billForLabel(e), w ? w.name : "", fmtDateTime(e.date, e.ts)].filter(Boolean).join(" · ") });
       });
       DB.staffTx.forEach(function(x){
         var s = staffById(x.staffId);
@@ -2920,7 +2931,7 @@
         h += list.map(function(e){
           var w = walletById(e.walletId);
           return '<div class="card" style="margin-top:10px"><div class="row"><div class="avatar amber">' + ic(expCatIcon(e.category)) + "</div>" +
-            '<div class="grow"><b>' + esc(e.title) + '</b><div class="small muted">' + esc(catLabel(e.category)) + " · " + fmtDate(e.date) + (w ? " · " + esc(w.name) : "") + "</div></div>" +
+            '<div class="grow"><b>' + esc(e.title) + '</b><div class="small muted">' + esc(catLabel(e.category)) + (billForLabel(e) ? " · " + esc(billForLabel(e)) : "") + " · " + fmtDate(e.date) + (w ? " · " + esc(w.name) : "") + "</div></div>" +
             '<div class="amt red">− ' + fmt(e.amount) + "</div></div>" +
             '<div style="margin-top:10px"><button type="button" class="btn soft small" data-act="edit-expense" data-id="' + e.id + '">' + ic("edit") + " " + L.edit + "</button></div></div>";
         }).join("");
@@ -4674,7 +4685,9 @@
       ["ময়লার বিল", ["ময়লা","garbage"]],
       ["পরিষ্কার", ["পরিষ্কার","ঝাড়ু","ক্লিন"]],
       ["নিরাপত্তা গার্ড", ["সিকিউরিটি","গার্ড","নিরাপত্তা"]],
-      ["দারোয়ান / কেয়ারটেকার", ["দারোয়ান","কেয়ারটেকার"]]
+      ["দারোয়ান / কেয়ারটেকার", ["দারোয়ান","কেয়ারটেকার"]],
+      ["ইন্টারনেট বিল", ["ইন্টারনেট","নেট বিল","internet"]],
+      ["ডিস বিল", ["ডিস","ক্যাবল","dish","cable"]]
     ];
     function vExpCategory(t){
       for(var i = 0; i < V_EXP_CATS.length; i++)
@@ -5050,13 +5063,15 @@
          month — its date starts on the 1st of the named month */
       '<div class="field"><label>' + L.fDate + '</label><input name="date" type="date" value="' + (p.monthGiven ? p.monthKey + "-01" : todayISO()) + '"></div></div>' +
       '<div class="field"><label>' + L.eCat + '</label>' + pickFieldHTML("vExpCatPick", "category", selCat, expCatFieldDisplay(selCat)) + "</div>" +
+      billMonthFieldHTML("vExpBillMonthWrap", selCat, p.monthGiven ? p.monthKey : todayISO().slice(0, 7)) +
       '<div class="field"><label>' + L.eFrom + '</label><select name="walletId">' + walletOptions(p.wallet ? p.wallet.id : "", true) + "</select></div>" +
       '<div class="form-actions"><button type="button" class="btn ghost" data-close>' + L.cancel + '</button><button class="btn" type="submit">' + L.vOkExp + "</button></div></form>");
-      wireExpCatPick("vExpCatPick");
+      wireExpCatPick("vExpCatPick", function(v){ toggleBillMonth("vExpBillMonthWrap", v); });
       $("#fVExp").onsubmit = function(ev){
         ev.preventDefault();
         var fd = new FormData(ev.target);
         var data = { title: String(fd.get("title")).trim(), amount: num(fd.get("amount")), date: String(fd.get("date") || todayISO()), category: String(fd.get("category")), walletId: String(fd.get("walletId") || "") };
+        data.billMonth = isBillCat(data.category) ? String(fd.get("billMonth") || "") : "";
         if(!data.title || data.amount <= 0){ toast(L.validAmount); return; }
         data.id = uid(); data.ts = Date.now();
         DB.expenses.push(data);
@@ -5669,13 +5684,14 @@
     function expCatFieldDisplay(v){
       return '<span class="pk-badge t0">' + ic(expCatIcon(v)) + '</span><span class="grow"><b>' + esc(catLabel(v) || L.pickChoose) + "</b></span>";
     }
-    function wireExpCatPick(btnId){
+    function wireExpCatPick(btnId, onPick){
       wirePickField(btnId, {
         title: L.eCat,
         options: function(){
           return EXP_CATS.map(function(c){ return { value: c, badgeHTML: ic(expCatIcon(c)), title: catLabel(c) }; });
         },
-        display: function(v){ return expCatFieldDisplay(v); }
+        display: function(v){ return expCatFieldDisplay(v); },
+        onPick: onPick
       });
     }
     function expenseForm(e){
@@ -5686,14 +5702,16 @@
       '<div class="grid2"><div class="field"><label>' + L.eAmount + '</label><input name="amount" type="text" data-num="1" min="1" inputmode="numeric" required value="' + esc(e.amount || "") + '"></div>' +
       '<div class="field"><label>' + L.fDate + '</label><input name="date" type="date" value="' + esc(e.date || todayISO()) + '"></div></div>' +
       '<div class="field"><label>' + L.eCat + '</label>' + pickFieldHTML("expCatPick", "category", selCat, expCatFieldDisplay(selCat)) + "</div>" +
+      billMonthFieldHTML("expBillMonthWrap", selCat, e.billMonth || (e.date || todayISO()).slice(0, 7)) +
       '<div class="field"><label>' + L.eFrom + '</label><select name="walletId">' + walletOptions(e.walletId, true) + "</select></div>" +
       '<div class="form-actions"><button type="button" class="btn ghost" data-close>' + L.cancel + '</button><button class="btn" type="submit">' + L.save + "</button></div></form>" +
       (e.id ? deleteBtn(e.id, "expense") : ""));
-      wireExpCatPick("expCatPick");
+      wireExpCatPick("expCatPick", function(v){ toggleBillMonth("expBillMonthWrap", v); });
       $("#fExp").onsubmit = function(ev){
         ev.preventDefault();
         var fd = new FormData(ev.target);
         var data = { title: String(fd.get("title")).trim(), amount: num(fd.get("amount")), date: String(fd.get("date") || todayISO()), category: String(fd.get("category")), walletId: String(fd.get("walletId") || "") };
+        data.billMonth = isBillCat(data.category) ? String(fd.get("billMonth") || "") : "";
         if(!data.title || data.amount <= 0) return;
         if(e.id){ Object.assign(DB.expenses.find(function(x){ return x.id === e.id; }), data); toast(L.updatedE); }
         else { data.id = uid(); data.ts = Date.now(); DB.expenses.push(data); toast(L.addedE); }
