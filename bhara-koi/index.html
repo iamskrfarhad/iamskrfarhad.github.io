@@ -671,6 +671,7 @@
          cut to the first 2 characters; the badge now widens for 3+ chars */
       .avatar.fnum{ width:auto; min-width:44px; padding:0 7px; font-size:.94rem; letter-spacing:.01em; }
       .avatar.teal{ background:#ccfbf1; color:#0f766e; }
+      .bk-flat-av svg{ width:16px; height:16px; }
       html[data-theme="dark"] .avatar.teal{ background:#083f3a; color:#2dd4bf; }
 
       /* ---------- modern option picker (replaces the native <select>
@@ -3273,7 +3274,7 @@
                 '<button type="button" class="mini-btn red" data-act="del-stafftx" data-id="' + x.id + '">' + L.delete + "</button></div>";
             }).join("");
           }
-          return '<div class="card" style="margin-top:10px"><div class="row"><div class="avatar">' + initials(s.name) + "</div>" +
+          return '<div class="card" style="margin-top:10px"><div class="row"><div class="avatar">' + ic("staff") + "</div>" +
             '<div class="grow"><b>' + esc(s.name) + '</b> <span class="chip ok">' + esc(roleLabel(s.role)) + '</span>' +
             '<div class="small muted">' + L.monthlySalary + " " + fmt(s.salary) + (s.phone ? " · " + esc(s.phone) : "") + (s.joinDate ? " · " + fmtDate(s.joinDate) : "") + "</div>" +
             (s.note ? '<div class="small muted">' + esc(s.note) + "</div>" : "") + "</div></div>" +
@@ -3552,7 +3553,7 @@
           var reviewHtml = rev ? '<div class="review-box"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span>' + L.reviewWord + "</span>" + starsHTML(num(rev.stars)) + "</div>" +
             (rev.text ? '<div style="margin-top:5px;white-space:pre-wrap">' + esc(rev.text) + "</div>" : "") +
             (rev.date ? '<div class="small muted" style="margin-top:4px">' + fmtDate(rev.date) + "</div>" : "") + "</div>" : "";
-          return '<div class="card' + (resolved ? " comp-done" : "") + '" style="margin-top:10px"><div class="row"><div class="avatar ' + (resolved ? "" : "amber") + '">' + (t ? ic("qTenant") : (f && flatType(f) === "owner" ? ic("king") : (f && flatType(f) === "guest" ? ic("bed") : (name ? initials(name) : ic("complaint"))))) + '</div>' +
+          return '<div class="card' + (resolved ? " comp-done" : "") + '" style="margin-top:10px"><div class="row"><div class="avatar ' + (resolved ? "" : "amber") + '">' + (t ? ic("qTenant") : (f && flatType(f) === "owner" ? ic("king") : (f && flatType(f) === "guest" ? ic("bed") : (name ? ic("wrench") : ic("complaint"))))) + '</div>' +
             '<div class="grow"><b>' + esc(name || L.complaints) + '</b><div class="small muted">' + flatLabel(f) + " · " + fmtDate(c.date) + "</div></div>" +
             (resolved ? '<span class="chip ok">' + L.chipResolved + '</span>' : '<span class="chip part">' + L.chipOpen + "</span>") + "</div>" +
             (c.category ? '<div style="margin-top:6px"><span class="chip free">' + esc(compCatLabel(c.category)) + "</span></div>" : "") +
@@ -4260,7 +4261,7 @@
           '<div style="display:flex;align-items:center;gap:10px"><span style="background:' + tint + ';color:var(--ink);font-weight:800;font-size:.92rem;border-radius:11px;padding:7px 11px">' + esc(String(f.number)) + '</span><b>' + L.flatWord + ' ' + esc(f.number) + '</b><span style="margin-left:auto">' + pill + '</span></div>' +
           '<div class="small muted" style="margin-top:8px">' + esc((buildingById(f.buildingId) || {}).name || "") + ' · ' + L.floorWord + ' ' + bnNum(f.floor) + '</div>';
         if(rental && t){
-          h += '<div style="display:flex;align-items:center;gap:8px;margin-top:9px"><span style="width:28px;height:28px;flex:none;border-radius:50%;background:linear-gradient(135deg,#2DD4BF,#0D9488);color:#fff;display:grid;place-items:center;font-size:.78rem;font-weight:700">' + esc(initials(t.name)) + '</span><span style="font-weight:600">' + esc(t.name) + '</span></div>';
+          h += '<div style="display:flex;align-items:center;gap:8px;margin-top:9px"><span class="bk-flat-av" style="width:28px;height:28px;flex:none;border-radius:50%;background:linear-gradient(135deg,#2DD4BF,#0D9488);color:#fff;display:grid;place-items:center">' + ic("qTenant") + '</span><span style="font-weight:600">' + esc(t.name) + '</span></div>';
         }
         if(rental){
           h += '<div class="small muted" style="margin-top:7px">' + L.rentWord + ' ' + fmt(f.rent) + (ch ? ' · ' + esc(ch) : '') + '</div>';
