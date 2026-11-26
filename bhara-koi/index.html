@@ -782,7 +782,7 @@
       window.__vkWatchdog = setTimeout(function(){
         if(window.__vkBooted) return;
         var v = document.getElementById("view");
-        if(!v || !v.querySelector(".boot-msg")) return;
+        if(!v || !(v.querySelector(".boot-msg") || v.querySelector(".bk-splash"))) return;
         v.innerHTML = '<div class="empty" style="margin-top:26px"><h3>অ্যাপটি খুলতে সমস্যা হচ্ছে</h3>' +
           "<p>আপনার সব তথ্য ফোনেই নিরাপদে সংরক্ষিত আছে। নিচের বোতামে চাপ দিয়ে আবার চেষ্টা করুন।</p>" +
           '<button type="button" class="btn" id="bootRetry">আবার চেষ্টা করুন</button></div>';
