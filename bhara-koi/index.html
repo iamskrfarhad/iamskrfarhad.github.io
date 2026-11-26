@@ -676,6 +676,8 @@
       .avatar.teal:has(>svg), .avatar.teal:has(>svg[data-ic="wifi"]){ background:#ccfbf1; color:#0f766e; }
       html[data-theme="dark"] .avatar.teal:has(>svg), html[data-theme="dark"] .avatar.teal:has(>svg[data-ic="wifi"]){ background:#083f3a; color:#2dd4bf; }
       .tiles .tile{ align-items:center; text-align:center; padding:16px 10px 13px; }
+      .bk-prom-chip.on{ background:#01452C !important; color:#fff !important; border-color:#01452C !important; }
+      html[data-theme="dark"] .bk-prom-chip.on{ background:#0E6B4A !important; border-color:#0E6B4A !important; }
       .tiles .tile .ti{ width:52px; height:52px; border-radius:50%; }
       .tiles .tile .ti svg{ width:25px; height:25px; }
       .tiles .tile .ti:has(>svg[data-ic="bell"]){ background:#FFF7ED; color:#EA580C; }
@@ -2784,12 +2786,22 @@
     function bkPromQuick(days){
       var inp = document.getElementById("bkPromDate");
       if(inp) inp.value = bkPromISO(days);
+      bkPromSyncChips();
+    }
+    function bkPromSyncChips(){
+      var inp = document.getElementById("bkPromDate");
+      var v = inp ? inp.value : "";
+      var chips = document.querySelectorAll(".bk-prom-chip");
+      for(var i = 0; i < chips.length; i++){
+        var d = parseInt(chips[i].getAttribute("data-days"), 10);
+        if(v && v === bkPromISO(d)) chips[i].classList.add("on"); else chips[i].classList.remove("on");
+      }
     }
     function bkPromiseSheet(bid){
       var b = billById(bid); if(!b) return;
       var t = tenantById(b.tenantId);
       var chips = [[0, L.promQ0], [1, L.promQ1], [3, L.promQ3], [7, L.promQ7]].map(function(q){
-        return '<button type="button" class="chip" style="cursor:pointer;border:1px solid var(--line);background:var(--card);font:inherit" onclick="bkPromQuick(' + q[0] + ')">' + q[1] + '</button>';
+        return '<button type="button" class="chip bk-prom-chip" data-days="' + q[0] + '" style="cursor:pointer;border:1px solid var(--line);background:var(--card);font:inherit" onclick="bkPromQuick(' + q[0] + ')">' + q[1] + '</button>';
       }).join(" ");
       openSheet(sheetHead(L.promTitle, L.promSub) +
         '<div class="card" style="margin-top:4px"><div class="row"><div class="avatar red">' + ic("qTenant") + '</div><div class="grow"><b>' + esc(t ? t.name : "") + '</b><div class="small muted">' + flatLabel(flatById(b.flatId)) + " · " + monthLabel(b.month) + '</div></div><div class="amt red">' + fmt(billDue(b)) + '</div></div></div>' +
@@ -2798,6 +2810,8 @@
         '<input type="date" id="bkPromDate" value="' + (b.promiseDate || todayISO()) + '" style="margin-top:5px;width:100%;border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--card);color:var(--ink);font:inherit">' +
         '<button type="button" class="btn block" style="margin-top:14px" id="bkPromSave">' + L.promSave + '</button>' +
         (b.promiseDate ? '<button type="button" class="btn danger block" style="margin-top:8px" id="bkPromClear">' + L.promClear + '</button>' : ""));
+      var pinp = document.getElementById("bkPromDate");
+      if(pinp){ pinp.oninput = bkPromSyncChips; bkPromSyncChips(); }
       document.getElementById("bkPromSave").onclick = function(){
         var v = document.getElementById("bkPromDate").value;
         if(!v) return;
