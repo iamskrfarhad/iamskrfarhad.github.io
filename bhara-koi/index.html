@@ -4044,8 +4044,8 @@
         if(bkFlatFilter === "vac" && !(rental && !t)) return false;
         if(bkFlatFilter === "due" && !(rental && due > 0)) return false;
         if(q){
-          var bld = (buildingById(f.buildingId) || {}).name || "";
-          var hay = (String(f.number) + " " + (t ? t.name : "") + " " + bld).toLowerCase();
+          var occN = rental ? "" : ((flatOccupant(f) || {}).name || "");
+          var hay = (String(f.number) + " " + (t ? t.name : "") + " " + occN).toLowerCase();
           if(hay.indexOf(q) < 0) return false;
         }
         return true;
