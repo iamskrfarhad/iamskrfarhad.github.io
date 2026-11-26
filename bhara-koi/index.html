@@ -2573,7 +2573,7 @@
             '<div class="grow"><b>' + esc(t ? t.name : L.navTenants) + '</b><div class="small muted">' + flatLabel(flatById(b.flatId)) + "</div></div>" +
             '<div style="text-align:right"><div class="amt">' + fmt(b.total) + "</div>" + statusChip(billStatus(b)) + "</div></div>" +
             billBreakdownHTML(b) +
-            (billDue(b) > 0 ? '<button type="button" class="btn soft block" style="margin-top:11px" data-act="pay-bill" data-id="' + b.id + '">' + ic("cashIn") + " " + L.takeMoney + "</button>" : "") +
+            (billDue(b) > 0 ? '<button type="button" class="btn soft block" style="margin-top:11px" data-act="pay-bill" data-id="' + b.id + '">' + ic("cashIn") + " " + L.takeMoney + "</button>" : "") + bkPromiseHTML(b) +
             '<button type="button" class="btn wa block" style="margin-top:8px" data-act="wa-bill" data-id="' + b.id + '">' + brandIc("whatsapp") + " " + (billDue(b) > 0 ? L.waSendBill : L.waSendReceipt) + "</button>" +
             '<div style="display:flex;gap:8px;margin-top:8px"><button type="button" class="btn ghost" style="flex:1" data-act="edit-bill" data-id="' + b.id + '">' + ic("edit") + " " + L.editBill + '</button><button type="button" class="btn danger" style="flex:1" data-act="del-bill" data-id="' + b.id + '">' + ic("trash") + " " + L.delete + "</button></div></div>";
         }).join("");
