@@ -411,7 +411,15 @@
     if (!syncOv) {
       syncOv = el("div", "position:fixed;inset:0;z-index:99998;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center;");
       syncOv.id = "bk-syncing";
-      var st0 = el("div", "font-size:30px;font-weight:800;", APPNAME);
+      if (!document.getElementById("bk-splash-css")) { var sc = document.createElement("style"); sc.id = "bk-splash-css"; sc.textContent = "@keyframes bkFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-10px) scale(1.04)}}"; document.head.appendChild(sc); }
+      var st0;
+      if (window.__bkIconSrc) {
+        st0 = el("div", "width:92px;height:92px;border-radius:25px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 16px 36px rgba(1,54,38,.25);animation:bkFloat 1.6s ease-in-out infinite;");
+        var sim = el("img", "width:70px;height:70px;object-fit:contain;"); sim.src = window.__bkIconSrc; sim.alt = "";
+        st0.appendChild(sim);
+      } else {
+        st0 = el("div", "font-size:30px;font-weight:800;", APPNAME);
+      }
       var st1 = el("div", "font-size:18px;font-weight:800;"); st1.id = "bk-syncing-t";
       var st2 = el("div", "font-size:13px;opacity:.75;max-width:290px;line-height:1.5;"); st2.id = "bk-syncing-s";
       syncOv.appendChild(st0); syncOv.appendChild(st1); syncOv.appendChild(st2);
