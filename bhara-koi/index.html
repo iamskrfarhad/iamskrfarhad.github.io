@@ -4585,6 +4585,85 @@
     function bkSubActive(){ return bkSubStatus().state !== "expired"; }
     function bkAllowedBuildings(){ var s = bkSubStatus(); return s.state === "paid" ? (s.buildings || 1) : 1; }
     function bkGoSub(){ go("sub", "subscription"); }
+    function bkNextSavDate(s){
+      var now = new Date(); now.setHours(0, 0, 0, 0);
+      function isoOf(d){ var m = d.getMonth() + 1, dd = d.getDate(); return d.getFullYear() + "-" + (m < 10 ? "0" : "") + m + "-" + (dd < 10 ? "0" : "") + dd; }
+      if(s.reminderFreq === "weekly"){
+        var wd = num(s.reminderWeekday);
+        for(var i = 0; i < 14; i++){
+          var d = new Date(now); d.setDate(d.getDate() + i);
+          if(d.getDay() !== wd) continue;
+          if(savType(s) === "dps" && dpsPaidThisMonth(s) && d.getMonth() === now.getMonth()) continue;
+          return isoOf(d);
+        }
+        return "";
+      }
+      if(s.reminderFreq === "monthly"){
+        var day = num(s.reminderDay) || 1;
+        for(var k = 0; k < 2; k++){
+          var y = now.getFullYear(), mo = now.getMonth() + k;
+          var last = new Date(y, mo + 1, 0).getDate();
+          var cand = new Date(y, mo, Math.min(day, last));
+          if(cand < now) continue;
+          if(k === 0 && savType(s) === "dps" && dpsPaidThisMonth(s)) continue;
+          return isoOf(cand);
+        }
+      }
+      return "";
+    }
+    function bkNotifySync(){
+      try{
+        if(!window.BkNotify || !BkNotify.bkSched) return;
+        BkNotify.bkSchedClear();
+        var en = DB.lang === "en";
+        var items = [];
+        var nowMs = Date.now();
+        function atHM(isoD, h){ var d = new Date(isoD + "T00:00:00"); d.setHours(h, 0, 0, 0); return d.getTime(); }
+        function pushItem(when, title, body){
+          if(items.length >= 60) return;
+          if(when < nowMs){
+            var d = new Date(when), t = new Date();
+            if(d.getFullYear() === t.getFullYear() && d.getMonth() === t.getMonth() && d.getDate() === t.getDate()) when = nowMs + 2 * 60 * 1000;
+            else return;
+          }
+          if(when > nowMs + 31 * 24 * 3600 * 1000) return;
+          items.push({ when: when, title: title, body: body });
+        }
+        scopedBills().forEach(function(b){
+          if(!b.promiseDate || billDue(b) <= 0) return;
+          var t = tenantById(b.tenantId);
+          pushItem(atHM(b.promiseDate, 9), en ? "Promised payment today" : "আজ দেওয়ার কথা", (t ? t.name : "") + " · " + flatLabel(flatById(b.flatId)) + " · " + (en ? "Due " : "বকেয়া ") + fmt(billDue(b)));
+        });
+        (DB.loans || []).forEach(function(ln){
+          var bal = loanBalance(ln);
+          if(!ln.dueDate || bal === 0) return;
+          pushItem(atHM(ln.dueDate, 9), en ? "Loan date today" : "ধার-দেনার তারিখ আজ", (ln.name || "") + " · " + fmt(Math.abs(bal)));
+        });
+        (DB.savings || []).forEach(function(s){
+          var dISO = bkNextSavDate(s);
+          if(!dISO) return;
+          pushItem(atHM(dISO, 9), en ? "Savings reminder" : "সঞ্চয়ের রিমাইন্ডার", s.name || "");
+        });
+        try{
+          var st = bkSubStatus();
+          if((st.state === "trial" || st.state === "paid") && st.until && st.daysLeft <= 3){
+            var u = new Date(st.until + "T00:00:00"); u.setDate(u.getDate() - 1);
+            var mm = u.getMonth() + 1, dd2 = u.getDate();
+            var uISO = u.getFullYear() + "-" + (mm < 10 ? "0" : "") + mm + "-" + (dd2 < 10 ? "0" : "") + dd2;
+            pushItem(atHM(uISO, 10), en ? "Subscription ending soon" : "সাবস্ক্রিপশনের মেয়াদ শেষের পথে", (en ? "Ends " : "শেষ তারিখ: ") + fmtDate(st.until));
+          }
+        }catch(e2){}
+        items.sort(function(a, b){ return a.when - b.when; });
+        items.forEach(function(it, i){ BkNotify.bkSched(1000 + i, it.when, it.title, it.body); });
+      }catch(e){}
+    }
+    var bkNvTimer = null;
+    function bkNotifySyncSoon(){ clearTimeout(bkNvTimer); bkNvTimer = setTimeout(bkNotifySync, 2500); }
+    if(window.BkNotify){
+      var bkSaveOrig = save;
+      save = function(){ var r = bkSaveOrig.apply(null, arguments); bkNotifySyncSoon(); return r; };
+      setTimeout(bkNotifySync, 5000);
+    }
     var BK_READONLY = { "wa-bill":1, "remind-send":1, "rep-pdf":1, "rep-xlsx":1, "rep-csv":1, "do-backup":1, "switch-building":1, "activate-building":1, "hero-month-pick":1, "building-flats":1, "worker-profile":1, "goto-wallets":1, "goto-savings":1, "goto-bills":1, "bk-copy-dev":1, "bk-copy-num":1, "bk-redeem":1, "oldten-view":1 };
     function bkGate(act){
       if(BK_READONLY[act]) return true;
